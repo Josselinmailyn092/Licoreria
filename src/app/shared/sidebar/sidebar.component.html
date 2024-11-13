@@ -1,0 +1,21 @@
+ <!-- Menu lateral -->
+ <div class="side-menu">
+ 
+    <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
+        <h2 [routerLink]="['/licores']" class="menu-title">LICORES</h2> <!-- Título del componente -->
+  <nz-menu nzMode="vertical" nzTheme="light">
+    <nz-submenu nzTitle="Licores">
+      <div *ngIf="selectedCategory !== 'licores'" class="menu-columns">
+        <nz-menu-item (click)="selectCategory('whiskey')" [routerLink]="['/whiskey']">Whiskey</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('vodka')" [routerLink]="['/vodka']">Vodka</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('tequila')" [routerLink]="['/tequila']">Tequila</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('brandy')" [routerLink]="['/brandy']">Brandy</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('vinos')" [routerLink]="['/vinos']">Vinos</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('gin')" [routerLink]="['/gin']">Gin</nz-menu-item>
+        <nz-menu-item (click)="selectCategory('cerveza')" [routerLink]="['/cerveza']">Cerveza</nz-menu-item>
+      </div>
+    </nz-submenu>
+  </nz-menu>
+</nz-sider>
+</div>
+

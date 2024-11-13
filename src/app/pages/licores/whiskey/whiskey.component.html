@@ -1,0 +1,25 @@
+<nz-layout>
+    <nz-sider [nzWidth]="200" class="side-menu">
+      <nz-menu nzMode="inline" nzTheme="light">
+        <!-- Categoría principal -->
+        <nz-submenu nzTitle="LICORES">
+          <!-- Subcategoría seleccionada (Whiskey) -->
+          <nz-menu-item-group>
+            <nz-menu-item>
+              <h4>{{ selectedCategory.toUpperCase() }} ({{ brands.length }})</h4>
+            </nz-menu-item>
+          </nz-menu-item-group>
+          
+          <!-- Marcas asociadas -->
+          <nz-menu-item-group nzTitle="MARCA">
+            <ng-container *ngFor="let brand of brands">
+              <nz-menu-item>
+                {{ brand.name }} ({{ brand.count }})
+              </nz-menu-item>
+            </ng-container>
+          </nz-menu-item-group>
+        </nz-submenu>
+      </nz-menu>
+    </nz-sider>
+  </nz-layout>
+  

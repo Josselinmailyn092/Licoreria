@@ -1,0 +1,41 @@
+
+<div class="licores-container">
+    <!-- Menu lateral -->
+   <app-sidebar></app-sidebar>
+  
+    <div class="licores-content">
+      <!-- <h2 class="title">Licores</h2> -->
+  
+      <!-- Filtros de Marca y Presentación -->
+      <div class="filters">
+        <nz-select [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)" placeholder="Seleccione Marca">
+        </nz-select>
+        
+        <nz-select [(ngModel)]="selectedPresentacion" (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" placeholder="Seleccione Presentación">
+        </nz-select>
+        
+      </div>
+  
+      <!-- Lista de Productos -->
+      <div class="product-grid">
+        <nz-card *ngFor="let producto of productosPaginados" [nzCover]="producto.imagenUrl">
+          <nz-card-meta [nzTitle]="producto.nombre" [nzDescription]="producto.descripcion"></nz-card-meta>
+          <p>{{ producto.presentacion_ml }} ml</p>
+          <p>{{ producto.precio | currency:'USD' }}</p>
+          <button nz-button nzType="primary">Comprar</button>
+        </nz-card>
+      </div>
+  
+      <!-- Paginación -->
+      <!-- <nz-pagination -->
+        <!-- [(nzPageIndex)]="paginaActual" -->
+        <!-- [nzTotal]="productos.length" -->
+        <!-- [nzPageSize]="productosPorPagina" -->
+        <!-- (nzPageIndexChange)="cambiarPagina($event)"> -->
+      <!-- </nz-pagination> -->
+    </div>
+  </div>
+
+   
+
+  
