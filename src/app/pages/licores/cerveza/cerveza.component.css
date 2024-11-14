@@ -1,0 +1,62 @@
+.cerveza-container {
+    display: flex;
+    padding: 20px;
+  }
+  
+  /* Estilo menu lateral */
+  .side-menu{
+  
+    height: 100vh;
+    margin-left: 160px;
+    width: 158px;
+    display: flex;
+    flex-direction: column;
+   }
+   .nz-submenu{
+     display: flex;
+     flex-direction: column;
+   }
+   /* titulo menulateral */
+   .side-menu h2{
+     text-align:start;
+     color: rgb(38, 38, 38);
+     margin: 0;
+     font-size: 18px;
+     cursor: pointer;
+   }
+   
+   .menu-title, .menu-titleMarca, .menu-titlePresentacion, .title-cerveza{
+    padding: 0 20px;
+    margin-top: 30px;
+  }
+   /* estilos de menu  */
+   .side-menu .nz-menu { 
+     background-color: #fff; /* Fondo blanco para el menú */
+      display: flex; 
+      flex-direction: column; 
+      /* Asegúrate de que los elementos se apilen en columna */
+      }
+      .menu-columns {
+       display: flex;
+       flex-direction: column;
+       margin: 0 30px ;
+       gap: 10px; /* Espacio entre los elementos */
+       color: rgb(96, 94, 94);
+       font-size: 16px;
+      margin-top: 12px;
+      margin-bottom: 18px;
+     }
+     nz-menu-item{
+       cursor: pointer;
+     }
+   
+   .licores-content {
+     flex: 1;
+   }
+   
+   .filters {
+     display: flex;
+     gap: 10px;
+     margin-bottom: 20px;
+   }
+   

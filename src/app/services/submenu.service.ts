@@ -16,9 +16,9 @@ private subMenuItems =[
     label :'LICORES',
     path: '/licores',
     subMenu:[
-        {label:'VINOS',path :'vinos'},
-        {label:'CERVEZA',path :'cerveza'},
-        {label:'WHISKEY',path :'whiskey'},
+        {label:'VINOS',path :'/vinos'},
+        {label:'CERVEZA',path :'/cerveza'},
+        {label:'WHISKEY',path :'/whiskey'},
         {label:'BRANDY',path :'/brandy'},
         {label:'VODKA',path :'/vodka'},
         {label:'TEQUILA',path :'/tequila'},

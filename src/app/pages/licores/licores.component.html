@@ -1,38 +1,98 @@
 
 <div class="licores-container">
     <!-- Menu lateral -->
-   <app-sidebar></app-sidebar>
+    <div class="side-menu">
+ 
+            <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
+                <h2 [routerLink]="['/licores']" class="menu-title">LICORES</h2> <!-- Título del componente -->
+          <nz-menu nzMode="vertical" nzTheme="light">
+            <nz-submenu nzTitle="Licores">
+              <div *ngIf="selectedCategory !== 'licores'" class="menu-columns">
+                <nz-menu-item (click)="selectCategory('whiskey')" [routerLink]="['/whiskey']">Whiskey</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('vodka')" [routerLink]="['/vodka']">Vodka</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('tequila')" [routerLink]="['/tequila']">Tequila</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('brandy')" [routerLink]="['/brandy']">Brandy</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('vinos')" [routerLink]="['/vinos']">Vinos</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('gin')" [routerLink]="['/gin']">Gin</nz-menu-item>
+                <nz-menu-item (click)="selectCategory('cerveza')" [routerLink]="['/cerveza']">Cerveza</nz-menu-item>
+              </div>
+            </nz-submenu>
+          </nz-menu>
+
+          <h2  class="menu-titleMarca">MARCA</h2> <!-- Título del componente -->
+          <nz-menu nzMode="vertical" nzTheme="light">
+            <nz-submenu nzTitle="Licores">
+              <div *ngIf="selectedCategory !== 'licores'" class="menu-columns">
+                <nz-menu-item  >Maca 1</nz-menu-item>
+                <nz-menu-item >Marca 2</nz-menu-item>
+                <nz-menu-item  >Maca 3</nz-menu-item>
+              </div>
+            </nz-submenu>
+          </nz-menu>
+
+          <h2  class="menu-titlePresentacion">PRESENTACIÓN</h2> <!-- Título del componente -->
+          <nz-menu nzMode="vertical" nzTheme="light">
+            <nz-submenu nzTitle="Licores">
+              <div *ngIf="selectedCategory !== 'licores'" class="menu-columns">
+                <nz-menu-item  >150ml</nz-menu-item>
+                <nz-menu-item >350ml</nz-menu-item>
+                <nz-menu-item  >500ml3</nz-menu-item>
+              </div>
+            </nz-submenu>
+          </nz-menu>
+        </nz-sider>
+      </div>
   
     <div class="licores-content">
-      <!-- <h2 class="title">Licores</h2> -->
-  
-      <!-- Filtros de Marca y Presentación -->
-      <div class="filters">
-        <nz-select [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)" placeholder="Seleccione Marca">
-        </nz-select>
-        
-        <nz-select [(ngModel)]="selectedPresentacion" (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" placeholder="Seleccione Presentación">
-        </nz-select>
-        
+       <!-- Header Image and Title -->
+  <div class="licores-header">
+
+    <img [src]="'assets/images/imagenLicores.jpg'" alt="Licor" class="header-image">
+  </div>
+
+ <!-- Filtros y Opciones de Ordenamiento -->
+<div class="filters">
+  <div>
+    <label>Productos encontrados: {{ productos.length }}</label>
+  </div>
+
+    <nz-select [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)" placeholder="Seleccione marca">
+    <nz-option *ngFor="let marca of marcas" [nzValue]="marca" [nzLabel]="marca"></nz-option>
+  </nz-select>
+
+    <nz-select [(ngModel)]="selectedPresentacion" (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" placeholder="Seleccione presentación">
+    <nz-option *ngFor="let presentacion of presentaciones" [nzValue]="presentacion" [nzLabel]="presentacion"></nz-option>
+  </nz-select>
+
+  <label>Artículos por página:</label>
+    <nz-select [(ngModel)]="productosPorPagina" (ngModelChange)="cambiarPagina(1)">
+    <nz-option *ngFor="let option of [4, 8, 12, 24]" [nzValue]="option" [nzLabel]="option"></nz-option>
+  </nz-select>
+</div>
+
+  <!-- Products List -->
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let producto of productosPaginados">
+      <div class="product-image">
+        <img [src]="producto.imagenUrl" [alt]="producto.nombre" />
       </div>
-  
-      <!-- Lista de Productos -->
-      <div class="product-grid">
-        <nz-card *ngFor="let producto of productosPaginados" [nzCover]="producto.imagenUrl">
-          <nz-card-meta [nzTitle]="producto.nombre" [nzDescription]="producto.descripcion"></nz-card-meta>
-          <p>{{ producto.presentacion_ml }} ml</p>
-          <p>{{ producto.precio | currency:'USD' }}</p>
-          <button nz-button nzType="primary">Comprar</button>
-        </nz-card>
+      <div class="product-details">
+        <h3>{{ producto.nombre }}</h3>
+        <p>{{ producto.presentacion_ml }} ml</p>
+        <div class="price">
+          <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
+          <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
+        </div>
+        <button nz-button nzType="primary">Comprar</button>
       </div>
-  
-      <!-- Paginación -->
-      <!-- <nz-pagination -->
-        <!-- [(nzPageIndex)]="paginaActual" -->
-        <!-- [nzTotal]="productos.length" -->
-        <!-- [nzPageSize]="productosPorPagina" -->
-        <!-- (nzPageIndexChange)="cambiarPagina($event)"> -->
-      <!-- </nz-pagination> -->
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nz-pagination [(nzPageIndex)]="paginaActual" [nzTotal]="productos.length" 
+                 [nzPageSize]="productosPorPagina" (nzPageIndexChange)="cambiarPagina($event)">
+  </nz-pagination>
+      
     </div>
   </div>
 

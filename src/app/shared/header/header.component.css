@@ -5,6 +5,7 @@ nz-layout{
   display: flex;
   align-items: center;
   padding: 20px;
+  margin-top: 0;
   background-color: #5F0F00; /* Fondo claro */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
   height: auto;
@@ -18,6 +19,7 @@ nz-layout{
   flex-direction: column;
   align-items: center;
   margin: auto;
+  gap: 5px;
   
 }
 
@@ -36,6 +38,7 @@ nz-layout{
   color: #ffffff;
   align-items: center;
   margin: auto;
+  margin-top: 20px;
   justify-content: center;/*Cnetrar logo en medio nav*/
   display: flex;
   padding: 0;
@@ -46,6 +49,7 @@ nz-layout{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 10px;
   width: 80%;
   background-color: #5F0F00;
 }
@@ -65,7 +69,7 @@ nz-layout{
   list-style: none;
   margin: auto;
   padding:0;
-  gap: 75px;
+  gap:90px;
   margin: 0;
   background-color:#5F0F00
 }
@@ -76,7 +80,7 @@ nz-layout{
 .search-icon {
   font-size: 32px; /* Tamaño del ícono */
   color: #555;
-  margin-left: 20px;
+  margin-left: 25px;
   transition: color 0.3s ease, transform 0.3s ease; /* Transiciones para hover */
   text-decoration: none;
   display: flex;
@@ -95,9 +99,9 @@ nz-layout{
 .search-modal {
   position: absolute;
     display: none; /* Asegura que el modal aparezca justo después del navbar */
-    top: 208px;
+    top: 170px;
     width: 400px;
-    right:  275px; /* Posiciona el modal hacia la derecha */
+    right:  278px; /* Posiciona el modal hacia la derecha */
     height: 50px; /* Altura del modal */
 
     z-index: 1000; /* Para que aparezca sobre el contenido pero debajo del navbar */
@@ -146,7 +150,8 @@ nz-layout{
 }
 .icons{
   display:flex;
-  gap: 80px; 
+  gap: 90px; 
+  margin-left: 5px;
 
 }
 .iconSearch, .cart-icon {
@@ -213,6 +218,7 @@ nz-layout{
   padding: 0;
   min-width: 110px; /* Ancho mínimo del submenú */
   z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  font-size: 13px;
 }
 
 /* Mostrar el submenú al pasar el mouse */
@@ -222,7 +228,7 @@ nz-layout{
 
 /* Estilo para los elementos del submenú */
 .sub-menu-item {
-  padding: 0 20px;
+  padding: 0 10px;
   height: 40px;
   margin: auto;
   align-items: center;
@@ -245,7 +251,7 @@ nz-layout{
 .sub-menu-item a::after {
   content: "";
   position: absolute;
-  bottom: 0; /* Coloca la línea en la parte inferior */
+  top:  18px; /* Coloca la línea en la parte inferior */
   left: 0;
   width: 100%; 
   margin-bottom: 22px;/* La línea cubre todo el ancho del texto */

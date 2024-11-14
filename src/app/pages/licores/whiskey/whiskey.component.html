@@ -1,25 +1,35 @@
-<nz-layout>
-    <nz-sider [nzWidth]="200" class="side-menu">
-      <nz-menu nzMode="inline" nzTheme="light">
-        <!-- Categoría principal -->
-        <nz-submenu nzTitle="LICORES">
-          <!-- Subcategoría seleccionada (Whiskey) -->
-          <nz-menu-item-group>
-            <nz-menu-item>
-              <h4>{{ selectedCategory.toUpperCase() }} ({{ brands.length }})</h4>
-            </nz-menu-item>
-          </nz-menu-item-group>
-          
-          <!-- Marcas asociadas -->
-          <nz-menu-item-group nzTitle="MARCA">
-            <ng-container *ngFor="let brand of brands">
-              <nz-menu-item>
-                {{ brand.name }} ({{ brand.count }})
-              </nz-menu-item>
-            </ng-container>
-          </nz-menu-item-group>
-        </nz-submenu>
-      </nz-menu>
-    </nz-sider>
-  </nz-layout>
+<div class="whiskey-container">
+ <div class="side-menu">
   
+    <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
+        <h2 [routerLink]="['/licores']" class="menu-title">LICORES</h2> 
+        <div class="menu-columns"></div>
+        <h2 class="title-whiskey">WHISKEY</h2><!-- Título del componente -->
+        
+        <h2  class="menu-titleMarca">MARCA</h2> <!-- Título del componente -->
+        <nz-menu nzMode="vertical" nzTheme="light">
+          <nz-submenu nzTitle="Whiskey">
+            <div  class="menu-columns">
+              <nz-menu-item  >Jhonnie Walker</nz-menu-item>
+              <nz-menu-item >Jamaeson</nz-menu-item>
+              <nz-menu-item  >The Macallan</nz-menu-item>
+              
+            </div>
+          </nz-submenu>
+        </nz-menu>
+
+
+            <h2  class="menu-titlePresentacion">PRESENTACIÓN</h2> <!-- Título del componente -->
+            <nz-menu nzMode="vertical" nzTheme="light">
+              <nz-submenu nzTitle="Whiskey">
+                <div  class="menu-columns">
+                  <nz-menu-item  >150ml</nz-menu-item>
+                  <nz-menu-item >350ml</nz-menu-item>
+                  <nz-menu-item  >500ml3</nz-menu-item>
+                </div>
+          </nz-submenu>
+        </nz-menu>
+    </nz-sider>
+  </div>
+
+    

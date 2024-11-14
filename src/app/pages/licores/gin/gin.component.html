@@ -1,1 +1,35 @@
-<p>gin works!</p>
+<div class="gin-container">
+    <div class="side-menu">
+     
+       <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
+           <h2 [routerLink]="['/licores']" class="menu-title">LICORES</h2> 
+           <div class="menu-columns"></div>
+           <h2 class="title-gin">GIN</h2><!-- Título del componente -->
+           
+           <h2  class="menu-titleMarca">MARCA</h2> <!-- Título del componente -->
+           <nz-menu nzMode="vertical" nzTheme="light">
+             <nz-submenu nzTitle="Gin">
+               <div  class="menu-columns">
+                 <nz-menu-item  >Tanqueray</nz-menu-item>
+                 <nz-menu-item >Monkey 47</nz-menu-item>
+                 <nz-menu-item  >Roku</nz-menu-item>
+                 
+               </div>
+             </nz-submenu>
+           </nz-menu>
+   
+   
+               <h2  class="menu-titlePresentacion">PRESENTACIÓN</h2> <!-- Título del componente -->
+               <nz-menu nzMode="vertical" nzTheme="light">
+                 <nz-submenu nzTitle="Gin">
+                   <div  class="menu-columns">
+                     <nz-menu-item  >150ml</nz-menu-item>
+                     <nz-menu-item >350ml</nz-menu-item>
+                     <nz-menu-item  >500ml3</nz-menu-item>
+                   </div>
+             </nz-submenu>
+           </nz-menu>
+       </nz-sider>
+     </div>
+   
+       
