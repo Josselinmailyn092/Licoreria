@@ -336,7 +336,7 @@ nz-layout{
     display: flex;
     flex-direction:row;
     position: absolute;
-    top: 120px;
+    top: 60px;
     left: 0;
     width: 100%;
     padding: 0px;
@@ -346,7 +346,7 @@ nz-layout{
 
   .nav-menu {
     flex-direction: column;
-    gap: 0;
+    gap: 30px;
     background-color: #816028;
     width: 100%;
       }
@@ -354,12 +354,17 @@ nz-layout{
    
     margin: 0 40px ;
     padding: 0;
-    height:20%; /*Alto menú*/
+    height:25%; /*Alto menú*/
     display: flex;
-    align-items: center;
+    align-items:flex-start;
+    justify-content: flex-start;
     color: #212020;
   }
-
+.nav-menu, .ant-menu, .ant-menu-root , .ant-menu-light, .ant-menu-horizonta{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
 .ant-menu-item, .ant-menu-item:hover, .ant-menu-item:focus, .ant-menu-item:active {
   outline: none !important;
   border: none !important;

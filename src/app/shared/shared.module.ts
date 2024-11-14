@@ -37,7 +37,7 @@ import { ShoppingCartOutline, SearchOutline } from '@ant-design/icons-angular/ic
     
   ],
   providers: [
-    { provide: NZ_ICONS, useValue: [ShoppingCartOutline, SearchOutline] }
+    { provide: NZ_ICONS, useValue: [ShoppingCartOutline, SearchOutline, MenuOutline] }
   ]
 })
 export class SharedModule {
