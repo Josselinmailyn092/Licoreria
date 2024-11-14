@@ -84,16 +84,24 @@
     background-color: transparent; /* Fondo ligero para mejor contraste */
     padding: 10px;
     border-radius: 8px;
-  gap: 60px;
+  gap: 30px;
 }
-
+.filters Label{
+  color:#5b5959
+}
+.filter-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
 ::ng-deep .filters nz-select {
   width: 200px; /* Ajuste de ancho */
   background-color: #ffffff; /* Fondo blanco */
-  border: 1px solid #cecbcb; /* Borde gris claro */
+  border: 1px solid #adaaaa; /* Borde gris claro */
   border-radius: 50px;
   height: 35px;/* Espacio entre los selectores */
-  width: 12%;
+  width: 50%;
 }
 ::ng-deep .filters nz-select .ant-select-selector {
   display: flex;
@@ -111,6 +119,7 @@
   color: #5F0F00;
   font-size: 1rem;
   transition: transform 0.3s ease;
+  right: 0;
 }
 
 .filters nz-select:hover, 
@@ -217,6 +226,25 @@
     background-color: transparent; /* Fondo ligero para mejor contraste */
     padding: 10px;
     border-radius: 8px;
+   
+  }
+  .filters Label{
+    color:#5b5959;
+    font-size: 14px;
+  }
+  .filter-item{
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+  }
+  ::ng-deep .filters nz-select {
+    width: 200px; /* Ajuste de ancho */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #adaaaa; /* Borde gris claro */
+    border-radius: 50px;
+    height: 30px;/* Espacio entre los selectores */
+    width: 50%;
   }
 }
 

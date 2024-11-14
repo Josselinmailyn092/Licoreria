@@ -51,24 +51,33 @@
   </div>
 
  <!-- Filtros y Opciones de Ordenamiento -->
-<div class="filters">
+ <div class="filters">
   <div>
     <label>Productos encontrados: {{ productos.length }}</label>
   </div>
-
+  
+  <div class="filter-item">
+    <label>Seleccione Marca</label>
     <nz-select [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)" placeholder="Seleccione marca">
-    <nz-option *ngFor="let marca of marcas" [nzValue]="marca" [nzLabel]="marca"></nz-option>
-  </nz-select>
-
+      <nz-option *ngFor="let marca of marcas" [nzValue]="marca" [nzLabel]="marca"></nz-option>
+    </nz-select>
+  </div>
+  
+  <div class="filter-item">
+    <label>Seleccione presentación</label>
     <nz-select [(ngModel)]="selectedPresentacion" (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" placeholder="Seleccione presentación">
-    <nz-option *ngFor="let presentacion of presentaciones" [nzValue]="presentacion" [nzLabel]="presentacion"></nz-option>
-  </nz-select>
-
-  <label>Artículos por página:</label>
+      <nz-option *ngFor="let presentacion of presentaciones" [nzValue]="presentacion" [nzLabel]="presentacion"></nz-option>
+    </nz-select>
+  </div>
+  
+  <div class="filter-item">
+    <label>Artículos por página:</label>
     <nz-select [(ngModel)]="productosPorPagina" (ngModelChange)="cambiarPagina(1)">
-    <nz-option *ngFor="let option of [4, 8, 12, 24]" [nzValue]="option" [nzLabel]="option"></nz-option>
-  </nz-select>
+      <nz-option *ngFor="let option of [4, 8, 12, 24]" [nzValue]="option" [nzLabel]="option"></nz-option>
+    </nz-select>
+  </div>
 </div>
+
 
   <!-- Products List -->
   <div class="products-grid">
