@@ -31,5 +31,124 @@
         </nz-menu>
     </nz-sider>
   </div>
+  
+  <div class="licores-content">
+    <!-- Header Image and Title -->
+<div class="licores-header">
+
+ <img [src]="'assets/images/imagenLicores.jpg'" alt="Licor" class="header-image">
+</div>
+
+<!-- Filtros y Opciones de Ordenamiento -->
+<div class="filters">
+<!-- Mostrar productos encontrados -->
+<div>
+ <label>Productos encontrados: {{ productos.length }}</label>
+</div>
+
+<!-- Filtro por Marca -->
+<div class="filter-item" style="position: relative;">
+ <label>Seleccione Marca</label>
+ <select class="custom-select"
+ nz-dropdown-match-select-with="true"
+ [(ngModel)]="selectedMarca" 
+(ngModelChange)="filtrarPorMarca(selectedMarca)" 
+   placeholder="Seleccione marca">
+   <option *ngFor="let marca of marcas" [value]="marca">{{marca}}</option>
+</select>
+</div>
+
+<!-- Filtro por Presentación -->
+<div class="filter-item" style="position: relative;">
+ <label>Seleccione Presentación</label>
+ <select class="custom-select"
+ nz-dropdown-match-select-with="true"
+   [(ngModel)]="selectedPresentacion" 
+   (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" 
+   placeholder="Seleccione presentación">
+   <option *ngFor="let presentacion of presentaciones" 
+              [value]="presentacion">{{presentacion}}
+   </option>
+ </select>
+</div>
+
+<!-- Cambiar Artículos por Página -->
+<div class="filter-item" style="position: relative;">
+ <label>Artículos por página:</label>
+ <select class="custom-select"
+ nz-dropdown-match-select-with="true"
+   [(ngModel)]="productosPorPagina" 
+   (ngModelChange)="cambiarPagina(1)">
+   <option *ngFor="let option of [4, 8, 12, 24]" 
+              [value]="option">{{option}}
+   </option>
+ </select>
+</div>
+</div>
+
+
+
+<!-- Products List -->
+<div class="products-grid">
+ <div class="product-card" *ngFor="let producto of productosPaginados">
+   <div class="product-image">
+     <img [src]="producto.imagenUrl" [alt]="producto.nombre" />
+   </div>
+   <div class="product-details">
+     <h3>{{ producto.nombre }}</h3>
+     <p>{{ producto.presentacion_ml }} ml</p>
+     <div class="price">
+       <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
+       <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
+     </div>
+     <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
+   </div>
+ </div>
+</div>
+
+<!-- Paginacion --> 
+<div class="custom-pagination-row">
+<!-- Botón para ir a la página anterior -->
+<button
+ nz-button
+ nzType="default"
+ [disabled]="paginaActual === 1"
+ (click)="cambiarPagina(paginaActual - 1)"
+>
+ <i nz-icon nzType="double-left" nzTheme="outline"></i>
+</button>
+
+<!-- Botones de número de página -->
+<span *ngFor="let pagina of paginas">
+ <button
+   nz-button
+   nzType="link"
+   [class.active]="pagina === paginaActual"
+   (click)="cambiarPagina(pagina)"
+ >
+   {{ pagina }}
+ </button>
+</span>
+
+<!-- Botón para ir a la página siguiente -->
+<button
+ nz-button
+ nzType="default"
+ [disabled]="paginaActual === totalPaginas"
+ (click)="cambiarPagina(paginaActual + 1)"
+>
+ <i nz-icon nzType="double-right" nzTheme="outline"></i>
+</button>
+</div>
+
+
+
+   
+ </div>
+</div>
+
+
+
+
 
     

@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // Asegúrate de importar RouterModule aquí
 
 import { PagesModule } from './pages/pages.module';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(en);
 
@@ -35,7 +36,8 @@ registerLocaleData(en);
     FeaturesModule,
     PagesModule,
     
-    FormsModule // Asegúrate de crear este módulo si es necesario
+    FormsModule,
+    HttpClientModule // Asegúrate de crear este módulo si es necesario
   ],
   providers: [
    

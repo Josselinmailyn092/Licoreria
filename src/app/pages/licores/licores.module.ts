@@ -19,6 +19,14 @@ import { VinosComponent } from './vinos/vinos.component';
 import { VodkaComponent } from './vodka/vodka.component';
 import { WhiskeyComponent } from './whiskey/whiskey.component';
 import { NZ_CONFIG, NzConfig } from 'ng-zorro-antd/core/config';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import { IconDefinition } from '@ant-design/icons-angular';
+import { DoubleLeftOutline,DoubleRightOutline } from '@ant-design/icons-angular/icons';
+const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
 
 @NgModule({
   declarations: [
@@ -41,6 +49,18 @@ import { NZ_CONFIG, NzConfig } from 'ng-zorro-antd/core/config';
     NzButtonModule,
     NzPaginationModule,
     NzSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzSelectModule,
+    BrowserAnimationsModule, // Obligatorio para NG Zorro
+    FormsModule, 
+    ReactiveFormsModule,
+    NzSelectModule,
+    NzButtonModule,
+    NzButtonModule,
+  NzIconModule,
+    FormsModule,
+   
   ],
   exports: [
     WhiskeyComponent,
@@ -49,6 +69,9 @@ import { NZ_CONFIG, NzConfig } from 'ng-zorro-antd/core/config';
      // Exporta el componente para que sea accesible desde otros módulos
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] ,
+  providers: [
+    { provide: NZ_ICONS, useValue: icons },
+  ],
 
 })
 export class LicoresModule { }

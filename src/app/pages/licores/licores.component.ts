@@ -5,7 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-licores',
   templateUrl: './licores.component.html',
-  styleUrls: ['./licores.component.css']
+  styleUrls: ['./licores.component.css'],
+  
 })
 export class LicoresComponent implements OnInit {
   selectedCategory: string | null = null;
@@ -13,7 +14,8 @@ export class LicoresComponent implements OnInit {
   presentaciones = ['750 ml', '500 ml'];
   productos: Producto[] = [];
   productosPaginados: Producto[] = [];
-  productosPorPagina = 8;
+  productosPorPagina : number =8;
+  totalProductos= 100;
   paginaActual = 1;
   selectedMarca: string = '';
   selectedPresentacion: string = '';
@@ -23,6 +25,8 @@ export class LicoresComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    
+
     this.cargarProductos();
     this.cambiarPagina(this.paginaActual);
 
@@ -50,31 +54,54 @@ export class LicoresComponent implements OnInit {
       this.productos = this.productos.filter(producto => producto.nombre.includes(categoria));
     } else {
       this.cargarProductos();
-    }
+  }
   }
 
+  // Filtrar por marca
   filtrarPorMarca(marca: string): void {
-    this.productos = this.productos.filter(producto => producto.nombre.includes(marca));
+    console.log('Marca seleccionada:', marca);
+   const productosFiltrados= this.productos = this.productos.filter(producto => producto.nombre.includes(marca));
+    this.productos = productosFiltrados;
+    console.log('Productos filtrados:', this.productos);
+    this.cambiarPagina(1);
   }
 
+  // Filtrar por presentación
   filtrarPorPresentacion(presentacion: string): void {
-    this.productos = this.productos.filter(producto => producto.presentacion_ml.toString() === presentacion);
+    const productosFiltrados =this.productos = this.productos.filter(producto => producto.presentacion_ml.toString() === presentacion);
+    this.productos = productosFiltrados;
+    this.cambiarPagina(1);
   }
 
-  cambiarPagina(pagina: number): void {
-    this.paginaActual = pagina;
-    this.productosPaginados = this.productos.slice(
-      (pagina - 1) * this.productosPorPagina,
-      pagina * this.productosPorPagina
-    );
+  get totalPaginas(): number {
+    return Math.ceil(this.totalProductos / this.productosPorPagina);
+  }
+
+  get paginas(): number[] {
+    return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+  }
+
+  cambiarPagina(nuevaPagina: number): void {
+    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
+      this.paginaActual = nuevaPagina;
+      const inicio =(nuevaPagina -1)* this.productosPorPagina;
+      const fin = inicio +this.productosPorPagina;
+      this.productosPaginados = this.productos.slice(inicio, fin);
+      console.log('Página actual:', this.paginaActual);
+    }
   }
 
   cargarProductos(): void {
     this.productos = [
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 19.32, imagenUrl: 'https://example.com/image1.jpg' },
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 40.02, imagenUrl: 'https://example.com/image2.jpg' },
-      { nombre: 'Stolichnaya Strawberry', presentacion_ml: 750, descripcion: 'descripción', precio: 12.03, imagenUrl: 'https://example.com/image3.jpg' },
-      { nombre: 'Stolichnaya Raspberry', presentacion_ml: 750, descripcion: 'descripción', precio: 11.87, imagenUrl: 'https://example.com/image4.jpg' },
+      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 19.32, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 40.02, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Stolichnaya Strawberry', presentacion_ml: 750, descripcion: 'descripción', precio: 12.03, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Stolichnaya Raspberry', presentacion_ml: 750, descripcion: 'descripción', precio: 11.87, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      // More products as needed
+      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 19.32, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 40.02, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Stolichnaya Strawberry', presentacion_ml: 750, descripcion: 'descripción', precio: 12.03, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
+      { nombre: 'Stolichnaya Raspberry', presentacion_ml: 750, descripcion: 'descripción', precio: 11.87, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
       // More products as needed
     ];
     this.cambiarPagina(this.paginaActual);

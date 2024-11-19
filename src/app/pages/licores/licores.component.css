@@ -50,10 +50,8 @@
   nz-menu-item{
     cursor: pointer;
   }
- 
 
-
-  .licores-content {
+.licores-content {
     flex-grow: 1;
     margin-left: 40px;
     margin-right: 100px;
@@ -63,28 +61,29 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;   
+    margin-bottom: 0;   
     height: 25%;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .header-image {
     width: 100%;
-    height: 100%;
+    height: 70%;
     border-radius: 8px;
     margin: auto;
 }
 
 /* Estilos contenedores de estilos */
 .filters {
+  position: relative;
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    background-color: transparent; /* Fondo ligero para mejor contraste */
-    padding: 10px;
-    border-radius: 8px;
-  gap: 30px;
+    margin-bottom: 5px;
+    gap: 20px;
+    font-size: 13px;
+    margin: auto;
 }
 .filters Label{
   color:#5b5959
@@ -94,79 +93,42 @@
   flex-direction: row;
   align-items: center;
   gap: 12px;
+
 }
-::ng-deep .filters nz-select {
-  width: 200px; /* Ajuste de ancho */
+
+.custom-select {
   background-color: #ffffff; /* Fondo blanco */
   border: 1px solid #adaaaa; /* Borde gris claro */
   border-radius: 50px;
-  height: 35px;/* Espacio entre los selectores */
-  width: 50%;
-}
-::ng-deep .filters nz-select .ant-select-selector {
+  height: 30px;/* Espacio entre los selectores */
+  width: 100%;
   display: flex;
   align-items: center;
-  padding-right: 10px;
+  position: relative; /* Ensure relative positioning */
+  z-index: 1; /* Ensure select is above other elements */
+  color: #333;
+  font-size: 12px;
 }
 
-::ng-deep .filters nz-select .ant-select-selection-placeholder {
-  color: #5F0F00;
-  font-style: italic;
-  font-size: 14px;
-}
-
-::ng-deep .filters nz-select .ant-select-arrow {
-  color: #5F0F00;
-  font-size: 1rem;
-  transition: transform 0.3s ease;
-  right: 0;
-}
-
-.filters nz-select:hover, 
-.filters nz-select:focus {
+.custom-select:hover {
   border-color: #5F0F00; /* Borde azul cuando se hace foco */
-  box-shadow: 0 0 0 2px rgba(99, 23, 6, 0.475); /* Efecto de foco */
+  box-shadow: 0 0 0 2px rgba(54, 13, 4, 0.475); /* Efecto de foco */
+}
+.custom-select::after {
+  content: "▼"; /* Agrega un icono de flecha hacia abajo */
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* No interferir con el clic */
 }
 
-
-::ng-deep .filters nz-select.ant-select-open .ant-select-arrow {
-  transform: rotate(180deg); /* Rotación al desplegar */
-}
-::ng-deep .ant-select-dropdown {
-  position: absolute !important; /* Asegura que el dropdown esté en la posición correcta */
-  top: 100% !important; /* Posiciona justo debajo del select */
-  left: 0;
-  width: auto;
-  z-index: 1000; /* Ajusta la superposición sobre otros elementos */
-  margin-top: 5px; /* Espacio opcional entre select y dropdown */
-  border-radius: 8px; /* Bordes redondeados para mejorar apariencia */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para visibilidad */
-
-}
-
-::ng-deep .ant-select-dropdown-menu {
-  background-color: #ffffff; /* Fondo blanco para mejor visibilidad */
-  padding: 10px 0;
-  font-size: 14px; /* Tamaño de texto */
-}
-
-::ng-deep .ant-select-dropdown-menu-item {
-  padding: 10px 15px;
-  transition: background-color 0.3s ease;
-}
-
-::ng-deep .ant-select-dropdown-menu-item:hover {
-  background-color: #f2f2f2; /* Color al pasar el cursor */
-  color: #5F0F00; /* Color del texto al pasar el cursor */
-}
-
-
-/* Icono de despliege */
 
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+    padding: 20px 0;
 }
 
 .product-card {
@@ -174,17 +136,30 @@
     border-radius: 8px;
     padding: 15px;
     text-align: center;
+    text-align: center;
+    transition: transform 0.3s;
 }
 
 .product-image img {
-    width: 100%;
+    width: 80%;
     height: auto;
     border-radius: 8px;
+    max-height: 200px;
+    object-fit: cover;
 }
 
 .product-details h3 {
     font-size: 18px;
-    margin: 10px 0;
+    margin: 5px 0;
+    color: #333;
+}
+.product-details p {
+  font-size: 14px;
+  color: #555;
+}
+
+.price {
+  margin: 5px 0;
 }
 
 .price .old-price {
@@ -197,6 +172,63 @@
     color: #ff4d4f;
     font-size: 18px;
 }
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.Boton-comprar{
+  background-color: #5F0F00 !important; 
+  color: white; /* Color del texto */
+    border: none !important; /* Sin borde */
+    border-radius : 5px !important; /* Bordes redondeados */
+    padding: 8px 28px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+}
+.ant-pagination .custom-pagination{
+  flex-direction: row !important;
+
+}
+.Boton-comprar:hover {
+  background-color: #ffffff !important; /* Color de fondo al hacer clic */
+  border: 2px solid #5F0F00 !important;
+  color: #5F0F00;
+}
+
+.custom-pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: Arial, sans-serif;
+  margin: 20px 0;
+}
+
+.custom-pagination-row button {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-pagination-row button.active {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #5F0F00;
+}
+
+.custom-pagination-row button[disabled] {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.custom-pagination-row .separator {
+  color: #555;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 
 
 @media (max-width: 768px) {
@@ -226,6 +258,7 @@
     background-color: transparent; /* Fondo ligero para mejor contraste */
     padding: 10px;
     border-radius: 8px;
+    margin-bottom: 0;
    
   }
   .filters Label{
@@ -238,14 +271,42 @@
     width: 100%;
     margin-top: 20px;
   }
-  ::ng-deep .filters nz-select {
-    width: 200px; /* Ajuste de ancho */
+  .custom-select {
     background-color: #ffffff; /* Fondo blanco */
     border: 1px solid #adaaaa; /* Borde gris claro */
     border-radius: 50px;
-    height: 30px;/* Espacio entre los selectores */
-    width: 50%;
+    height: 25px;/* Espacio entre los selectores */
+    width: 30%;
+    display: flex;
+    align-items: center;
+    position: relative; /* Ensure relative positioning */
+    z-index: 1; /* Ensure select is above other elements */
+    color: #333;
+    font-size: 12px;
   }
+  .product-details h3 {
+    font-size: 16px;
+}
+.product-details p {
+    font-size: 13px;
+}
+.price .discount-price {
+    font-size: 16px;
+}
+.products-grid {
+   gap: 20px;
+  padding: 10px;
+}
+
+.product-card {
+  padding: 5px 30px;
+ 
+}
+.product-image img {
+  width: 70%;
+ 
+}
+  
 }
 
 @media (max-width: 350px) {
