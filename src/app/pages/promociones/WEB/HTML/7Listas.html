@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--Sirven para listar contenido. En funcion del tipo de contenido de muestras 
+    listas tenenos tres tipos
+
+ul -> UNORDERED LIST :El orden de los elemnton no influyen
+
+OL-> ORDERED LIST : Se utiliza cuando el ordende los elementos es importante 
+
+Cada elemnto de la lista se representa con la etiqutea <li>, tanto en las
+     ul como en las ol
+    
+DL-> DEFINITION LIST: Se usa para hacer una lista de defeniciones (diccionario)
+
+dt -> definicion term: El termino que vamos a definir 
+dd -> definictionn description: la descripcion del termino -->
+</body>
+<h1>Listas Ordenadas </h1>
+<!--FORMA CORRECTA DE HACER UN MENU -->
+<nav>
+    <li><a href="#Post_1">Post 1</a></li>
+    <li><a href="#Post_2">Post 2</a></li>
+    <li><a href="#Post_3">Post 3</a></li>
+    <li><a href="#Post_4">Post 4</a></li>
+    <li><a href="#Post_5">Post 5</a></li>
+    <li><a href="#Post_6">Post 6</a></li>
+</nav>
+<h2>Lista de la compras</h2>
+<ul>
+    <li>Pan</li>
+    <li>Leche</li>
+    <li>Azucar</li>
+</ul>
+
+<h2>Orden de aprendizaje de desarrollo web</h2>
+<ol>
+    <li>HTML</li>
+    <LI>CSS</LI>
+    <LI>JAVASCRIP</LI>
+</ol>
+
+<h2>Lenguajes de desarrollo web</h2>
+<dl>
+    <dt>HTML</dt>
+    <dd>HyperText Markup Languaje :Es un lenguaje que se usa para estruvturar 
+        una PAGINA web </dd>
+
+    <dt>CSS</dt>
+    <dd> Cascade Stye Sheeets: Es un lenguaje de diseño que se utiliza para dar 
+        estilos al HTML   </dd>
+
+    <dt>JavaScript</dt>
+    <dd> Lenguaje de programacion para dar interactividad a una pagina </dd>
+</dl>
+
+<!--Se pueden construir listas aninadas una dentro de otra -->
+
+<!--Atributos de las listas 
+
+    ol -> type:Estilo de numeracion (1,A,a,I,i)
+            start: Inicio de laas secuencias (un numero )
+        
+    ul -> type: Estilos de los item (disc,, square ,circle)
+-->
+<!--estilos de losindicadores de las listas -->
+<ul type="square">
+    <li>Html</li>
+    <li>Css</li>
+    <li>JavaScript</li>
+</ul>
+<!--Indicadores de la tabla start indica en que numero o en que pposicion indica el indicador de la lista -->
+<ol type="1" start="12">
+    <li>Html</li>
+    <li>Css</li>
+    <li>JavaScript</li>
+</ol>
+</html>

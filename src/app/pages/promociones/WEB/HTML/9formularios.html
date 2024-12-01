@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!--
+    4 elemntos basico de los formularios 
+    form -> es la etiqueta que engloban nuestro formulario 
+
+    label -> sirve para escribir el nombre del campo a rellenar DEBE TENER 
+    el atributo for al cual se le indica un id que lo hara sera emparejar el
+     label con su input correspondiente
+
+    input -> sirve para crear un campo que permite al usuario interectuar.
+    El unico atributo obligatorio del input es name button -> crea un boton
+     que permite envar el formulario
+
+    button -> crea un boton que permitiria enviar el formulario
+-->
+<body>
+    <!--Input tipos
+    datetime -> 
+    submit -> Envia el formulario 
+    date -> Introducir fecha 
+    datetime -> Obsoleto
+    datetime-Local -> fecha y hora pero no funciona en firefox
+    time-> introducir hora 
+
+    T   Type
+         datetime-local para seleccionar fecha y hora 
+         hidden -> Campo oculto,puede tener valor pero no se mostrara 
+
+        month -> Introduce un mes 
+        week -> semanas 
+        month -> Mes
+        search -> Se usa para barras de buswqueda 
+        tel -< se usa para introducir numeros trlefonicos 
+        email -> se usa paraintroducir email
+        url -> se utiliza para introducir urls 
+
+        color -> Esécifica color 
+        number -> se usa valores numericos 
+        range -> estable un rango 
+        text -> valor por defecto 
+        reset -> resetea formulario
+
+
+
+
+    -->
+    <form >
+        <label for="name" >Nombre </label>
+        <input id="name ">
+        <button>Enviar formulario</button>
+        <h1>Input enviar formulario submit </h1>
+        <input type="submit"value="Evalar formulario">
+<!--Input de fecha y hora -->
+        <input type="date ">
+        <input type="datetime-local">
+        <input type="time">
+        <input type="week">
+        <input type="month">
+
+<!---Input telefonos -->
+<div>
+<label >search 
+    <input type="search">
+</div>
+
+</label>
+<div>
+<label >telefono
+    <input type="tel">
+</div>
+
+</label>
+<div>
+<label >email
+    <input type="email">
+</label>
+</div>
+<div>
+<label >password
+    <input type="password">
+</label>
+</div>
+<div>
+<label >urls
+    <input type="url">
+</label>
+</div>
+    
+<input type="color">
+<input type="number">
+<input type="range" step="5" min="0" max="20">
+<input type="reset">
+<input type="hidden">
+<!--Input seleccionables 
+
+radio -> Permite seleccionar una unica opción de una lista de opciones relacionadas
+
+chckbox -> permite seleccionar varias opciones de una lista de opciones relacionadas
+
+select -< crea una opcion donde podemos seleccionar una o vaios opciones cada opcion ira dentro de cada <option < </option> 
+sis tenemos muchas categorias odemos ordenalr por categorias a traves de la aetiqueta <optgroup> con el atributo label para nombrar la categoria -->
+
+    <!--Radio-->
+<h1>Genero</h1>
+<label for="">Masculino
+    <input type="radio"name="gender" value="masculino ">
+</label>
+    <label for="">Femenino
+        <input type="radio"name="gender" value="">
+    </label>
+    <label for="">otros
+        <input type="radio"name="gender">
+    </label>
+
+    <!---Checkbox-->
+    <h2>Lenguajes que conoces </h2>
+    <label >
+        HTML<input type="checkbox"name="lenguajes "value="html">
+
+        Css<input type="checkbox"name="lenguajes "value="CSS">
+
+        JavaScript<input type="checkbox"name="lenguajes "value="JAVASCRIP">
+
+        <!--Selcct-->
+        <BR></BR>
+        <!--Elegir una sola opcion -->
+        <select name="lenguajes" 
+          id="">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="javascrip">javascript</option>
+        </select>
+
+         <!--Elegir variuas opciones  -->
+         <select name="lenguajes" multiple
+         id="">
+         <option value="html">HTML</option>
+         <option value="css">CSS</option>
+         <option value="javascrip">javascript</option>
+       </select>
+
+<!--Si tenemos muchas opciones podemos ordenarlas por categorias a traves de la etiqueta <optgroup> con el atributo label para nombrar la categoria -->
+
+    <select name="lenguajes" 
+    id="">
+    <optgroup label="Grupo 1 ">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="javascrip">javascript</option>
+</optgroup>
+     <optgroup label="Grupo 2">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="javascrip">javascript</option>
+</optgroup>
+<optgroup label ="Grupo 3">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="javascrip">javascript</option>
+</optgroup>
+  </select>
+   
+
+<!--Dat list  puede filtrar resultados -->
+<h1>elementos seleccionables </h1>
+<input type="list" list ="pets">
+<datalist id="pets">
+    <!--Funciona como subtirulo lo siguiente -->
+    <option value="GAto">Perro</option>
+
+    <!--Busca ayuda a buscar por lo que contiene en el inicio o final-->
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+    <option value="gato"></option>
+
+</datalist><h1>Mas etiquetas </h1>
+<!--
+    fielset -> se utiliza para agrupa elemenyos dentrp e un formulario
+
+    legent -> Representa una etiqueta para el contenido del fielset 
+
+    file -> este imput se utliza para cargar archivos y enviarlos desde un formulario 
+
+    meter -> Representate un valor dentro de un rang conocido 
+
+    progress se utiliza para introducir texto en un formulario 
+    texarea -> Se utiliza para imntroducir texto en un formulario
+    
+-->
+<h1>Fieldset</h1>
+<fieldset>
+    <legend>Datos personales </legend>
+    <div>
+        <label for="name">Nombre:</label>
+        <input type="text" id="name">
+    </div>
+    <label for="surmane">Apellidos</label>
+    <input type="text" id="surmane">
+</fieldset>
+<h2>File</h2>
+<input type="file">
+
+<!--Indicador de barra paramtro para de acuerdo a poncertanje se pinte de un color especifico-->
+<label for="fuel">Combustible</label> 
+<meter id="fuel" min="0" max="100" value="50" low="30" high="75" optimum="50"></meter>
+<br>
+<!--Progress-->
+<label for="task">Tarea 3</label>
+<progress id="task" max="100" value="10"></progress>
+<br>
+<!--Los tex area se pueden controlr el tamaño cpm row y cols  -->
+<label for="message">Mensaje </label>
+
+<textarea name="" id="message" cols="30" rows="2"></textarea>
+
+
+
+    </form>
+</body>
+</html>

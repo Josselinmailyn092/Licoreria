@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: aliceblue;
+
+}
+/* Propiedades de body  */
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(44, 73,172);
+    background: linear-gradient(58deg, rgba(44,73,172,1) 0%, rgba(86, 192, 255,1)100%);
+
+
+}
+.contenedor{
+    height: 500px;
+    min-width: 500px;
+
+}
+
+.cien{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.one{
+    height: 80%;
+    width: 10%;
+    background-color: aliceblue;
+    border-radius: 5px;
+    position: relative;
+    left: 6%;
+    z-index: 2;
+    filter: drop-shadow(1px 1px 9px #0000002f);
+}
+.detalle{
+    position: absolute;
+    height: 30%;
+    width: 8%;
+    background-color: aliceblue;
+    border-radius: 5px;
+    transform: rotate(50deg);
+    left: 5%;
+    top: 10%;
+
+
+}
+.cero_1{
+    height: 80%;
+    width: 40%;
+    border-radius: 50%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: -3px;
+    filter: drop-shadow(1px 1px 9px #0000002f);
+    z-index: 1;
+
+}
+/* pseudoelemntos para hacer el cero  */
+.cero_1::after{
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background: linear-gradient(58deg, rgba(44,73,172,1) 0%, rgba(86, 192, 255,1)100%);
+    z-index: 2;
+
+
+}
+.cero_2{
+    height: 80%;
+    width: 40%;
+    border-radius: 50%;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: -3px;
+    filter: drop-shadow(1px 1px 9px #0000002f);
+  
+
+}
+
+.cero_2::after{
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background: linear-gradient(58deg, rgba(44,73,172,1) 0%, rgba(86, 192, 255,1)100%);
+    z-index: 1;
+
+
+}
+.info{
+    height: 50%;
+    display: grid;
+    place-items: center;
+
+}
+.info h1{
+    font-size: 10rem;
+    line-height: 70%;
+
+}
+.info p{
+    font-size: 3rem;
+    font-weight: bold;
+
+}

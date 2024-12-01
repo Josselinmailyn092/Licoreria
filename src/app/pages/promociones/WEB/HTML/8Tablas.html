@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            font-family: sans-serif;
+            border: 2px solid grey;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        caption{
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+
+        }
+        th,td{
+            font-size: 1rem;
+            padding: .5rem;
+        }
+        tr:nth-child(4) td:nth-child(2){
+            background-color: aquamarine;
+            letter-spacing: 90px;
+        }
+       td:first-child,th,tfoot{
+        background-color: aquamarine;
+       }
+    </style>
+</head>
+<body>
+    <!--Mostar contenido
+    la estructura basica de la tabla se compone de 
+Table -> etiqueta que encierra una tabla 
+tr ->  table row construye una fila 
+td -> table data , etiqueta que construye una celda  EL NUMERO DE 
+CELDS DENTRO DE UN TD ESTABLECERA EL NUMERO DE COLUMNAS DE LA TABLA 
+
+TITULOS -> se establecen con caption,opcional se coloca despues de colocar
+ la etiqueta table
+
+ CABECERA DE TABLA -> se establece con thead dentro tenemos tr normla ,pero
+  en el caso de las celdas ,las establecemos con la etiqueta th en un kugar de td 
+
+ el contenido de la tabla debe ir dentro de uan etiqueta tbody para representar
+  el cuerpo de la tabla 
+
+ de forma opcional podemos coocar un tfood a la tabla al establecer un pie
+  decelda como suma de cantidades totales 
+
+ Para hacer que las celdas ocupen mas de una fila o mas de una columan tendremos 
+ 2 atributos 4
+        rowspan:sirven para que una celda ocupemas de una fila, el valor por
+         defecto es 1 
+
+        cospan: sirve paras que una celda ocupe mas de una columana , el valor 
+        por defecto 1 
+
+Cuando seleccionemos una columana ,tenemos la etiqueta 
+colgrup -> nos permite seleccionar una columna en concreto, dentro iran la cantifdad de columnas que tengamos siguiendo el mismo orden 
+
+si necesitamos una etiqueta col agrupe mas de una columna tenemos 
+span -> funciona igual que row span y colspan 
+-->
+<H1>Table</H1>
+<table>
+    <caption>HORARIO DE CLASES </caption>
+    <colgroup>
+        <!--Span dice la longitusd de celdad de cada col perfecto paradar stilos -->
+    <col span="5">
+    <col>
+</colgroup>
+    <thead>
+        <th> </th>
+        <th>L</th>
+        <th>M</th>
+        <th>X</th>
+        <th>J</th>
+        <Th>V</Th>
+    </thead>
+    <tbody>
+          <tr>
+        <td>8:30 a 9:30</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Fisica</td>
+        <td>Lengueje</td>
+        <td>Ciencias</td>
+        
+    </tr>
+
+    <tr>
+        <td>8:30 a 9:30</td>
+        <td>Matematicas</td>
+        <td>Ciencias</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+       
+    </tr>
+
+    <tr>
+        <td>8:30 a 9:30</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+        
+       
+    </tr>
+<tr>
+    <td>8:30 a 9:30</td>
+        <td colspan="5">RECREO </td>
+</tr>
+    <tr>
+        <td>8:30 a 9:30</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+      
+    </tr>
+
+    <tr>
+        <td>8:30 a 9:30</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+        <td>Lengueje</td>
+        <td>Matematicas</td>
+        
+    </tr>
+    <!--Opcional si no usamos thead establecemos cabecera el resto debe de estar en tbody -->
+</tbody>
+<!--PIE DE TABLA -->
+  <tfoot>
+    <TR>
+        <td colspan="5">
+            total asignaturas 
+        </td>
+        <td>4</td>
+    </TR>
+  </tfoot>
+</table>
+
+
+
+</body>
+</html>

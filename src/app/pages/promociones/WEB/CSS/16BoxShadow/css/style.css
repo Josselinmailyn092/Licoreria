@@ -1,0 +1,37 @@
+/* 
+    La propiedad box-shadow se creo para añadir eectos de sombra a nuestra caja,
+    
+    En escencia lo que hace es crear un clon de la caja respetando la form
+    de box-model (ancho, alto, redondez)
+    
+    La forma de box-shdow se puede escribir de destintas
+    formas según lo que queramos consegir.
+        los valores que le podemos poner son:
+            offset-x -> Desplazamiento en x (obligatorio)
+            offset-y -> Dezplamiento en y (obligatorio)
+            blu-radius-> Expansión de sombra
+            color -> El colo de la sombra, si no lo especifica lo heredará del element al que pertenece
+            inset -> Determina sí la sombra será interior o externo seria comodarle padding a la imagen
+            */
+*{
+    box-sizing: border-box;
+}
+
+.box{
+    background-color: darkcyan;
+    width: 200px;
+    color: blue;
+    padding: 50px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* border-radius: 30px; */
+    /* se añaden valores como en la descripsión  */
+    /* box-shadow: inset -5px -5px 10px 0 rgb(42, 26, 2) ; */
+
+    box-shadow: 5px 5px red, inset 10px 10px blue;
+}
+
+
+
+

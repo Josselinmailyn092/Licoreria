@@ -1,0 +1,82 @@
+/* 
+La propiedad position nos permite posicionar los elelmntos. Hay
+
+Flujo de renderizaado -> Por norma general los elelmntos se dibujan de ixquierda a derecha
+y de arriba abajo. El punto 0,0 de los ellemntos, por norma general, es la esquina superior izquierda.
+
+Espacio reservad -> Es el espacio que tiene un elemento asignado en el navegador.
+
+Elemento posicionado -> Esto significa que el elemento tiene la propiedad position7
+con un valor distinto de "Static", que es el valor que tene esta propiedD POR deeco
+
+Stackin contxt -> Contexto de apilamiento. Es el orden en el que se aplicaran
+las cajas que se superpone dentro del mismo contenedor 
+
+Al posicionar un elemento se habilitan 5 propiedades que podemos utilizar para move 
+los elementtos en los 3 ejes 
+     top -> El elemento se movera desde la parte superior la distancia
+     que le hayamos indicado.
+
+     right -> El elelmnto se movera desde la parte derecha la distancia
+     que le hayamos indicado.
+
+     bottom -> El elemento se móvera desde la parte inferior la ditancia que le 
+     hayamos indicado.
+
+     left -> El elelmnto se movera desde la parte izquierda la distancia
+     que le hayamos indicado 
+
+     z-index - Nos permite mover el elemento en el contexto de apilamiento (eje z)
+
+
+NOTA : Si a un elemnto le declaramosla propiedad top o lef en este caso4
+bootom y righ no funciona y viseversa
+
+Posibles valores que se le puede dar
+static -> Es el valor que tirene por defectoun elemento, con este valor 
+el elemento NO ES POSICIONADO y por el cual no podremos.
+
+Relative -> El elemnto mantendra su posición y medidas en el flujo
+de rendimiento y mantendra su espacio reservado. Si lo movemos lo hará
+usando su posición en el html como punto de refeencia.
+
+absolute -> El elemento perdera sus medidas y su espacio reservado.
+Si lo movemos usará el elemento posicionado contenedor como referencia
+.Si no tiene ninguno, usará el elemento html de referencia.
+
+fixed -> El elemento perdera sus medidas y su espacio
+reservado.Si lo movemos usará el elmento html de referencia, y ademas se quedara fijo en esa posición 
+aunque hagamos scroll.
+
+Stiky -> Es una mexcla de posición relative y fixed. Con este tipo 
+de posicionamiento los valores top, left, bottom y right no siven para mover el
+elemento, si no para indicarle en que punto pasra a tener un comportamiento de posicionamieto fixed, hasta llegar
+a ese punto se comportará como si tuviera relaive.
+
+
+*/
+
+body{
+     margin: 0;
+     background-color: #333;
+
+}
+.box{
+     width: 100px;
+     height: 100px;
+     text-align: center;
+
+}
+.box-1{
+     background-color: lightcoral;
+   
+}
+
+.box-2{
+     background-color: lightgreen;
+     position: absolute;
+     bottom: 0;
+     right: 0;
+
+
+}

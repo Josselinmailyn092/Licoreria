@@ -1,0 +1,53 @@
+/* Border-radius: Es lapropiedad que nos permite redondear verticales de forma independiente.
+Es un shorthand que engoba 4 propiedades:
+    border-top-radius -> Radio del borde superiro isquierdo 
+
+    border-top-right-radius -> Radio del borde superior derecho
+
+    border-bottom-rigt-radius -> Radio del borde inferior derecho
+
+    border-bottom-left-radius -> Radio del borde inferior izquierdo 
+
+    Si solo recibe un valor debujara un circulo del borde ide radio que se especifique 
+
+    border-radius : 50 px; -> Circulo con 50px de radio 
+
+    Sí utilizamos el border-radius como shorthand hay 
+
+
+    SI ASIGNAMOS DOS VALORES FORMAMOS UN ELIPCE
+    
+    border-top-right-radius: 50PX 100PX -> Elípse con 50px en el radio X y 100px en el radio Y 
+    Sí utilizamos el border-radius como shorthat hay diferencias entre si queremos dar un valor a caa lado (círculos) o dos (elípse)
+
+     
+
+ */
+
+
+ *{
+    box-sizing: border-box;
+ }
+ body{
+    background-color: #333;
+    color: #fff;
+    margin: 0;
+ }
+.box{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: lightblue;
+    width: 300px;
+    height: 300px;
+    /* 
+    Es un valor para todos lo mismo 
+    lo miso que en box-sizing: se puede dar 1, 2, 3, 4 valores acorde a las manecillas del reloj ;border-radius: 50px; */
+    /* border-top-right-radius: 50px; */
+    /* border-top-left-radius: 100px; */
+    /* border-bottom-left-radius: 150px; */
+    /* border-bottom-right-radius: 200px; */ 
+    border-top-left-radius: 50px 100px;
+    border-radius: 50px 100px 150px 200px / 100px 150px 200px 250px;
+
+ }

@@ -1,0 +1,173 @@
+/* Inicio de css */
+*{
+    padding: 0;
+    padding:0;
+}
+body{
+    height: 100vh;   /* Altura al cuerpo de la ventana toda*/
+    background-color: #212c34;
+    /* Centraer elemetos en el centro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contenedor{
+    aspect-ratio: 1/1;
+    width: 40vw; /*El 40% del ancho de ventana que sea un tamaño relativo*/
+    border-radius: 50%;
+    background-color: #75cfab;
+/*  */
+    position: relative;
+    overflow: hidden; /*Oculta a cualquier contenido que se desborde del conteneor */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* aminacion 3.5 segundos, temporización lineal y se repite infinitamente */
+    animation: desaparecer 3.5s linear infinite;
+}
+/* al prin0cipi0 desaparece y al fina igual  */
+@keyframes desaparecer {
+    0%{
+        opacity: 0;
+
+    }
+    10%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+/* elemntos dentro de contenedor */
+.suelo{
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    background-color: #dece6f;
+    top: 64%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sombra{
+    height: 100%;
+    width: 150%;
+    background-color:rgba(0, 0, 0, 0.244) ;
+/* Para trabajar con poligonos podemos ir a clipi podemos trabar con formas 
+y nos da los valores a poner  */
+    clip-path: polygon(15% 0, 100% 20%, 85% 0);
+    animation: sombra 3.5s linear infinite;
+}
+
+@keyframes sombra {
+    0%{
+        clip-path: polygon(15% 0, 100% 20%, 85% 0);
+    }
+    30%{
+        clip-path: polygon(15% 0, 100% 40%, 85% 0);
+    }
+    50%{
+        clip-path: polygon(15% 0, 100% 40%, 85% 0);
+    }
+    100%{
+        clip-path: polygon(15% 0, 0% 50%, 84% 0);
+    }
+}
+.piramide{
+    position: absolute;
+    height: 30%;
+    width: 70%;
+    display: flex;   
+}
+
+.ladoA{
+    height: 100%;
+    width: 70%;
+    background-color: #f0f0f0;
+    clip-path: polygon(79% 0, 0% 100%, 100% 100%);
+    position: absolute;
+    z-index: 1;
+    animation: cambioA 3.5s linear infinite;
+
+}
+@keyframes cambioA{
+    0%{
+        background-color: #c3c1c3;
+
+    }
+    30%{
+        background-color: #dadada;
+
+    }
+    70%{
+        background-color: #dadada;
+
+    }
+    100%{
+        background-color: #919191;
+
+    }
+}
+.ladoB{
+    position: absolute;
+    height: 100%;
+    width: 70%;
+    background-color: #c3c1c3;
+    clip-path: polygon(36% 0, 0% 100%, 100% 100%);
+    left: 30%;
+    animation: cambioB 3.5s linear infinite;
+}
+@keyframes cambioB {
+    0%{
+        background-color: #828181;
+
+    }
+    30%{
+        background-color: #c3c1c1;
+    }
+    50%{
+        background-color: #c3c1c1;
+    }
+    100%{
+        background-color: #e0e0e0;
+        
+    }
+}
+/* Le daos animación al contenedor del sol solfondo no al sol  */
+.solFondo{
+    position: absolute;
+    height: 170%;
+    width: 170%;
+    top: 40%;
+    transform: rotate(0deg );
+    animation: girar 3.5s linear infinite ;
+}
+@keyframes girar{
+    0%{
+        transform: rotateZ(0deg);
+    }
+    30%{
+        transform: rotateZ(30deg);
+    }
+    50%{
+        transform: rotateZ(30deg);
+    }
+    100%{
+        transform: rotateZ(90deg);
+    }
+}
+.sol{
+    position: absolute;
+    height: 13%;
+    width: 13%;
+    border-radius: 50%;
+    background-color: #fee401;
+
+}

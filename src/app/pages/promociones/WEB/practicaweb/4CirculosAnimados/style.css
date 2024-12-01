@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    background-color: #e56262;
+    
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.contenedor{
+    aspect-ratio: 1/1;
+    width: 50vw;
+    position: relative;
+    /* CENTRAR CONTENIDO DENTRO DEL CONTENDOR  */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+.esferaOne{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: white;
+    /* SOMBRA de esfera  */
+    box-shadow: 28px 28px 31px 10px rgba(0, 0, 0, 0.199);
+    /* CENTRAR CONTENIDO DENTRO de esfera */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+    animation:  escaleOne 4s linear infinite;
+}
+@keyframes escaleOne{
+    0%{
+        scale: 0;
+    }
+    20%{
+        scale: 1;
+    }
+    40%{
+        scale: 1;
+    }
+    60%{
+        scale: 1;
+    }
+    70%{
+        scale: 1;
+    }
+    90%{
+        scale: 0;
+    }
+    100%{
+        scale: 0;
+    }
+}
+
+.esferaTwo{
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background-color: white;
+     /* SOMBRA de esfera  */
+     box-shadow: 28px 28px 31px 10px rgba(0, 0, 0, 0.199);
+   
+    /* CENTRAR CONTENIDO DENTRO de esfera */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    /* animacion */
+    animation: escaleTwo 4s linear infinite ;
+}
+@keyframes escaleTwo{
+    0%{
+        scale: 0;
+    }
+    15%{
+        scale: 0;
+    }
+    30%{
+        scale: 1;
+    }
+    60%{
+        scale: 1;
+    }
+    85%{
+        scale: 0;
+    }
+    100%{
+        scale: 0;
+    }
+
+}
+
+.esferaThree{
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    background-color: white;
+     /* SOMBRA de esfera  */
+     box-shadow: 28px 28px 31px 10px rgba(0, 0, 0, 0.199);
+   
+    /* CENTRAR CONTENIDO DENTRO de esfera */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    animation: escaleThree 4s linear infinite ;
+
+}
+@keyframes escalethree{
+    0%{
+        scale: 0;
+    }
+    30%{
+        scale: 0;
+    }
+    40%{
+        scale: 1;
+    }
+    55%{
+        scale: 1;
+    }
+    70%{
+        scale: 0;
+    }
+    100%{
+        scale: 0;
+    }
+
+}

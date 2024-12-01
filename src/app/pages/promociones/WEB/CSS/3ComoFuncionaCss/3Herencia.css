@@ -1,0 +1,66 @@
+/* Como funciona CSs??
+Especofidad -> Establece cómo de especifico es un selelctor para saber wué estilo aplicar.
+
+El cáculo se realiza con la siguiente fórmula:
+    etiquetas y pseudoelementos 001
+    clases, atributos y pseudoclases 010
+    Ids 100
+    Estilos en línes 1000
+    !import Gana a todo , admite que sabe como funciona css o no le da importancia a la especifidad
+    NO SE USA NUNCA 
+    CSS SPECIFICITY GRAPH GENERATOR ---> AYUDA VER LA CALIDAD DEL CSS SI HAY DEMASICO PICOS NO ESTA BIEN 
+    SI ESLINEAL Y NO HAY PICOS ES BUENO
+
+
+Cascada 
+    Funciona siempre que la especifidad del elemento sea la misma 
+herencia --> Es la capacidad de heredar algunas que tienen algunos elementos de heredar algunas propiedades de sus elementos contenedores
+(paadres , abuelos , etc
+
+el color y propiedades detrexto por lo general se heredan 
+
+*/
+body{
+    background-color: #333;
+}
+h1{
+    background-color: red;
+}
+.title{
+    background-color: blue;
+    color: crimson;
+    font-size: 10px;
+}
+
+#title{
+    background-color: green;
+}
+
+h1.title{
+    background-color: yellow;
+}
+
+h1#title{
+    background-color: aquamarine;
+}
+/* Tienes por valor 111 por lo tanto este predomina en el color  */
+h1.title#title{
+    background-color: tomato;
+}
+/* Los enlaces no heredan de su padre, deben tenenr su estilo propio  */
+.text{
+    color: rgb(114, 201, 74);
+
+}
+/* Forzar herencia palabra inherit */
+.Link{
+    color:inherit;
+}
+/* Con list se hereda el color a elementos de la lista list-item */
+.list{
+    color: indianred;
+}
+/* Con initial se indica que vuelva al pricipio sin herencia  */
+.list-item-extra{
+    color: initial;
+}

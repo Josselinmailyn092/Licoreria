@@ -1,0 +1,55 @@
+/* 
+Box-sizing:
+    Es la primera que nos permite controlar el cálculo que hace el navegador a la hora de modificar las propiedades content, padding y border 
+    
+    los 2 valores que podemos darle son
+        content-box -> Valor por defecto
+        borde-box -> Cálculo de tamañp del elelmto 
+        inckuyendo el padding y el border 
+        */
+
+
+/* Ademas de puede hacer al principio de los proyectos con un selector universal y ahí poner el selector  */
+        body{
+            background-color: #8e8787;
+            margin: 0;
+        }
+        /* No hay mismas limitaciones que en margin  */
+        .box{
+            background-color: lightcoral;
+            width: 200px;
+            height: 200px;
+            margin: 200px 50px 10px 300px;
+           box-sizing: border-box;
+            border: 5px solid red;
+        }
+        
+        .inline{
+            background-color: aquamarine;
+            color: inherit;
+            margin-bottom: 100px;
+          
+        }
+        
+        .buttons{
+            background-color: steelblue;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-top: 30px
+        }
+        
+        .button{
+            margin-left: 90px;
+            padding: 25px 50px;
+            /* Solid es una linea  
+            UNA SOLA LINA */
+            border: 20px solid red;
+            /* TRES lineas lo mismo  */
+            border-width: 20px;
+            border-style: solid;
+            border-color: red;
+            border-right-color: rgb(42, 198, 198);
+            border-right-width: 8px;
+        
+        
+        }

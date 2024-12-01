@@ -1,0 +1,73 @@
+/* Borde:
+    Es la propiedad que nos permite modificar el borde de la caja 
+    Es un shorthat (propiedad abrevieda ) que agrupa 3 propiedades
+        bordee-width: ancho del borde 
+            borde-top-width
+            borde-tright-width
+            borde-bottom-width
+            borde-left -width
+        border-style: estilo de borde
+        Listado de valores de style
+            none  -> no tiene nada
+            hidden -> bisualmente como none 
+            dotted --> borde de puntos
+            dashed --> lineas en vez de botones
+            solid --> lineas
+            double --> linea dble
+            groove --> sombra en tres 3
+            ridge --> lo mismo pero sobra de abajo 
+            inset --> igyal pero menos animación
+            outset --> lo mismo pero otras sombras 
+
+            borde-top-style
+            borde-tright-style
+            borde-bottom-style
+            borde-left - style 
+        border-color: color del borde 
+            borde-top-color
+            borde-tright-color
+            borde-bottom-color
+            borde-left - color  */
+body{
+    background-color: #8e8787;
+    margin: 0;
+}
+/* No hay mismas limitaciones que en margin  */
+.box{
+    background-color: lightcoral;
+    width: 200px;
+    height: 200px;
+    margin: 200px 50px 10px 300px;
+   
+
+}
+
+.inline{
+    background-color: aquamarine;
+    color: inherit;
+    margin-bottom: 100px;
+  
+}
+
+.buttons{
+    background-color: steelblue;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 30px
+}
+
+.button{
+    margin-left: 90px;
+    padding: 25px 50px;
+    /* Solid es una linea  
+    UNA SOLA LINA */
+    border: 20px solid red;
+    /* TRES lineas lo mismo  */
+    border-width: 20px;
+    border-style: solid;
+    border-color: red;
+    border-right-color: rgb(42, 198, 198);
+    border-right-width: 8px;
+
+
+}
