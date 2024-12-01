@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Contenido embebido</title>
+  </head>
+  <!--
+    DPR (Device Pixel Ratio)
+    Es la relación que existe entre los pixeles 
+    reales que tiene el dipositivo y lospixeles que 
+    tenenmos disponibles para "pintar" contenido
+
+    DPR = pixeles reales / pixeles disponibles 
+
+-->
+  <body>
+    <h1>Contenido Embebido</h1>
+    <!--
+        El uso de srcset sirve para carga imagenes acorde a lospixeles de la pantalla
+        asi la imagen se ajustara a la pantalla se vera acorde , las imagenes debes
+        ya estar reducida en pixeles 
+    -->
+    <!--Uso de picture -->
+    <picture>
+      <source srcset="Imagnes" />
+      <!--scr sirve para dejar una copia en caso d ser necesario 
+dentro de esta va la etiquet trdiccional img junto a los atributs src y alt , 
+debe si o si de tener una copia -->
+      <img src="" alt="" />
+    </picture>
+  </body>
+</html>

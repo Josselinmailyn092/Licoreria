@@ -4,7 +4,6 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
-
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router'; // Asegúrate de importar esto
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -13,7 +12,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { FormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NZ_ICONS, NzIconModule } from 'ng-zorro-antd/icon';
-import { ShoppingCartOutline, SearchOutline, MenuOutline, ArrowDownOutline} from '@ant-design/icons-angular/icons';
+import { ArrowDownOutline, MenuOutline, SearchOutline, ShoppingCartOutline } from '@ant-design/icons-angular/icons';
+const icons = [ShoppingCartOutline, MenuOutline,SearchOutline];
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -32,7 +32,7 @@ import { ShoppingCartOutline, SearchOutline, MenuOutline, ArrowDownOutline} from
     NzButtonModule,
     NzDropDownModule,
     NzIconModule, 
-    NzIconModule.forRoot([MenuOutline,SearchOutline]),
+    NzIconModule.forRoot(icons),
     NzImageModule,NzPaginationModule
     
   ],

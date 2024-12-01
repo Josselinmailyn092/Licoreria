@@ -1,0 +1,34 @@
+/* 
+
+    Text-aligh es la propiedad que nos permite alinear horizoltamente
+    el contenido de un elemento de bloque siempre que el contenido NO TENGA ANCHO DECLARADO
+    
+    Acepta 4 posibles valores
+        text-align: left; -> Alinea el contendio a la izquierda 
+        text-align:right -> Alinea contenido a la derecha 
+        text-align: center -> Ainea contendio al centro
+        text-alig:Justify; -> Alinea contenido de forma justificada, No es recomendable usarlo.
+        
+        
+*/
+*{
+    box-sizing:  border-box;
+}
+
+body{
+    background-color: aquamarine;
+    color: blue;
+}
+
+.text{
+    text-align:justify ;
+ }
+.box{
+    background-color: #666;
+    width: 60px;
+    padding: 15px 58px;
+    margin: 20px 0;
+    border: 2px solid lightcoral;
+    text-align: center;
+    color: palevioletred;
+}

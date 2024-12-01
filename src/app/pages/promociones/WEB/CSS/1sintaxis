@@ -1,0 +1,16 @@
+/* SELECTOR.- ellementos al que vamos aplicar selector 
+*Propiedad.- lo qu evamos a cambiar
+*Valor.- El nuevo valor que le vamos a dar a la propiedad
+*´Propiedad.- Valor -> se le denomina declaración 
+*Al conjunto de selector + declracion (es) se le denomina regla 
+
+
+*/
+/*Todo est es una regla*/
+selector {
+    propiedad;valor;
+    propiedad;valor;
+    /* No hay un limite de propiedad la ultima linea no es necesario el punto y coma 
+     */
+     propiedadN;valor;
+}

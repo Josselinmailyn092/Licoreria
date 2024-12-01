@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+body{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+
+
+}
+.menu{
+    aspect-ratio: 1/1;
+    width: 12vw;
+    display: flex;
+    flex-direction: column;
+    gap: 12%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+span{
+    height: 10%;
+    width: 100%;
+    background-color: aliceblue;
+    border-radius: 6px;
+    filter: drop-shadow(1px 1px 5px #0000004f);
+
+}
+/* reverse */
+.line3{
+    animation: buttonRev 700ms ease-in-out backwards;
+
+}
+@keyframes buttonREV{
+    0%{
+        transform: translateY(-225%) rotate(135deg);
+
+    }
+    50%{
+        transform: translateY(-225%);
+
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+.line2{
+    animation: centerRev 700ms ease-in-out forwards;
+
+
+}
+@keyframes centerRev{
+    0%, 50% {
+        scale:0;
+    }
+    100%{
+        scale: 1;
+
+    }
+}
+.line1{
+    animation: topRev 700ms ease-in-out forwards;
+
+}
+@keyframes  topRev{
+    0%{
+        transform: translateY(225%) rotate(45deg);
+    }
+    50%{
+        transform: translateY(225%);
+    }
+    100%{
+        transform: translateY(0%)
+        ;
+
+    }
+} 
+    
+/* Reverse */
+.top{
+    animation: top 700ms ease-in-out forwards;
+
+}
+@keyframes top{
+    0%{
+        transform: rotate(0deg);
+
+    }
+    50%{
+        transform: translateY(225%);
+
+    }
+    100%{
+        transform: translateY(225%) rotate(45deg);
+
+    }
+}
+.centro{
+    animation: centro 700ms ease-in-out forwards;
+
+}
+@keyframes centro{
+    0%{
+        scale: 0;
+
+    }
+    50%,100%{
+    scale: 0;
+
+    }
+
+}
+
+.button{
+    animation: button 700ms ease-in-out forwards;
+
+}
+
+@keyframes button{
+    0%{
+        transform: rotate(0deg);
+
+    }
+    50%{
+        transform:translateY(-225%) ;
+    }
+    100%{
+        transform: translateY(-225%) rotate(135deg);
+    }
+}

@@ -1,0 +1,104 @@
+/* Selelctores*/
+/* 
+    selectores simples 
+        SELECTORES ELEMENTALES
+            SELECTOR UNIVERSAL -> *
+            selector de tipo o etiqueta -> Nombre de etiqueta
+
+        SELECTORES DE ATRIBUTOS
+            id -< id del elelmento 
+            clases -> clases de elementos
+            otros atibutos
+                [nombreatributo]
+                [atributo=valor]
+                [atributo^=valor] ---> Buscar el nombre de un atributo al comienzo
+                [atributo*=valor] ---> Buscar el nombre de un atributo en la mitad 
+                [atributo$= valor ] ---> Buscar el nombre de un atributo al final
+                [atrubuto | 0 valor] --> Funciona en idioma 
+
+
+ 
+ */
+ /* Universal  */
+ *{
+    background-color: aqua;
+ }
+ /* Etiqueta */
+ h1{
+    background-color: blueviolet;
+ }
+
+ p{
+    background-color: palevioletred;
+ }
+ ul{
+    background-color: greenyellow;
+ }
+ li{
+    background-color: brown;
+ }
+/* id -> no es recomendable ya que son identificadores, uno de losprincipios es que 
+css sea reutilizables*/
+ #title {
+    background-color: bisque;
+ }
+
+ .Lista{
+    background-color: black;
+ }
+ [href]{
+    background-color: pink;
+ }
+
+ [href ="https://google.com"]{
+    background-color: rgb(115, 190, 205);
+    color: black;
+ }
+
+ [href^="color"]{
+    background-color: chartreuse;
+ }
+/*
+ selectorrex compuestos */
+ /* Sirve para poner estilos iguales  a etiquetas agrupandolas en comaa */
+.text,.text-2, .text-3, .text-4{
+ background-color: brown;
+}
+
+ /*
+     SEELECTORRES AGRUPADOS
+     /* Sirve para poner estilos iguales  a etiquetas agrupandolas en comaa */
+.text,.text-2, .text-3, .text-4{
+background-color: brown;
+}
+
+         /* Selectores descendentes */
+
+div h2{
+   background-color: teal;
+}
+         /* Selector de hermano siguiente 
+            Selector de hermano siguiente +   o 
+            Selector de hermano siguiente  ~  */
+p + .title-1{
+   background-color: tomato;
+}   
+/* Solo funciona con el herano siguiente osea dentro dl mismo rango y clasificación */
+  
+/* Seleciona todos losp siguientes con ~ no es recomendable bajar don 
+herencia se recominedo usar dos como max */
+.title-1 ~p{
+   background-color: palevioletred;
+}
+      /* Selectr hijo directo que sea hijo de atributo que no sea 
+      nieto se usa > de la siguiente manera */
+
+      .container >p{
+         background-color: aquamarine;
+      }
+      /* Eligiera solo hijos directos todos lo que sean hijos directos */
+/*
+
+     SELECTORES COMBINADOS
+     SELECTORES COMBINADORES
+     PSEUDOCLASES -PSEUDOELEMENTOS */

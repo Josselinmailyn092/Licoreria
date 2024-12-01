@@ -50,7 +50,7 @@ export class WhiskeyComponent implements OnInit {
 
   filtrarPorCategoria(categoria: string | null): void {
     if (categoria) {
-      this.productos = this.productos.filter(producto => producto.nombre.includes(categoria));
+      this.productos = this.productos.filter(producto => producto.nombreProducto.includes(categoria));
     } else {
       this.cargarProductos();
   }
@@ -59,7 +59,7 @@ export class WhiskeyComponent implements OnInit {
   // Filtrar por marca
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
-   const productosFiltrados= this.productos = this.productos.filter(producto => producto.nombre.includes(marca));
+   const productosFiltrados= this.productos = this.productos.filter(producto => producto.nombreProducto.includes(marca));
     this.productos = productosFiltrados;
     console.log('Productos filtrados:', this.productos);
     this.cambiarPagina(1);
@@ -91,12 +91,9 @@ export class WhiskeyComponent implements OnInit {
   }
   
   cargarProductos(): void {
-    // Productos específicos de Whiskey
+    
     this.productos = [
-      { nombre: 'Whiskey Brand A', presentacion_ml: 750, descripcion: 'Descripción A', precio: 20.5, imagenUrl: 'assets/images/wiskey.jpeg' },
-      { nombre: 'Whiskey Brand B', presentacion_ml: 100, descripcion: 'Descripción B', precio: 30.0, imagenUrl: 'assets/images/wiskey.jpeg' },
-      { nombre: 'Whiskey Brand C', presentacion_ml: 750, descripcion: 'Descripción C', precio: 25.0, imagenUrl: 'assets/images/wiskey.jpeg' }
-    ];
+         ];
     this.totalProductos = this.productos.length;
     this.cambiarPagina(this.paginaActual);
   }

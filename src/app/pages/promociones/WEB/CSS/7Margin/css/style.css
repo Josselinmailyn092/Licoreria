@@ -1,0 +1,36 @@
+/* Margin:
+    Es la propiedad que nos permite generar espacioentre elelemntos.
+    Es un shorthat (propiedad abreviada) que controla los 4 lados de dar margen 
+    margin-top:Margen superios
+    margin-righ: Margen derecho 
+    margin-bottom: Margen inferior
+    margin-left: Margen izquierdo
+
+    admite 4 valores en este orden 
+    de las ajugas del reloj
+    4 valores -> margin:top right bottom left;
+    3 valores -> magin: top left/rigt bottom
+    2 valores -> margin: top/bottom let/right
+    1 valo    -> margin: top/right/bottom/left
+
+ */
+body{
+    background-color: #8e8787;
+    margin: 0;
+}
+.box{
+    background-color: lightcoral;
+    width: 200px;
+    height: 200px;
+    margin: 200px 50px 10px 300px;
+}
+/* Los elementos en linea el link no tiene medida  */
+
+.inline{
+    background-color: aquamarine;
+    color: inherit;
+    margin-bottom: 100px;
+}
+
+
+/* Debe tener un anchi el box model para hacrlo a un lado  */

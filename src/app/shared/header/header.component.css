@@ -69,7 +69,7 @@ nz-layout{
   list-style: none;
   margin: auto;
   padding:0;
-  gap:90px;
+  gap:100px;
   margin: 0;
   background-color:#5F0F00
 }
@@ -150,7 +150,7 @@ nz-layout{
 }
 .icons{
   display:flex;
-  gap: 90px; 
+  gap: 60px; 
   margin-left: 5px;
 
 }

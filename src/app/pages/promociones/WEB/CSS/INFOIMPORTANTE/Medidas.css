@@ -1,0 +1,41 @@
+/*El uso de px y % en un codigo el porcentaje se asigna una vez el ellemnto este
+dentro de un contendor de la siguiente anera: indicando cuanto debe de ocupar*/
+
+
+div{
+     background: red;
+      width: 300px;
+       height: 300px;
+     } 
+img{
+     width:100%; 
+     /* en este
+caso ocupara el 80% del div */
+
+height: 100vh ;/*en este caso ocupa todo el alto dela venta */
+ }
+
+ /* UNIDADES DE MEDIDA px cm mm pt  mas dufil adaptar el tamaño a diferentes pantallas */
+
+
+ /* uNIDADES ABOSUOLUTAS .- miden lo mismo aunque la pantalla sea lo mismo  
+ em rem % vw vh vmax vmin*/
+
+ /* https://youtu.be/yWEMvny3eVk?si=JUyFUM2Lnv9_Rnv7 */
+
+ /* La unidad em funciona en multiplicando e vaor en este caso font-size * nem en este caso asi  */
+ .contenedor_texto{
+    font-size: 15rem;  /**En este caso el elemento de referncia es html si se indica un ancestro el font-size se guiara por ese y o multiplicaa */
+    background-color: aqua;
+    padding: 30em;
+
+}
+
+
+ /* rem */
+ /* solo toma de referencia al valor raiz no al ancestro mas cercano  */
+
+ /* vw y vh   */
+ /* Esta medida calcula el ancho ya tlto de toda la ventana sin calcularlo sin ningun 
+ elemento previo solo el la ventana 100vh altura total vetana , vw ancho de la ventana  */
+ 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -6,31 +7,79 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-licores',
   templateUrl: './licores.component.html',
   styleUrls: ['./licores.component.css'],
-  
 })
 export class LicoresComponent implements OnInit {
   selectedCategory: string | null = null;
-  marcas = ['Carlyle', 'Stolichnaya'];
-  presentaciones = ['750 ml', '500 ml'];
+  marcas : any[] =[];
+  marcasCantidad: any []=[];
+  tiposLicores: any[] = [];
+  categorias: any[] =[];
+  presentaciones : any[] =[];
+  presentacionesCantidad : any[]=[];
   productos: Producto[] = [];
+  productosOriginales:Producto[] =[];
   productosPaginados: Producto[] = [];
-  productosPorPagina : number =8;
-  totalProductos= 100;
-  paginaActual = 1;
+  productosPorPagina: number = 8;
+  totalProductos = 100;
+   paginaActual = 1;
   selectedMarca: string = '';
-  selectedPresentacion: string = '';
+  selectedPresentacion: number =0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Licores';
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+// obtener categria de licores
+this.productoService.getTiposLicores().subscribe((data) =>{
+  this.tiposLicores = data;
+})
+
+// Obtenr cantidad de las categoria de licores 
+this.productoService.getCategoriasConCantidad().subscribe((data) =>{
+  this.categorias =data;
+})
+
+    // Obtener marcas desde la API 
+    this.productoService.getMarcas().subscribe((data) => {
+      this.marcas = data.map((marca) => marca.nombreMarca) //Indica solo los nombres de las marcas
+    })
+
+    // contar cantidad de marcas disponibles
+    this.productoService.getCountMarcas().subscribe((data) => {
+      this.marcasCantidad = data; // Data tendrá el formato [{nombreMarca: 'Macallan', cantidad: 5}, ...]
+    });
+
+    // Obtener productos desde la API 
+    this.productoService.getAllProducts().subscribe((data) => {
+      this.productosOriginales = data; //asignar los productos obtenidos a la lista local
+      this.productos = [...data]
+      this.cambiarPagina(this.paginaActual); //configurar paginación
+    });
+
+
+    // Obtenr presentaciones desde la API 
+    this.productoService.getPresentaciones().subscribe((data)=>{
+      this.presentaciones = data;
+    });
+
+    // Cantidad de presentaciones disponibles
+    this.productoService.getPresentacionesConCantidad().subscribe((data) => {
+      this.presentacionesCantidad = data; 
+    });
+  
     
 
-    this.cargarProductos();
-    this.cambiarPagina(this.paginaActual);
 
-    this.route.url.subscribe(url => {
+    
+  
+
+ 
+    
+
+
+
+    this.route.url.subscribe((url) => {
       const subMenu = url[1] ? url[1].path : null;
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
@@ -51,27 +100,91 @@ export class LicoresComponent implements OnInit {
 
   filtrarPorCategoria(categoria: string | null): void {
     if (categoria) {
-      this.productos = this.productos.filter(producto => producto.nombre.includes(categoria));
+      this.productos = this.productos.filter((producto) => producto.nombreProducto.includes(categoria));
     } else {
-      this.cargarProductos();
-  }
+      this.productoService.getAllProducts().subscribe((data) => {
+        this.productos = data;
+        this.cambiarPagina(this.paginaActual);
+      });
+    }
   }
 
+
+  // Ver si hay productos disponibles 
+  verificarProductosDisponibles(): void {
+    if (this.productos.length === 0) {
+      console.log('No hay productos disponibles para los filtros seleccionados.');
+      }
+  }
+  
   // Filtrar por marca
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
-   const productosFiltrados= this.productos = this.productos.filter(producto => producto.nombre.includes(marca));
-    this.productos = productosFiltrados;
-    console.log('Productos filtrados:', this.productos);
-    this.cambiarPagina(1);
+    this.selectedMarca = marca;
+  
+    if (!marca || marca.trim() === '') {
+      // Si no hay marca seleccionada, aplica el filtro solo por presentación
+      if (this.selectedPresentacion) {
+        this.productos = this.productosOriginales.filter(
+          (producto) => producto.presentacion_ml === this.selectedPresentacion
+        );
+      } else {
+        // Mostrar todos los productos si no hay marca ni presentación seleccionadas
+        this.productos = [...this.productosOriginales];
+      }
+    } else {
+      // Filtrar por marca (y por presentación si está seleccionada)
+      this.productos = this.productosOriginales.filter((producto) =>
+        producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
+      );
+  
+      if (this.selectedPresentacion) {
+        this.productos = this.productos.filter(
+          (producto) => producto.presentacion_ml === this.selectedPresentacion
+        );
+      }
+    }
+  
+    this.verificarProductosDisponibles();
+    this.cambiarPagina(1); // Resetear a la primera página
   }
+  
+  
 
-  // Filtrar por presentación
-  filtrarPorPresentacion(presentacion: string): void {
-    const productosFiltrados =this.productos = this.productos.filter(producto => producto.presentacion_ml.toString() === presentacion);
-    this.productos = productosFiltrados;
-    this.cambiarPagina(1);
+  
+   // Filtrar por presentación
+   filtrarPorPresentacion(presentacion: number): void {
+    console.log('Filtrando por presentación:', presentacion);
+    this.selectedPresentacion = presentacion;
+  
+    if (!presentacion) {
+      // Si no hay presentación seleccionada, aplica el filtro solo por marca
+      if (this.selectedMarca) {
+        this.productos = this.productosOriginales.filter((producto) =>
+          producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
+        );
+      } else {
+        // Mostrar todos los productos si no hay presentación ni marca seleccionadas
+        this.productos = [...this.productosOriginales];
+      }
+    } else {
+      // Filtrar por presentación (y por marca si está seleccionada)
+      this.productos = this.productosOriginales.filter(
+        (producto) => producto.presentacion_ml === presentacion
+      );
+  
+      if (this.selectedMarca) {
+        this.productos = this.productos.filter((producto) =>
+          producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
+        );
+      }
+    }
+  
+    this.verificarProductosDisponibles();
+    this.cambiarPagina(1); // Resetear a la primera página
   }
+  
+  
 
   get totalPaginas(): number {
     return Math.ceil(this.totalProductos / this.productosPorPagina);
@@ -84,26 +197,12 @@ export class LicoresComponent implements OnInit {
   cambiarPagina(nuevaPagina: number): void {
     if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
       this.paginaActual = nuevaPagina;
-      const inicio =(nuevaPagina -1)* this.productosPorPagina;
-      const fin = inicio +this.productosPorPagina;
+      const inicio = (nuevaPagina - 1) * this.productosPorPagina;
+      const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
     }
   }
-
-  cargarProductos(): void {
-    this.productos = [
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 19.32, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 40.02, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Stolichnaya Strawberry', presentacion_ml: 750, descripcion: 'descripción', precio: 12.03, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Stolichnaya Raspberry', presentacion_ml: 750, descripcion: 'descripción', precio: 11.87, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      // More products as needed
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 19.32, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Whisky Carlyle ', presentacion_ml: 750, descripcion: 'descripción', precio: 40.02, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Stolichnaya Strawberry', presentacion_ml: 750, descripcion: 'descripción', precio: 12.03, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      { nombre: 'Stolichnaya Raspberry', presentacion_ml: 750, descripcion: 'descripción', precio: 11.87, imagenUrl: 'assets/images/licorWhiskey.jpeg' },
-      // More products as needed
-    ];
-    this.cambiarPagina(this.paginaActual);
-  }
+  
+ 
 }

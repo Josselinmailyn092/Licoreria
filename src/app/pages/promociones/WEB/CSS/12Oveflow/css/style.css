@@ -1,0 +1,38 @@
+
+/* Overflow:
+    Es la propiedad que contrla qué debe hacer la caja cuando su contenido se desborda del cojtenedor.
+    Es un shorthat que engloba overflow-x y overflow-y tiene 4 pasibles valores:
+        visible -> Es el vañor por defecto.
+
+        hidden -> El contendio que se desborde no se vera. si aplicamos esta propiedad en un solo eje, el otro se pondrá automáticamente en el valor scroll.
+
+        scroll-> A parece barras de scroll en el eje asignado (x,y o ambos )
+
+        auto -> Aparecera barras de sctoll en el casp de que hicieran falta  */
+*{
+    box-sizing: border-box;
+
+}
+
+body{
+    background-color: black;
+    color: aliceblue;
+    margin: 0;
+
+}
+
+.box{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:100px ;
+    background-color: limegreen;
+    width: 300px;
+    height: 300px;
+    color: #000;
+    overflow: scroll;
+    
+}
+.text{
+    width:350px;
+    
+}

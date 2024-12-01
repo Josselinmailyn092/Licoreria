@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Producto } from '../../../models/licores.models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cerveza',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class CervezaComponent {
 
+ 
+  
 }
+
+
+
+
+
+
