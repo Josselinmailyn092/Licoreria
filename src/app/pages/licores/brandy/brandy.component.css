@@ -66,17 +66,16 @@
   }
   /* Estilo para el elemento seleccionado */
 nz-menu-item.active {
-  background-color: #1890ff !important; /* Fondo azul */
-  color: white !important; /* Texto blanco */
+  
+  color: rgb(19, 19, 19) !important; /* Texto blanco */
   border-radius: 4px; /* Bordes redondeados */
   transition: all 0.3s ease;
-  font-size: 20px; /* Transición suave */
+  font-size: 22px; /* Transición suave */
+  font-weight: bold;
 }
 
+/* Estilo específico para Brandy */ nz-menu-item.active-brandy { color: rgb(19, 19, 19) !important; /* Texto blanco */ border-radius: 4px; /* Bordes redondeados */ transition: all 0.3s ease; /* Transición suave */ font-size: 22px; font-weight: bold; }
 /* Estilo para el hover normal */
-
-  
-
 .licores-content {
     flex-grow: 1;
     margin-left: 70px;

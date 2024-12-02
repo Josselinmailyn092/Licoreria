@@ -14,6 +14,7 @@ export class LicoresComponent implements OnInit {
   marcasCantidad: any []=[];
   tiposLicores: any[] = [];
   categorias: any[] =[];
+  selectedCategoria:string | null =null;
   presentaciones : any[] =[];
   presentacionesCantidad : any[]=[];
   productos: Producto[] = [];
@@ -21,7 +22,7 @@ export class LicoresComponent implements OnInit {
   productosPaginados: Producto[] = [];
   productosPorPagina: number = 8;
   totalProductos = 100;
-   paginaActual = 1;
+  paginaActual = 1;
   selectedMarca: string = '';
   selectedPresentacion: number =0;
   isCollapsed: boolean = false;
@@ -68,17 +69,6 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
       this.presentacionesCantidad = data; 
     });
   
-    
-
-
-    
-  
-
- 
-    
-
-
-
     this.route.url.subscribe((url) => {
       const subMenu = url[1] ? url[1].path : null;
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
@@ -89,9 +79,9 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-  selectCategory(category: string) {
-    this.selectedCategory = category === 'licores' ? null : category;
-    this.isCollapsed = category !== 'licores';
+  selectCategory(nombreCategoria: string): void {
+    this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
+    this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
   }
 
   resetCategory() {

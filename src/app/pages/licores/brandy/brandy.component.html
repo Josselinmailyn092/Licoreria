@@ -9,8 +9,8 @@
             <div class="menu-columns">
               <nz-menu-item
         *ngFor="let categoria of categorias"
-        [ngClass]="{'active': selectedCategoria === categoria.nombreCategoria}"
-        (click)="selectCategory(categoria.nombreCategoria)"
+        [ngClass]="{ 'active': selectedCategoria === categoria.nombreCategoria, 'active-brandy': categoria.nombreCategoria === 'Brandy' && selectedCategoria === 'Brandy' }"
+       (click)="selectCategory(categoria.nombreCategoria)"
         [routerLink]="['/', categoria.nombreCategoria.toLowerCase()]"
       >
         {{ categoria.nombreCategoria }} ({{categoria.cantidad}})

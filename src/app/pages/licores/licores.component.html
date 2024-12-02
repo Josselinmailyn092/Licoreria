@@ -9,6 +9,7 @@
           <div class="menu-columns">
             <nz-menu-item
       *ngFor="let categoria of categorias"
+      [ngClass]="{ 'active': selectedCategoria === categoria.nombreCategoria, 'active-brandy': categoria.nombreCategoria === 'Brandy' && selectedCategoria === 'Brandy' }"
       (click)="selectCategory(categoria.nombreCategoria)"
       [routerLink]="['/', categoria.nombreCategoria.toLowerCase()]"
     >
@@ -95,7 +96,7 @@
       No hay productos disponibles para los filtros seleccionados.
     </div>
 
-    <!-- Products List -->
+    <!-- Products List --> 
     <div class="products-grid">
       <div class="product-card" *ngFor="let producto of productosPaginados">
         <div class="product-image">
