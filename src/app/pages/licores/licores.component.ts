@@ -13,6 +13,7 @@ export class LicoresComponent implements OnInit {
   marcas : any[] =[];
   marcasCantidad: any []=[];
   tiposLicores: any[] = [];
+  selectedTipoLicor: string = '';
   categorias: any[] =[];
   selectedCategoria:string | null =null;
   presentaciones : any[] =[];
@@ -36,10 +37,15 @@ this.productoService.getTiposLicores().subscribe((data) =>{
   this.tiposLicores = data;
 })
 
+this.productoService.getTiposLicores().subscribe((data) => {
+  this.tiposLicores = data.map((tiposLicores) => tiposLicores.nombreCategoria)// Data tendrá el formato [{nombreTipo: 'Ron', cantidad: 10}, ...]
+});
+
 // Obtenr cantidad de las categoria de licores 
-this.productoService.getCategoriasConCantidad().subscribe((data) =>{
-  this.categorias =data;
-})
+this.productoService.getCategoriasConCantidad().subscribe((data) => {
+  this.categorias = data;
+});
+
 
     // Obtener marcas desde la API 
     this.productoService.getMarcas().subscribe((data) => {
@@ -80,18 +86,24 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
   }
 
   selectCategory(nombreCategoria: string): void {
-    this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-    this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    if (nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    } else {
+      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    }
   }
+  
 
   resetCategory() {
     this.selectedCategory = null;
   }
+  
 
-  filtrarPorCategoria(categoria: string | null): void {
+filtrarPorCategoria(categoria: string | null): void {
     if (categoria) {
       this.productos = this.productos.filter((producto) => producto.nombreProducto.includes(categoria));
-    } else {
+  } else {
       this.productoService.getAllProducts().subscribe((data) => {
         this.productos = data;
         this.cambiarPagina(this.paginaActual);
@@ -138,10 +150,7 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
     this.verificarProductosDisponibles();
     this.cambiarPagina(1); // Resetear a la primera página
   }
-  
-  
-
-  
+     
    // Filtrar por presentación
    filtrarPorPresentacion(presentacion: number): void {
     console.log('Filtrando por presentación:', presentacion);
@@ -175,7 +184,6 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
   }
   
   
-
   get totalPaginas(): number {
     return Math.ceil(this.totalProductos / this.productosPorPagina);
   }
@@ -191,8 +199,6 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    }
+    
   }
-  
- 
-}
+}}

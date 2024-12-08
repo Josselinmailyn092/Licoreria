@@ -6,7 +6,6 @@ import { NosotrosComponent } from './nosotros/nosotros.component';
 import { ConfiteriaComponent } from './confiteria/confiteria.component';
 import { PromocionesComponent } from './promociones/promociones.component';
 import { links } from './links.config';
-
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Asegúrate de tener esto también
 import { FormsModule } from '@angular/forms';

@@ -89,8 +89,12 @@ export class BrandyComponent implements OnInit {
   }
 
   selectCategory(nombreCategoria: string): void {
-    this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-    this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    if (nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    } else {
+      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    }
   }
 
   resetCategory() {
@@ -117,29 +121,32 @@ export class BrandyComponent implements OnInit {
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
-
+  
     if (!marca || marca.trim() === '') {
+      // Si no hay marca seleccionada, aplica el filtro solo por presentación
       if (this.selectedPresentacion) {
         this.productos = this.productosOriginales.filter(
           (producto) => producto.presentacion_ml === this.selectedPresentacion
         );
       } else {
+        // Mostrar todos los productos si no hay marca ni presentación seleccionadas
         this.productos = [...this.productosOriginales];
       }
     } else {
+      // Filtrar por marca (y por presentación si está seleccionada)
       this.productos = this.productosOriginales.filter((producto) =>
         producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
       );
-
+  
       if (this.selectedPresentacion) {
         this.productos = this.productos.filter(
           (producto) => producto.presentacion_ml === this.selectedPresentacion
         );
       }
     }
-
+  
     this.verificarProductosDisponibles();
-    this.cambiarPagina(1);
+    this.cambiarPagina(1); // Resetear a la primera página
   }
 
   filtrarPorPresentacion(presentacion: number): void {
