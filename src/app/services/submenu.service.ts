@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import path from 'path';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,30 +8,28 @@ import path from 'path';
 export class SubmenuService {
 private subMenuItems =[
   {
-    label:'INICIO',
-    path:'/inicio',
+    label:'Inicio',
+    path:'/home',
     subMenu: []
   },
   
   {
-    label :'LICORES',
+    label :'Licores',
     path: '/licores',
     subMenu:[
-        {label:'VINOS',path :'/vinos'},
-        {label:'CERVEZA',path :'/cerveza'},
-        {label:'WHISKEY',path :'/whiskey'},
-        {label:'BRANDY',path :'/brandy'},
-        {label:'VODKA',path :'/vodka'},
-        {label:'TEQUILA',path :'/tequila'},
-        {label:'GIN',path :'/gin'}
-
-      
+        {label:'Vinos',path :'/vinos'},
+        {label:'Cerveza',path :'/cerveza'},
+        {label:'Whiskey',path :'/whiskey'},
+        {label:'Brandy',path :'/brandy'},
+        {label:'Vodka',path :'/vodka'},
+        {label:'Tequila',path :'/tequila'},
+        {label:'Gin',path :'/gin'}      
     ]
   },
 
   //confiteria submenu 
   {
-    label:'CONFITERIA',
+    label:'Confiteria',
     path:'/confiteria',
     subMenu:[
       {label:'GALLETAS', path:'/confiteria/galletas'},
@@ -44,17 +43,17 @@ private subMenuItems =[
 
   },
   {
-    label:'PROMOCIONES',
+    label:'Promociones',
     path:'/promociones',
     subMenu: []
   },
   {
-    label:'NOSOTROS',
+    label:'Nosotros',
     path:'/nosotros',
     subMenu: []
   },
   {
-    label:'CONTACTO',
+    label:'Contacto',
     path:'/contacto',
     subMenu: []
   },

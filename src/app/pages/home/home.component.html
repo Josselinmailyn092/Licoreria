@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="home-container">
+    <!-- Sección: Resumen -->
+    <div nz-row [nzGutter]="16" class="summary-section">
+      <div nz-col [nzSpan]="12">
+        <h1 class="title">Bienvenidos a [Nombre de la Licorería]</h1>
+        <p class="description">
+          Ofrecemos una amplia variedad de licores de las mejores marcas, desde 
+          cervezas artesanales hasta los whiskies más exclusivos. ¡Descubre nuestras 
+          promociones y vive una experiencia única!
+        </p>
+      </div>
+      <div nz-col [nzSpan]="12" class="visual-support">
+        <img src="assets/licoreria.jpg" alt="Imagen Licorería" class="hero-image" />
+      </div>
+    </div>
+  
+    <!-- Sección: Logos de marcas (Carrusel) -->
+    <div class="carousel-section">
+      <nz-carousel autoplay [nzEffect]="'scrollx'">
+        <div nz-carousel-content *ngFor="let logo of brandLogos">
+          <img [src]="logo" class="brand-logo" alt="Marca de Licor" />
+        </div>
+      </nz-carousel>
+    </div>
+  
+    <!-- Sección: Puntos de dolor y beneficios -->
+    <div class="pain-points-section">
+      <h2>Puntos de dolor</h2>
+      <ul>
+        <li *ngFor="let point of painPoints">{{ point }}</li>
+      </ul>
+      <h2>Beneficios de nuestra licorería</h2>
+      <ul>
+        <li *ngFor="let benefit of benefits">{{ benefit }}</li>
+      </ul>
+    </div>
+  
+    <!-- Sección: Testimonios -->
+    <div class="testimonials-section">
+      <h2>Lo que dicen nuestros clientes</h2>
+      <nz-card *ngFor="let testimonial of testimonials" class="testimonial-card">
+        <nz-card-meta
+          [nzTitle]="testimonial.name"
+          [nzDescription]="testimonial.feedback"
+        ></nz-card-meta>
+      </nz-card>
+    </div>
+  
+    <!-- Sección: Call to Action -->
+    <div class="cta-section">
+      <h2>¡Ven a visitarnos o haz tu pedido online!</h2>
+      <button nz-button nzType="primary" nzSize="large">Contáctanos</button>
+    </div>
+  </div>
+  

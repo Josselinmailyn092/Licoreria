@@ -4,23 +4,24 @@ nz-layout{
 .header {
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 10px 50px ;
   margin-top: 0;
-  background-color: #5F0F00; /* Fondo claro */
+  background-color: #F8F5F3; /* Fondo claro */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-  height: 175px;
-  flex-direction: column;
-  font-family: 'Poppins';
- 
+  height: 90px;
+  font-family: 'Mona Sans';
+ justify-content: space-between;
  
 }
 .logo-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin: auto;
-  gap: 0px;
-  height: 110px;
+  gap: 25px;
+  height: 50px;
+  width: 400px;
+  padding: 10px 20px;
   
 }
 
@@ -33,10 +34,9 @@ nz-layout{
 }
 
 .title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
   align-items: center;
   margin: auto;
   margin-top: 0px;
@@ -44,7 +44,7 @@ nz-layout{
   display: flex;
   padding: 0;
   margin: 0;
-  margin-top: -10px;
+  margin-top: 0;
 }
 .contenedor {
   display: flex;
@@ -52,7 +52,9 @@ nz-layout{
   justify-content: space-between;
   margin-top: 0px;
   width: 80%;
-  background-color: #5F0F00;
+  background-color: #F8F5F3;
+  margin: 0;
+  
 }
 .nav-container {
   display: flex;
@@ -61,24 +63,31 @@ nz-layout{
   align-items: center;
   margin: auto;
   justify-content: center;
-  background-color:#5F0F00 ;
-  margin-top: -10px;
+  background-color:#F8F5F3 ;
+  margin-top: 0;
+  
+  
 }
-
+.nav-container li a{
+  font-size: 15px;
+}
 .nav-menu {
   list-style: none;
   display: flex;
   list-style: none;
   margin: auto;
-  padding:0;
-  gap:60px;
+  padding:10px;
+  gap:25px;
   margin: 0;
-  background-color:#5F0F00
+  background-color:#F8F5F3;
+  margin-top: 15px;
+  
 }
 
-
-
-
+.nav-menu[_ngcontent-ng-c2557042287] li[_ngcontent-ng-c2557042287] {
+  padding: 8px;
+  color: #dae0e5;
+}
 .search-icon {
   font-size: 32px; /* Tamaño del ícono */
   color: #555;
@@ -89,11 +98,11 @@ nz-layout{
   align-items: center;
   padding: 8px;
   border-radius: 50%;
-  background-color: #e9ecef;
+  background-color: #ff4100;
  }
 
 .search-icon:hover {
-  color: #007bff; /* Color al pasar el mouse */
+  color:#ff8326 ; /* Color al pasar el mouse */
   transform: scale(1.1); /* Agranda el ícono al hacer hover */
   background-color: #dae0e5; /* Fondo más oscuro en hover */
 ;
@@ -101,11 +110,10 @@ nz-layout{
 .search-modal {
   position: absolute;
     display: none; /* Asegura que el modal aparezca justo después del navbar */
-    top: 170px;
+    top: 70px;
     width: 400px;
-    right:  278px; /* Posiciona el modal hacia la derecha */
+    right:  108px; /* Posiciona el modal hacia la derecha */
     height: 50px; /* Altura del modal */
-
     z-index: 1000; /* Para que aparezca sobre el contenido pero debajo del navbar */
     border-radius: 10px;
     background-color: transparent;
@@ -115,6 +123,7 @@ nz-layout{
   display: flex; /* Show when active */
   align-items: center;
   justify-content: center;
+  
 }
 
 .search-bar-modal {
@@ -127,9 +136,8 @@ nz-layout{
   padding: 0;
   height: 40px;
   border-radius: 30px;
-  border: 1px solid #ccc;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para el efecto de modal */
-}
+  border: 2px solid #ff8326;
+ }
 .search-bar-modal button {
   background-color: transparent;
   border: none;
@@ -138,9 +146,10 @@ nz-layout{
   color: #00bfa5;
   cursor: pointer;
 }
-.search-bar-modal i[nz-icon] {
-  font-size: 1.5rem; /* Ajusta el tamaño del ícono si es necesario */
-  color: #00bfa5; /* Color personalizado */
+i[nz-icon] {
+  display: inline-block;
+  font-size: 16px; /* Ajusta el tamaño según sea necesario */
+  color: inherit; /* Usa el color del contexto */
 }
 
 
@@ -152,23 +161,31 @@ nz-layout{
 }
 .icons{
   display:flex;
-  gap: 60px; 
-  margin-left: 5px;
+  gap: 32px; 
+  margin-left: 25px;
 
 }
 .iconSearch, .cart-icon {
-  color: #ffffff;
-  font-size: 1.5rem;
+  color:#ff4100;
+  font-size: 1.15rem;
   transition: color 0.3s ease;
+  border: 2px solid #ff8326 ;
+  border-radius: 15px;
+  line-height: 1.8;
+  padding: 0 5px;
+  
 }
 
 .iconSearch:hover, .cart-icon:hover {
-  color: #007bff;
+  color: #aa2202;
+  background-color:#ffb164 ;
 }
+
 .menu-toggle {
   display: none;
  
 }
+
 .icon-button {
   cursor: pointer;
   padding: 5px;
@@ -177,7 +194,7 @@ nz-layout{
 }
 
 .icon-button:hover {
-  background-color: #f0f0f0; /* Color de fondo al pasar el cursor */
+  background-color: #ff8326; /* Color de fondo al pasar el cursor */
 }
 
 .icon-button:focus {
@@ -188,21 +205,33 @@ nz-layout{
 /* Estilos de submenu  */
 .menu-item {
   position: relative; /* Importante para la posición absoluta del submenú */
+  border-radius: 25px;
+  padding:  8px;
+  line-height: 1.5; /* Controla la altura de línea para texto */
 }
+
 
 .menu-link {
   cursor: pointer; /* Cambia el cursor al pasar por el enlace */
   padding: 0;
-  color: #ffffff; /* Color del texto */
+  color: #000000; /* Color del texto */
   text-decoration: none;
   transition: color 0.3s ease; 
   font-size: 16px;
   gap: 80px;
   height: 200px;
 }
+.active-menu-item {
+  border: 3px solid #ff4100; /* Color del borde */
+  color: #FF6600; /* Cambia el color del texto */
+  font-weight: bold; /* Opcional: texto en negrita */
+}
 
-.menu-link:hover {
-  color: #ff6600; /* Cambia el color del texto al pasar el mouse */
+.menu-item:hover {
+  border: 2px solid #ff8326;
+  background-color: #FFFAE6;
+  color: #FFC107;
+  cursor: pointer;
 }
 
 /* Ocultar el submenú por defecto */
@@ -214,7 +243,7 @@ nz-layout{
   margin: auto;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff; /* Fondo blanco para el submenú */
+  background-color: #F8F5F3; /* Fondo blanco para el submenú */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el submenú */
   display: none; /* Ocultar submenú por defecto */
   padding: 0;
@@ -238,7 +267,7 @@ nz-layout{
 }
 
 .sub-menu-item a {
-  color: #5F0F00;
+  color:#ffb164 ;
   text-decoration: none;
   display: inline-block;
   transition: background-color 0.3s ease;
@@ -248,17 +277,22 @@ nz-layout{
   justify-content: center;
   align-items: center;
   
+  
 }
+.sub-menu li a{
+  font-size: 15px;
+}
+
 /* Línea debajo del texto en el hover */
 .sub-menu-item a::after {
   content: "";
   position: absolute;
-  top:  18px; /* Coloca la línea en la parte inferior */
+  top:  29px; /* Coloca la línea en la parte inferior */
   left: 0;
   width: 100%; 
   margin-bottom: 22px;/* La línea cubre todo el ancho del texto */
   height: 2px; /* Grosor de la línea */
-  background-color: #5F0F00; /* Color de la línea */
+  background-color: #ff8326; /* Color de la línea */
   transform: scaleX(0); /* Inicialmente la línea está "oculta" */
   transform-origin: bottom right;
   transition: transform 0.3s ease;
@@ -274,17 +308,20 @@ nz-layout{
   background-color:transparent; 
   transform: scaleX(1); /* Hace que la línea se expanda */
   transform-origin: bottom left; /* Origen de la expansión */
+  color: #ff8326;
 }
 
-/* Media Queries */
+
 @media (max-width: 768px) {
   
   .header {
-    padding: 10px;
+    padding: 5px;
     flex-direction: row; /* Disposición vertical en pantallas pequeñas */
     text-align: center;
     justify-content: space-between;
   }
+
+
   .nav-container {
     display: none;
   }
@@ -325,9 +362,10 @@ nz-layout{
     display: block;
     align-items: center;
     justify-content: center;
-    color: white;
-    border: none;
-    background-color: #5F0F00;
+    color: #ff4100;
+    border: 2px solid #ff8326 ;
+    border-radius: 14px;
+    background-color: transparent;
     padding: 0;
   }
   .icon-button{
@@ -338,94 +376,48 @@ nz-layout{
     display: flex;
     flex-direction:row;
     position: absolute;
-    top: 60px;
+    top: 80px;
     left: 0;
     width: 100%;
-    padding: 10px 10px;
+    padding: 0px 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 9999; /* Valor alto para que se sobreponga */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    background-color: #816028;
+    background-color: #ff8326;
+    color: #ffffff !important;
   }
 
   .nav-menu {
     flex-direction: column;
-    gap: 30px;
-    background-color: #816028;
+    gap: 0px;
+    background-color: #ff8326;
     width: 100%;
+    color: #ffffff;
       }
-  .nav-menu li[nz-menu-item] {
-   
-    margin: 0 40px ;
+  .nav-menu li {
+    margin: 0 20px ;
     padding: 0;
-    height:25%; /*Alto menú*/
+    height:45px; /*Alto menú*/
     display: flex;
     align-items:flex-start;
     justify-content: flex-start;
-    color: #212020;
+    color: #ffffff;
   }
 .nav-menu, .ant-menu, .ant-menu-root , .ant-menu-light, .ant-menu-horizonta{
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
-.ant-menu-item, .ant-menu-item:hover, .ant-menu-item:focus, .ant-menu-item:active {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-}
 
-.ant-menu-item a, 
-.ant-menu-item a:hover,
-.ant-menu-item a:focus,
-.ant-menu-item a:active {
-  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
-}
 
-.nav-menu li[nz-menu-item] a:focus-visible {
+.nav-menu li {
   outline: none !important;
   box-shadow: none !important;
-}
-
-    /* Ajusta el subrayado del menú desplegable en pantallas pequeñas */
-    .nav-menu li[nz-menu-item] a {
-      outline: none !important;
-      border: none !important;
-      box-shadow: none !important;
-      -webkit-box-shadow: none !important;
-      -moz-box-shadow: none !important;
-      -webkit-tap-highlight-color: transparent; /* Elimina el color de tap en dispositivos móviles */
-
-  
-        }
-   /* Cambia el estilo en hover para reducir la línea */
-   .nav-menu li[nz-menu-item] a:hover {
-     color: #ffffff;
-    background-color: #6b4e2a; /* Cambia el fondo */
-    transition: all 0.3s ease; /* Suaviza el efecto */
-
-  }
-  .ant-menu-horizontal .ant-menu-item-selected::after {
-    display: none;
-}
- 
- 
-/* Estilos para hacer el item menos alto */
-.nz-menu-item, .ant-menu-item, .ant-menu-submenu-title {
-  height: 100px; /* Ajuste general del alto */
-  color: #212020;
-}
-
- /* Alternativa: cambiar color de fondo en lugar de línea de subrayado */
- .nav-menu li[nz-menu-item]:hover {
-  background-color: #6b4e2a; /* Color de fondo diferente en hover */
 }
 
 .ant-menu-item a{
 padding: 0;
-color: #212020;
+color: #ffffff;
 }
   .icons {
     display: flex;
@@ -435,9 +427,13 @@ color: #212020;
     
   }
    .cart-icon {
-    color: #ffffff;
-    font-size: 1.2rem;
+    color:#ff4100;
+    font-size: 1.15rem;
     transition: color 0.3s ease;
+    border: 2px solid #ff8326 ;
+    border-radius: 15px;
+    line-height: 1.8;
+    padding: 0 5px;
   }
   .iconSearch{
     display: none;
@@ -452,61 +448,90 @@ color: #212020;
     margin-top: -10px;
     width: 100%;
     background-color: transparent;
-    border: none;
+    
     z-index: 1000; /* Para que aparezca sobre otros elementos */
-    border: none;
+    
   }
   .search-bar-modal {
     width: 100%; /* Asegura que la barra no se extienda completamente en pantallas pequeñas */
-    background-color: #fffbfa; /* Color de fondo */
+    background-color: #ffb164; /* Color de fondo */
     display: flex;
     align-items: center; /* Centra el contenido verticalmente */
     justify-content: center; /* Centra el contenido horizontalmente */
     padding: 5px;
+    
     
       
     }
     
     .search-bar-modal input {
       border-radius: 50px;
-      width: 290px;
+      width: 120%;
       color:  rgb(95, 108, 129);
       align-items: center;
       justify-content: center;
       padding: 0 20px;
-      height: 30px;
+      height: 35px;
       margin: auto;
-      border-radius: 0px;
+      border-radius: 15px;
+      border: 2px solid #ff4100;
 
+      }
+      .active-menu-item {
+        border: 3px solid #ff4100; /* Color del borde */
+        color: #FF6600; /* Cambia el color del texto */
+        font-weight: bold; /* Opcional: texto en negrita */
+      }
+      
+      .menu-item:hover {
+        border: 2px solid #ff8326;
+        background-color: #FFFAE6;
+        color: #FFC107;
+        cursor: pointer;
       }
 }
 @media (max-width: 350px) {
+  .header {
+    
+    padding: 0 ;
+    margin-top: 0;
+    font-family: 'Mona Sans';
+   justify-content: space-between;
+   
+  }
   
   .logo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 0 auto;
-    width: 750px;
-    padding: 0;
-    
+    margin: auto;
+    gap: 0;
+    height: 30px;
+    width: 200px;
+    padding: 5px 10px;
     
   }
+  
+  
   .logo img {
     margin: 0; 
-    width:40px;
-    height: 40px;
-    margin-left: 10px;
+    width:60px;
+    height: 60px;
   
   }
+  
   .title {
-    font-size: 14px; /* Reduce el tamaño de la fuente */
-    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000000;
+    align-items: center;
+    margin: auto;
+    margin-top: 0px;
+    justify-content: center;/*Cnetrar logo en medio nav*/
+    display: flex;
     padding: 0;
-    text-align: start;
-    justify-content: flex-start;
-    margin-left: 20px;
-    width: 100%;
+    margin: 0;
+    margin-top: 0;
   }
 
 

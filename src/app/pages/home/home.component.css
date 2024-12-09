@@ -1,0 +1,53 @@
+.home-container {
+    padding: 20px;
+  }
+  
+  .summary-section {
+    margin-bottom: 40px;
+    text-align: left;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .hero-image {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .carousel-section {
+    margin: 40px 0;
+    text-align: center;
+  }
+  
+  .brand-logo {
+    height: 80px;
+    margin: 0 auto;
+  }
+  
+  .pain-points-section ul,
+  .benefits-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .testimonials-section {
+    margin-top: 40px;
+  }
+  
+  .testimonial-card {
+    margin: 10px 0;
+  }
+  
+  .cta-section {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
