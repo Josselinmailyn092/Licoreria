@@ -1,11 +1,32 @@
-import { Component } from '@angular/core';
-
+import { Component, OnChanges,SimpleChange,SimpleChanges,ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnChanges {
+  animationActive: boolean = false;
+  categories: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
+  currentCategoryIndex: number = 0;
+  categoryText: string = this.categories[this.currentCategoryIndex];
+
+  
+  constructor(private router: Router) {}
+  // Llama esta función cuando el componente se muestra
+  ngOnChanges(changes: SimpleChanges): void {
+    this.triggerAnimation();
+  }
+
+  triggerAnimation(): void {
+    this.animationActive = false; // Elimina la animación
+    setTimeout(() => {
+      this.animationActive = true; // Reaplica la animación después de un pequeño retraso
+    }, 10); // Retraso mínimo para reactivar la animación
+  }
+   goToLiquor(): void {
+    this.router.navigate(['/licores']); // Redirige al componente de licores
+  }
 
   brandLogos = [
     'assets/vodka.png',

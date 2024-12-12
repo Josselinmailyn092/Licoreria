@@ -1,53 +1,436 @@
 .home-container {
-    padding: 20px;
+  margin-top: 70px;
+    padding: 0px;
   }
   
-  .summary-section {
-    margin-bottom: 40px;
-    text-align: left;
+  .full-screen-carousel {
+    height: 85vh; /* Altura completa de la pantalla */
+    width: 100vw;  /* Ancho completo de la pantalla */
+    position: relative;
+    overflow: hidden;
   }
   
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
+  .carousel-item {
+    position: relative;
+    height: 100%;
   }
   
-  .description {
-    font-size: 1.2rem;
-    line-height: 1.6;
-  }
-  
-  .hero-image {
+  .carousel-item img {
+    object-fit: cover;
+    height: 100%;
     width: 100%;
-    border-radius: 8px;
+    filter: brightness(0.7);
   }
   
-  .carousel-section {
-    margin: 40px 0;
+  .carousel-caption {
+    position: absolute;
+    top: 60%; /* Ubica el texto al pie de la imagen */
+    color: white; /* Texto en color blanco */
     text-align: center;
+    right: 0; 
+    padding: 10px 10px; /* Espaciado interno del texto */
+   
   }
   
-  .brand-logo {
-    height: 80px;
-    margin: 0 auto;
+
+  .welcome-section {
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 10px;
+    animation: slideIn 1s ease-out;
+    width: 800px; /* Animación de entrada */
   }
   
-  .pain-points-section ul,
-  .benefits-section ul {
-    list-style: none;
+  .welcome-title {
+    font-size: 38px;
+    font-weight:800;
+    text-transform: uppercase;
+    color: #ff4100; /* Color llamativo */
+    margin-bottom: 10px;
+    animation: fadeIn 2s ease-in; /* Animación específica para el título */
+  }
+  
+  .welcome-text {
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff; /* Color blanco para mayor contraste */
+    animation: fadeIn 2.5s ease-in; /* Animación específica para el texto */
+  }
+  
+  /* Animaciones específicas para cada card */
+.card.animation-card1:hover .welcome-section {
+  animation: bounceInRight 3s ease forwards;
+}
+.carousel-caption2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card2-section {
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  padding: 200px;
+  border-radius: 10px;
+  animation: slideIn 1s ease-out;
+  width: 100%;  /* Reducir el tamaño para que no sea 100% */
+  height: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+.card2-title {
+  font-size: 38px;
+  font-weight:800;
+  text-transform: uppercase;
+  color: #ff4100; /* Color llamativo */
+  margin-bottom: 10px;
+  animation: fadeIn 2s ease-in; /* Animación específica para el título */
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+.card2-text {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #ffffff; /* Color blanco para mayor contraste */
+  animation: fadeIn 2.5s ease-in; /* Animación específica para el texto */
+}
+
+.card.animation-card2:hover .welcome-section {
+  animation: flipInY 3s ease forwards;
+}
+
+
+/* Animación de la tarjeta al entrar */
+.carousel-item.animate-card2 .content {
+  animation: fadeInUp 1.5s ease-out forwards;
+}
+
+
+/* Botón */
+.btn-shop {
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-shop:hover {
+  background-color: #c0392b;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Keyframes para animaciones */
+@keyframes bounceInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-20px);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* Comienza desde fuera del contenedor */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0); /* Termina en su posición original */
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Container that holds everything */
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.brand-logo {
+  margin-right: 20px;
+}
+
+.brand-logo img {
+  width: 200px;
+  height: auto;
+}
+
+.text-content {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: #333;
+}
+
+.category {
+  font-weight: bold;
+  color: #0a9d26;
+  font-size: 28px;
+  transition: color 0.5s ease-in-out;
+}
+
+/* Sección de puntos de dolor y beneficios */
+.pain-points-section {
+  background-color: #F8F5F3;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+.pain-points-container, .benefits-container {
+  width: 100%;
+  max-width: 1000px; /* Ancho máximo para mantener la legibilidad */
+  padding: 30px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.section-title {
+  font-size: 32px;
+  color: #aa2202;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.pain-points-list, .benefits-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas grandes */
+  gap: 20px;
+}
+
+.pain-point, .benefit {
+  background-color: #fff5f3;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.pain-point:hover, .benefit:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pain-point-img, .benefit-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pain-point p, .benefit p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+button {
+  background-color: #ff4100;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ff8326;
+}
+
+
+
+  @media (max-width: 768px) {
+    .home-container{
+      margin-top: 128px;
+    }
+    .full-screen-carousel {
+      height: 50vh; /* Altura completa de la pantalla */
+      width: 100vw;  /* Ancho completo de la pantalla */
+    }
+    .carousel-item img {
+      object-fit: cover;
+      height: 90%;
+      width: 100%;
+      filter: brightness(0.7);
+    }
+
+  .carousel-caption {
+    top: 50%; /* Centrar el texto verticalmente */
     padding: 0;
   }
-  
-  .testimonials-section {
-    margin-top: 40px;
+  .welcome-section {
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 5px;
+    
+    animation: slideIn 1s ease-out;
+    width: 410px; /* Animación de entrada */
   }
   
-  .testimonial-card {
-    margin: 10px 0;
+  .welcome-title {
+    font-size: 20px;
+    font-weight:700;
+    margin-bottom: 8px;
+    
+   
   }
-  
-  .cta-section {
+  .welcome-text {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff; /* Color blanco para mayor contraste */
+    animation: fadeIn 2.5s ease-in; /* Animación específica para el texto */
+  }
+  .carousel-caption2 {
+   
+    width: 100%;
+    height: 100%;
+   
+  }
+  .card2-section {
+    padding: 15px; /* Reducir el padding */
+    width: 100%;  /* Reducir el ancho */
+    height: 80%; /* Ajustar altura */
+  }
+
+  .card2-title {
+    font-size: 30px;  /* Ajustar el tamaño del título */
+  }
+
+  .card2-text {
+    font-size: 18px; /* Ajustar el tamaño del texto */
+  }
+
+  .btn-shop {
+    padding: 10px 20px; /* Reducir el tamaño del botón */
+  }
+
+  .pain-points-list, .benefits-list {
+    grid-template-columns: 1fr; /* Una columna en dispositivos más pequeños */
+  }
+
+  .pain-point, .benefit {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    margin-top: 40px;
   }
+
+  .pain-point-img, .benefit-img {
+    width: 60px;
+    height: 60px;
+  }
+    }
   
+/* Responsivo para pantallas muy pequeñas (350px o menos) */
+@media (max-width: 350px) {
+  /* Ajustar el contenedor del carrusel */
+  .full-screen-carousel {
+    height: 60vh; /* Ajustar aún más la altura */
+  }
+
+  .carousel-caption {
+    top: 40%; /* Asegurar que el texto siga siendo visible */
+    padding: 10px;
+  }
+
+  .card2-section {
+    padding: 50px; /* Reducir más el padding */
+    width: 90%;
+    height: auto;
+  }
+
+  .card2-title {
+    font-size: 25px; /* Ajustar el tamaño del título */
+  }
+
+  .card2-text {
+    font-size: 16px; /* Ajustar el tamaño del texto */
+  }
+
+  .btn-shop {
+    padding: 8px 15px; /* Reducir aún más el tamaño del botón */
+  }
+  .section-title {
+    font-size: 24px;
+  }
+
+  .pain-point p, .benefit p {
+    font-size: 16px;
+  }
+}
+

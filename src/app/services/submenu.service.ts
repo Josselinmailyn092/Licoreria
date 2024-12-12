@@ -1,5 +1,5 @@
-import { Component, Injectable } from '@angular/core';
-import path from 'path';
+import { Injectable } from '@angular/core';
+
 
 
 @Injectable({
@@ -32,13 +32,13 @@ private subMenuItems =[
     label:'Confiteria',
     path:'/confiteria',
     subMenu:[
-      {label:'GALLETAS', path:'/confiteria/galletas'},
-      {label:'CHOCOLATES', path:'/confiteria/chocolates'},
-      {label:'CHUPETES', path:'/confiteria/chupetes'},
-      {label:'GOMITAS', path:'/confiteria/gomitas'},
-      {label:'CARAMELOS', path:'/confiteria/caramelos'},
-      {label:'CHICLE', path:'/confiteria/chicle'},
-      {label:'SNAKS', path:'/confiteria/snaks'}
+      {label:'Galletas', path:'/confiteria/galletas'},
+      {label:'Chocolate', path:'/confiteria/chocolates'},
+      {label:'Chupete', path:'/confiteria/chupetes'},
+      {label:'Gomitas', path:'/confiteria/gomitas'},
+      {label:'Caramelos', path:'/confiteria/caramelos'},
+      {label:'Chicle', path:'/confiteria/chicle'},
+      {label:'Snack', path:'/confiteria/snaks'}
     ]
 
   },
