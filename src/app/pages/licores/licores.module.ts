@@ -60,6 +60,12 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     NzButtonModule,
   NzIconModule,
     FormsModule,
+    CommonModule,
+    FormsModule,
+    NzMenuModule,
+    NzIconModule,
+    NzButtonModule,
+    NzPaginationModule,
    
   ],
   exports: [

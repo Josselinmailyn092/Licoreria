@@ -1,84 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../../../services/producto.service';
+import { ProductoBrandyService } from '../../../services/productoBrandy.service';
 import { Producto } from '../../../models/licores.models';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductoService } from '../../../services/producto.service';
+
 @Component({
   selector: 'app-brandy',
   templateUrl: './brandy.component.html',
-  styleUrl: './brandy.component.css'
+  styleUrls: ['./brandy.component.css'] // Nota: Usa styleUrls en lugar de styleUrl
 })
-export class BrandyComponent  implements OnInit{
+export class BrandyComponent implements OnInit {
   selectedCategory: string | null = null;
-  marcas : any[] =[];
-  marcasCantidad: any []=[];
+  marcas: any[] = [];
+  marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
-  categorias: any[] =[];
-  selectedCategoria:string | null =null;
-  presentaciones : any[] =[];
-  presentacionesCantidad : any[]=[];
+  categorias: any[] = [];
+  selectedCategoria: string | null = null;
+  presentaciones: any[] = [];
+  presentacionesCantidad: any[] = [];
   productos: Producto[] = [];
-  productosOriginales:Producto[] =[];
+  productosOriginales: Producto[] = [];
   productosPaginados: Producto[] = [];
   productosPorPagina: number = 8;
   totalProductos = 100;
-   paginaActual = 1;
+  paginaActual = 1;
   selectedMarca: string = '';
-  selectedPresentacion: number =0;
+  selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
-  selectedSubMenu:string ='Brandy';
-  
-  constructor(private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
+  selectedSubMenu: string = 'Brandy';
+
+  constructor(private productoBrandyService: ProductoBrandyService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-// obtener categria de licores
-this.productoService.getTiposLicores().subscribe((data) =>{
-  this.tiposLicores = data;
-})
+    // Obtener categorias de licores
+    this.productoService.getTiposLicores().subscribe((data) => {
+      this.tiposLicores = data;
+    });
 
-// Obtenr cantidad de las categoria de licores 
-this.productoService.getCategoriasConCantidad().subscribe((data) =>{
-  this.categorias =data;
-})
+    // Obtener cantidad de las categorias de licores
+    this.productoService.getCategoriasConCantidad().subscribe((data) => {
+      this.categorias = data;
+    });
 
-    // Obtener marcas desde la API 
-    this.productoService.getMarcas().subscribe((data) => {
-      this.marcas = data.map((marca) => marca.nombreMarca) //Indica solo los nombres de las marcas
-    })
+    // Obtener marcas desde la API
+    this.productoBrandyService.getMarcasBrandy().subscribe((data) => {
+      this.marcas = data.map((marca) => marca.nombreMarca); // Indica solo los nombres de las marcas
+    });
 
-    // contar cantidad de marcas disponibles
-    this.productoService.getCountMarcas().subscribe((data) => {
+    // Contar cantidad de marcas disponibles
+    this.productoBrandyService.getCountMarcasBrandy().subscribe((data) => {
       this.marcasCantidad = data; // Data tendrá el formato [{nombreMarca: 'Macallan', cantidad: 5}, ...]
     });
 
-    // Obtener productos desde la API 
-    this.productoService.getAllProducts().subscribe((data) => {
-      this.productosOriginales = data; //asignar los productos obtenidos a la lista local
-      this.productos = [...data]
-      this.cambiarPagina(this.paginaActual); //configurar paginación
+    // Obtener productos desde la API
+    this.productoBrandyService.getAllProductBrandy().subscribe((data) => {
+      this.productosOriginales = data; // Asignar los productos obtenidos a la lista local
+      this.productos = [...data];
+      this.cambiarPagina(this.paginaActual); // Configurar paginación
     });
 
-
-    // Obtenr presentaciones desde la API 
-    this.productoService.getPresentaciones().subscribe((data)=>{
+    // Obtener presentaciones desde la API
+    this.productoBrandyService.getPresentacionesBrandy().subscribe((data) => {
       this.presentaciones = data;
     });
 
     // Cantidad de presentaciones disponibles
-    this.productoService.getPresentacionesConCantidad().subscribe((data) => {
-      this.presentacionesCantidad = data; 
+    this.productoBrandyService.getPresentacionesBrandyCount().subscribe((data) => {
+      this.presentacionesCantidad = data;
     });
-  
-    
 
+    // Suscribirse a los cambios en la ruta
+    this.route.params.subscribe((params) => {
+      const category = params['category'];
+      if (category) {
+        this.selectedCategoria = this.capitalize(category);
+      }
+    });
 
-    
-  
-
- 
-    
-
-
-
+    // Suscribirse a la URL para cambiar el submenú
     this.route.url.subscribe((url) => {
       const subMenu = url[1] ? url[1].path : null;
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
@@ -88,10 +87,14 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
-   
+
   selectCategory(nombreCategoria: string): void {
-    this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-    this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    if (nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
+    } else {
+      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    }
   }
 
   resetCategory() {
@@ -109,15 +112,12 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
     }
   }
 
-
-  // Ver si hay productos disponibles 
   verificarProductosDisponibles(): void {
     if (this.productos.length === 0) {
       console.log('No hay productos disponibles para los filtros seleccionados.');
-      }
+    }
   }
-  
-  // Filtrar por marca
+
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
@@ -148,43 +148,34 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
     this.verificarProductosDisponibles();
     this.cambiarPagina(1); // Resetear a la primera página
   }
-  
-  
 
-  
-   // Filtrar por presentación
-   filtrarPorPresentacion(presentacion: number): void {
+  filtrarPorPresentacion(presentacion: number): void {
     console.log('Filtrando por presentación:', presentacion);
     this.selectedPresentacion = presentacion;
-  
+
     if (!presentacion) {
-      // Si no hay presentación seleccionada, aplica el filtro solo por marca
       if (this.selectedMarca) {
         this.productos = this.productosOriginales.filter((producto) =>
           producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
         );
       } else {
-        // Mostrar todos los productos si no hay presentación ni marca seleccionadas
         this.productos = [...this.productosOriginales];
       }
     } else {
-      // Filtrar por presentación (y por marca si está seleccionada)
       this.productos = this.productosOriginales.filter(
         (producto) => producto.presentacion_ml === presentacion
       );
-  
+
       if (this.selectedMarca) {
         this.productos = this.productos.filter((producto) =>
           producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
         );
       }
     }
-  
+
     this.verificarProductosDisponibles();
-    this.cambiarPagina(1); // Resetear a la primera página
+    this.cambiarPagina(1);
   }
-  
-  
 
   get totalPaginas(): number {
     return Math.ceil(this.totalProductos / this.productosPorPagina);
@@ -201,8 +192,6 @@ this.productoService.getCategoriasConCantidad().subscribe((data) =>{
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    }
+    
   }
-  
- 
-}
+}}

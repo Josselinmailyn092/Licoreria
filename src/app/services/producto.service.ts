@@ -25,6 +25,10 @@ export class ProductoService {
   getAllProducts():Observable<any[]>{
     return this.http.get<any[]>(`${this.apiUrl}/All`)
   }
+  getTiposLicores(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/categoria/tipos-licores');
+  }
+  
 
 // Método para obtener marcas desde ls API 
   getMarcas(): Observable<any[]>{
@@ -44,11 +48,8 @@ getPresentacionesConCantidad(): Observable<any[]> {
   getCountMarcas(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/marca/count');
   }
+ 
 
-  // api tipo de licores disponibles
-  getTiposLicores(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:3000/categoria/tipos-licores')
-  }
   // api contar tipo de licores 
   getCategoriasConCantidad(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/categoria/categorias-cantidad');

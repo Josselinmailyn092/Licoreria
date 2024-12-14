@@ -6,7 +6,6 @@ import { NosotrosComponent } from './nosotros/nosotros.component';
 import { ConfiteriaComponent } from './confiteria/confiteria.component';
 import { PromocionesComponent } from './promociones/promociones.component';
 import { links } from './links.config';
-
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Asegúrate de tener esto también
 import { FormsModule } from '@angular/forms';
@@ -15,6 +14,10 @@ import { NzButtonModule } from 'ng-zorro-antd/button'; // Si usas botones tambi�
 import { LicoresModule } from './licores/licores.module';
 import { WhiskeyComponent } from './licores/whiskey/whiskey.component';
 import { VodkaComponent } from './licores/vodka/vodka.component';
+
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,13 @@ import { VodkaComponent } from './licores/vodka/vodka.component';
     BrowserAnimationsModule, // Necesario para la funcionalidad de los componentes de NG Zorro
     NzButtonModule, // Solo si estás usando botones también  
     NzPaginationModule,
-    NzPaginationModule
+    NzPaginationModule,
+    BrowserAnimationsModule,
+    NzButtonModule,
+    NzCardModule,
+    NzCarouselModule,
+    NzCardModule,
+    NzGridModule
   ],
   exports: [
     

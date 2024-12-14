@@ -5,7 +5,7 @@
       <div class="logo">
         <img [src]="'assets/images/logochinito.jpg?version=1'" alt="Logo" style="width: 100%;" />
       </div>
-      <span class="title">LICORERIA EL CHINITO</span>
+      <span class="title">Licoreria el Chinito</span>
     </div>
 
     <div class="contenedor">
@@ -13,16 +13,17 @@
       <div class="nav-container" [ngClass]="{'menu-open': isMenuOpen}">
         <ul nz-menu nzTheme="light" nzMode="horizontal" class="nav-menu">
           <!-- Iteracion con ngFor sobre los enlaces de linksservice -->
-          <li class="menu-item"  *ngFor="let link of links" (click)="closeMenuAndNavigate(link.path)"> 
+          <li class="menu-item" 
+           *ngFor="let link of links"
+            (click)="closeMenuAndNavigate(link.path)"
+            [routerLinkActive]="'active-menu-item'"> 
             <a class="menu-link" [routerLink]="link.path">{{ link.label }}</a>
-           
           <!-- Submenú -->
-          <ul class="sub-menu" *ngIf="link.subMenu">
-            <!-- Itera un submenu si el enlace tiene un sub menu  -->
-            <li class="sub-menu-item" *ngFor="let subLink of link.subMenu">
-              <a [routerLink]="subLink.path">{{ subLink.label }}</a>
-            </li>
-          </ul>
+          <ul class="sub-menu" *ngIf="link.subMenu && link.subMenu.length">
+        <li class="sub-menu-item" *ngFor="let subItem of link.subMenu">
+          <a class="sub-menu-link" [routerLink]="subItem.path">{{ subItem.label }}</a>
+        </li>
+      </ul>
 
           </li>
         </ul>
