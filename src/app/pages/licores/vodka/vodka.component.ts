@@ -10,7 +10,7 @@ import { ProductoService } from '../../../services/producto.service';
   styleUrl: './vodka.component.css'
 })
 export class VodkaComponent implements OnInit {
-  selectedCategory: string | null = null;
+  selectedCategory: string | null = 'Vodka';
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
@@ -28,10 +28,13 @@ export class VodkaComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Vodka';
-
+  url='http://localhost:3000/uploads'; 
   constructor(private productoVodkaService: ProductoVodkaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+    this.selectedCategoria = 'Vodka'; // Establece la categoría activada por defecto
+    this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
+  
     // Obtener categorias de licores
     this.productoService.getTiposLicores().subscribe((data) => {
       this.tiposLicores = data;
@@ -54,9 +57,12 @@ export class VodkaComponent implements OnInit {
 
     // Obtener productos desde la API
     this.productoVodkaService.getAllProductVodka().subscribe((data) => {
-      this.productosOriginales = data; // Asignar los productos obtenidos a la lista local
-      this.productos = [...data];
-      this.cambiarPagina(this.paginaActual); // Configurar paginación
+      this.productosOriginales = data.map((producto) => ({ 
+        ...producto, 
+        imagenUrl: `${this.url}/${producto.imagen}` 
+      })); 
+      this.productos = [...this.productosOriginales]; 
+      this.cambiarPagina(this.paginaActual);
     });
 
     // Obtener presentaciones desde la API
@@ -89,13 +95,17 @@ export class VodkaComponent implements OnInit {
   }
 
   selectCategory(nombreCategoria: string): void {
-    if (nombreCategoria) {
-      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
-    } else {
-      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    if (this.selectedCategoria !== nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Actualiza la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega a la nueva categoría
+    } else if (nombreCategoria === 'Vodka') {
+      // Forzar recarga si ya estás en la categoría "Whiskey"
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+      });
     }
   }
+
   resetCategory() {
     this.selectedCategory = null;
   }

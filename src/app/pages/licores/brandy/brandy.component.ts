@@ -10,7 +10,7 @@ import { ProductoService } from '../../../services/producto.service';
   styleUrls: ['./brandy.component.css'] // Nota: Usa styleUrls en lugar de styleUrl
 })
 export class BrandyComponent implements OnInit {
-  selectedCategory: string | null = null;
+  selectedCategory: string | null = 'Brandy';
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
@@ -28,10 +28,15 @@ export class BrandyComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Brandy';
+  url='http://localhost:3000/uploads'; 
 
   constructor(private productoBrandyService: ProductoBrandyService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+
+    this.selectedCategoria = 'Brandy'; // Establece la categoría activada por defecto
+    this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
+  
     // Obtener categorias de licores
     this.productoService.getTiposLicores().subscribe((data) => {
       this.tiposLicores = data;
@@ -54,11 +59,13 @@ export class BrandyComponent implements OnInit {
 
     // Obtener productos desde la API
     this.productoBrandyService.getAllProductBrandy().subscribe((data) => {
-      this.productosOriginales = data; // Asignar los productos obtenidos a la lista local
-      this.productos = [...data];
-      this.cambiarPagina(this.paginaActual); // Configurar paginación
+      this.productosOriginales = data.map((producto) => ({ 
+        ...producto, 
+        imagenUrl: `${this.url}/${producto.imagen}` 
+      })); 
+      this.productos = [...this.productosOriginales]; 
+      this.cambiarPagina(this.paginaActual);
     });
-
     // Obtener presentaciones desde la API
     this.productoBrandyService.getPresentacionesBrandy().subscribe((data) => {
       this.presentaciones = data;
@@ -89,11 +96,14 @@ export class BrandyComponent implements OnInit {
   }
 
   selectCategory(nombreCategoria: string): void {
-    if (nombreCategoria) {
-      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
-    } else {
-      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    if (this.selectedCategoria !== nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Actualiza la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega a la nueva categoría
+    } else if (nombreCategoria === 'Brandy') {
+      // Forzar recarga si ya estás en la categoría "Whiskey"
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+      });
     }
   }
 

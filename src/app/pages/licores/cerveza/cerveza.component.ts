@@ -11,7 +11,7 @@ import { subscribe } from 'diagnostics_channel';
   styleUrls: ['./cerveza.component.css']
 })
 export class CervezaComponent implements OnInit{
-  selectedCategory: string | null = null;
+  selectedCategory: string | null = 'Cerveza';
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
@@ -29,9 +29,14 @@ export class CervezaComponent implements OnInit{
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Cerveza';
-
+  url='http://localhost:3000/uploads'; 
   constructor(private productoCervezaService: ProductoCervezaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
  ngOnInit(): void {
+
+  
+  this.selectedCategoria = 'Cerveza'; // Establece la categoría activada por defecto
+  this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
+
     // Obtener categorias de licores
     this.productoService.getTiposLicores().subscribe((data) => {
       this.tiposLicores = data;
@@ -54,8 +59,11 @@ export class CervezaComponent implements OnInit{
 
     // Obtner productos desde la Api 
     this.productoCervezaService.getAllProductCerveza().subscribe((data)=>{
-      this.productosOriginales = data;
-      this.productos=[...data];
+      this.productosOriginales = data.map((producto) => ({ 
+        ...producto, 
+        imagenUrl: `${this.url}/${producto.imagen}` 
+      })); 
+      this.productos = [...this.productosOriginales]; 
       this.cambiarPagina(this.paginaActual);
     });
 
@@ -97,11 +105,14 @@ export class CervezaComponent implements OnInit{
   }
 
   selectCategory(nombreCategoria: string): void {
-    if (nombreCategoria) {
-      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
-    } else {
-      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    if (this.selectedCategoria !== nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Actualiza la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega a la nueva categoría
+    } else if (nombreCategoria === 'Cerveza') {
+      // Forzar recarga si ya estás en la categoría "Whiskey"
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+      });
     }
   }
 

@@ -9,7 +9,7 @@ import { Producto } from '../../../models/licores.models';
   styleUrl: './gin.component.css'
 })
 export class GinComponent implements OnInit {
-  selectedCategory: string | null = null;
+  selectedCategory: string | null = 'Gin';
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
@@ -27,9 +27,13 @@ export class GinComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Gin';
-
+  url='http://localhost:3000/uploads'; 
 constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router){}
  ngOnInit(): void {
+
+  this.selectedCategoria = 'Gin'; // Establece la categoría activada por defecto
+  this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
+
    // Obtener categorias de licores
    this.productoService.getTiposLicores().subscribe((data) => {
     this.tiposLicores = data;
@@ -52,9 +56,12 @@ constructor(private productoGinService: ProductoGinService,private productoServi
 
     // Obtener productos desde la API
     this.productoGinService.getAllProductGin().subscribe((data) => {
-      this.productosOriginales = data; // Asignar los productos obtenidos a la lista local
-      this.productos = [...data];
-      this.cambiarPagina(this.paginaActual); // Configurar paginación
+      this.productosOriginales = data.map((producto) => ({ 
+        ...producto, 
+        imagenUrl: `${this.url}/${producto.imagen}` 
+      })); 
+      this.productos = [...this.productosOriginales]; 
+      this.cambiarPagina(this.paginaActual);
     });
 
     // Obtener presentaciones desde la API
@@ -87,11 +94,14 @@ constructor(private productoGinService: ProductoGinService,private productoServi
   }
 
   selectCategory(nombreCategoria: string): void {
-    if (nombreCategoria) {
-      this.selectedCategoria = nombreCategoria; // Marca la categoría seleccionada
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega al componente correspondiente
-    } else {
-      console.error("Categoria seleccionada es inválida:", nombreCategoria);
+    if (this.selectedCategoria !== nombreCategoria) {
+      this.selectedCategoria = nombreCategoria; // Actualiza la categoría seleccionada
+      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega a la nueva categoría
+    } else if (nombreCategoria === 'Gin') {
+      // Forzar recarga si ya estás en la categoría "Whiskey"
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+      });
     }
   }
 

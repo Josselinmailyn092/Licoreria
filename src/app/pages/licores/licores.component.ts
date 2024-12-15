@@ -28,6 +28,7 @@ export class LicoresComponent implements OnInit {
   selectedPresentacion: number =0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Licores';
+  url='http://localhost:3000/uploads'; 
 
   constructor(private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
@@ -59,10 +60,14 @@ this.productoService.getCategoriasConCantidad().subscribe((data) => {
 
     // Obtener productos desde la API 
     this.productoService.getAllProducts().subscribe((data) => {
-      this.productosOriginales = data; //asignar los productos obtenidos a la lista local
-      this.productos = [...data]
-      this.cambiarPagina(this.paginaActual); //configurar paginación
+      this.productosOriginales = data.map((producto) => ({ 
+        ...producto, 
+        imagenUrl: `${this.url}/${producto.imagen}` 
+      })); 
+      this.productos = [...this.productosOriginales]; 
+      this.cambiarPagina(this.paginaActual);
     });
+    
 
 
     // Obtenr presentaciones desde la API 

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactoComponent } from './contacto/contacto.component';
 import { HomeComponent } from './home/home.component';
@@ -18,12 +18,14 @@ import { VodkaComponent } from './licores/vodka/vodka.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n'; import { registerLocaleData } from '@angular/common'
+import en from '@angular/common/locales/en';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import {  ArrowRightOutline } from '@ant-design/icons-angular/icons';
+const icons = [ ArrowRightOutline];
 @NgModule({
   declarations: [
-    
     HomeComponent,
-
     ConfiteriaComponent,
     PromocionesComponent,
     NosotrosComponent,
@@ -44,11 +46,14 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzCardModule,
     NzCarouselModule,
     NzCardModule,
-    NzGridModule
+    NzGridModule,
+    NzIconModule.forRoot(icons),
   ],
   exports: [
     
-    ]
+    ],
+    providers: [{ provide: NZ_I18N, useValue: en_US }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule { 
   links = links;

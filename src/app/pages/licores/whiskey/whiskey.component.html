@@ -9,10 +9,12 @@
           <div class="menu-columns">
             <nz-menu-item
   *ngFor="let categoria of categorias"
-  [ngClass]="{'active': selectedCategoria === categoria.nombreCategoria}"
+  [ngClass]="{'active': selectedCategoria === categoria.Categoria}"
   (click)="selectCategory(categoria.Categoria)"
   [routerLink]="['/', categoria.Categoria]">
-  {{ categoria.Categoria }} ({{ categoria.TotalProductos }})
+  <span class="circle-indicator" [ngClass]="{'selected': selectedCategoria === categoria.Categoria}"></span>
+ <span class="category-name">{{ categoria.Categoria }}</span>
+  <span class="item-count"  [ngClass]="{'selected': selectedCategoria === categoria.Categoria}">{{ categoria.TotalProductos }}</span>
 </nz-menu-item>
 
             
@@ -26,7 +28,10 @@
       <nz-menu nzMode="vertical" nzTheme="light">
         <nz-submenu nzTitle="Marcas">
           <div class="menu-columns menu-columns-scrollable">
-            <nz-menu-item *ngFor="let marca of marcasCantidad" (click)="filtrarPorMarca(marca.nombreMarca)" [ngClass]="{'active-item': selectedMarca === marca.nombreMarca}">{{marca.nombreMarca}} ({{marca.cantidad}})</nz-menu-item>
+            <nz-menu-item *ngFor="let marca of marcasCantidad" (click)="filtrarPorMarca(marca.nombreMarca)" [ngClass]="{'active-item': selectedMarca === marca.nombreMarca}">{{marca.nombreMarca}}
+              
+              <span class="item-count">{{ marca.cantidad }}</span>
+            </nz-menu-item>
           </div>
         </nz-submenu>
       </nz-menu>
@@ -35,10 +40,11 @@
       <!-- Título del componente -->
       <nz-menu nzMode="vertical" nzTheme="light">
         <nz-submenu nzTitle="presentaciones">
-          <div class="menu-columns">
+          <div class="menu-columns menu-columns-scrollable">
             <nz-menu-item *ngFor="let presentacion of presentacionesCantidad" (click)="filtrarPorPresentacion(presentacion.presentacion_ml)" [ngClass]="{'active-item': selectedPresentacion === presentacion.presentacion_ml}"
   
-            >{{ presentacion.presentacion_ml}}ml ({{presentacion.cantidad}})</nz-menu-item>
+            >{{ presentacion.presentacion_ml}}ml 
+            <span class="item-count">{{ presentacion.cantidad }}</span></nz-menu-item>
           </div>
         </nz-submenu>
       </nz-menu>
@@ -118,23 +124,43 @@
     </div>
 
     <!-- Paginación -->
-    <div class="custom-pagination-row">
-      <!-- Botón para ir a la página anterior -->
-      <button nz-button nzType="default" [disabled]="paginaActual === 1" (click)="cambiarPagina(paginaActual - 1)">
-        <i nz-icon nzType="double-left" nzTheme="outline"></i>
-      </button>
+    <!-- Paginación -->
+<div class="custom-pagination-row">
+  <!-- Botón para ir a la página anterior -->
+  <button
+    nz-button
+    nzType="default"
+    class="pagination-button"
+    [disabled]="paginaActual === 1"
+    (click)="cambiarPagina(paginaActual - 1)"
+  >
+    <i nz-icon nzType="double-left" nzTheme="outline"></i>
+  </button>
 
-      <!-- Botones de número de página -->
-      <span *ngFor="let pagina of paginas">
-        <button nz-button nzType="link" [class.active]="pagina === paginaActual" (click)="cambiarPagina(pagina)">
-          {{ pagina }}
-        </button>
-      </span>
+  <!-- Botones de número de página -->
+  <span *ngFor="let pagina of paginas">
+    <button
+      nz-button
+      nzType="default"
+      class="pagination-button"
+      [ngClass]="{'active': pagina === paginaActual}"
+      (click)="cambiarPagina(pagina)"
+    >
+      {{ pagina }}
+    </button>
+  </span>
 
-      <!-- Botón para ir a la página siguiente -->
-      <button nz-button nzType="default" [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)">
-        <i nz-icon nzType="double-right" nzTheme="outline"></i>
-      </button>
-    </div>
+  <!-- Botón para ir a la página siguiente -->
+  <button
+    nz-button
+    nzType="default"
+    class="pagination-button"
+    [disabled]="paginaActual === totalPaginas"
+    (click)="cambiarPagina(paginaActual + 1)"
+  >
+    <i nz-icon nzType="double-right" nzTheme="outline"></i>
+  </button>
+</div>
+
   </div>
 </div>
