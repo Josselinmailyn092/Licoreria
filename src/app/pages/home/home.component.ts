@@ -36,7 +36,7 @@ export class HomeComponent  {
   }
 
   redirectToWhatsApp(): void {
-    window.open('https://wa.me/1234567890', '_blank'); // Cambia el número de WhatsApp
+    window.open('https://wa.link/iecfyy', '_blank'); // Cambia el número de WhatsApp
   }
 
   navigateToCategory(route: string): void {
