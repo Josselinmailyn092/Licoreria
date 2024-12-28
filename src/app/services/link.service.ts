@@ -17,8 +17,7 @@ export class LinkService {
     { path: '/licores', label: 'Licores' },
     { path: '/confiteria', label: 'Confiteria' },
     { path: '/promociones', label: 'Promociones' },
-    { path: '/nosotros', label: 'Nosotros' },
-    { path: '/contacto', label: 'Contacto' }
+    { path: '/nosotros', label: 'Nosotros' }
   ];
 
   // devuleve array de enlaces de links 

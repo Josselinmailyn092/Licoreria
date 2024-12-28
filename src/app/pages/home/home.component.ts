@@ -1,14 +1,14 @@
-import { Component, OnChanges,OnDestroy,OnInit,SimpleChanges,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
-
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent  {
+export class HomeComponent implements OnInit {
   @ViewChild('categoryCarousel', { static: false }) categoryCarousel!: NzCarouselComponent;
   animationActive: boolean = false;
   categories: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
@@ -16,20 +16,114 @@ export class HomeComponent  {
   categoryText: string = this.categories[this.currentCategoryIndex];
   private categoryInterval: any;
 
+  chunkedProducts: any[] = [];
+  featuredProducts: any[] = [];
   showWhatsAppPopup: boolean = false;
-  categorias = [
-    { name: 'Licores', products: 42, color: '#881f06', image: 'assets/images/brandy.jpeg', route: '/licores' },
-    { name: 'Confitería', products: 18, color: '#FF5F00', image: 'assets/images/confiteria.png', route: '/confiteria' },
-    { name: 'Whisky', products: 26, color: '#AA2202', image: 'assets/images/whisky.png', route: '/whisky' },
-    { name: 'Gin', products: 15, color: '#FFB164', image: 'assets/images/gin.png', route: '/gin' },
-    { name: 'Brandy', products: 20, color: '#D72B00', image: 'assets/images/brandy.png', route: '/brandy' },
-    { name: 'Cerveza', products: 35, color: '#FF8326', image: 'assets/images/cerveza.png', route: '/cerveza' },
-    { name: 'Tequila', products: 12, color: '#FF4100', image: 'assets/images/tequila.png', route: '/tequila' },
-    { name: 'Vodka', products: 10, color: '#FF5F00', image: 'assets/images/vodka.png', route: '/vodka' },
-    { name: 'Vinos', products: 30, color: '#881F06', image: 'assets/images/vinos.png', route: '/vinos' }
-  ];
+  categorias: any[] = [];
+  paginatedProducts: any[] = [];
+  currentPage: number = 0;
+  pageSize: number = 4;
+  totalPages: number = 0;
+  url='http://localhost:3000/uploads'; 
+  constructor(private productoService: ProductoService, private router: Router) {}
+
+  ngOnInit() {
+    this.loadCategorias();
+    this.loadFeaturedProducts();
+  }
+
+  loadCategorias(): void {
+    this.productoService.getCategoriasConCantidad().subscribe(
+      (data) => {
+        this.categorias = data.map((item: any) => ({
+          name: item.Categoria,
+          products: item.TotalProductos,
+          color: this.getCategoryColor(item.Categoria),
+          image: this.getCategoryImage(item.Categoria),
+          route: `${item.Categoria.toLowerCase()}`
+        }));
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+  loadFeaturedProducts(): void {
+    this.productoService.getProductosDestacados().subscribe(
+      (data) => {
+        this.featuredProducts = data.map((producto: any) => ({
+          ...producto,
+          imagenUrl: `${this.url}/${producto.imagen}`
+        }));
+        this.totalPages = Math.ceil(this.featuredProducts.length / this.pageSize);
+        this.updatePaginatedProducts();
+      },
+      (error) => {
+        console.error('Error fetching featured products:', error);
+      }
+    );
+  }
+
+
+  updatePaginatedProducts(): void {
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedProducts = this.featuredProducts.slice(start, end);
+  }
   
-  constructor(private router: Router) {}
+   nextPage(): void {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePaginatedProducts();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePaginatedProducts();
+    }
+  }
+
+
+ 
+  
+
+  getCategoryColor(category: string): string {
+    const colors: { [key: string]: string } = {
+      Licores: '#881f06',
+      Whiskey: '#AA2202',
+      Gin: '#FFB164',
+      Brandy: '#D72B00',
+      Cerveza: '#FF8326',
+      Tequila: '#FF4100',
+      Vodka: '#FF5F00',
+      Vinos: '#881F06'
+    };
+    return colors[category] || '#FFFFFF';
+  }
+
+  getCategoryImage(category: string): string {
+    const images: { [key: string]: string } = {
+      Licores: 'assets/images/brandy.jpeg',
+      Whiskey: 'assets/images/Whiskey.jpg',
+      Gin: 'assets/images/Gin.png',
+      Brandy: 'assets/images/brandy.jpeg',
+      Cerveza: 'assets/images/cerveza.jpg',
+      Tequila: 'assets/images/tequila.jpg',
+      Vodka: 'assets/images/vodka.png',
+      Vinos: 'assets/images/vino.jpg'
+    };
+    return images[category] || 'assets/images/default.jpg';
+  }
+
+  chunkFeaturedProducts() {
+    const chunkSize = 4;
+    this.chunkedProducts = [];
+    for (let i = 0; i < this.featuredProducts.length; i += chunkSize) {
+      this.chunkedProducts.push(this.featuredProducts.slice(i, i + chunkSize));
+    }
+  }
 
   toggleWhatsAppPopup(): void {
     this.showWhatsAppPopup = !this.showWhatsAppPopup;
@@ -51,11 +145,9 @@ export class HomeComponent  {
     this.categoryCarousel?.next(); // Navegar hacia la derecha
   }
 
-
   goToLiquor(): void {
     this.router.navigate(['/licores']); // Redirige al componente de licores
   }
-
 
   testimonials = [
     {

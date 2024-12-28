@@ -328,7 +328,7 @@
 
 .arrow {
   position: absolute;
-  top: 30%;
+  top: 65%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
@@ -348,11 +348,11 @@
 }
 
 .left-arrow {
-  left: 10px;
+  left: 0;
 }
 
 .right-arrow {
-  right: 10px;
+  right: 0;
 }
 
 
@@ -395,10 +395,182 @@
   animation: fade-in-out 3s infinite;
 }
 
+@keyframes fade-in-out {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Producos destacados */
+.products-container {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #ffb064;
+  position: relative; /* For arrow positioning */
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #a92203;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nz-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.carousel-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap; /* Ensure one row */
+}
+
+.product-card {
+  background-color: #fff;
+  border: 1px solid #ff8226;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.buy-button-container {
+  margin-top: 1rem;
+}
+
+.buy-button {
+  background-color: #ff5e00;
+  border-color: #ff4000;
+  color: #fff;
+  width: 100%;
+}
+
+.buy-button:hover {
+  background-color: #d72b00;
+  border-color: #a92203;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow:hover {
+  background-color: #ff5e00;
+}
+
+.carousel-arrow-left {
+  left: 10px;
+}
+
+.carousel-arrow-right {
+  right: 10px;
+}
+
+/* Aviso de llamado de acción  */
+.cta-divider {
+  width: 50%;
+  height: 2px;
+  background-color: #a92203;
+  margin: 1rem auto;
+  border: none;
+}
+
+.cta-section {
+  background-color: transparent; /* Fondo cálido que combina con la sección anterior */
+  text-align: center;
+  padding: 2rem 1rem; /* Espaciado interno para una apariencia limpia */
+  border-radius: 12px; /* Bordes redondeados para suavizar el diseño */
+  margin: 2rem 1rem; /* Espaciado externo para separación */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de elevación */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease-out;
+}
 
 
+.cta-section h2 {
+  font-size: 2rem;
+  color: #a92203; /* Color principal para el texto */
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
 
+.cta-section button {
+  background-color: #ff5e00;
+  border-color: #a92203;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
+.cta-section button:hover {
+  background-color: #d72b00;
+  border-color: #a92203;
+  transform: scale(1.05); /* Pequeña animación de escala */
+}
+
+.cta-section button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 94, 0, 0.3); /* Resalte accesible */
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
   @media (max-width: 768px) {
     .home-container{
@@ -465,26 +637,12 @@
     padding: 10px 20px; /* Reducir el tamaño del botón */
   }
 
-  .pain-points-list, .benefits-list {
-    grid-template-columns: 1fr; /* Una columna en dispositivos más pequeños */
-  }
-
-  .pain-point, .benefit {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .pain-point-img, .benefit-img {
-    width: 60px;
-    height: 60px;
-  }
 
 /* Estilo Categorias  */
 
 .carousel-container {
   width: 90%;
-  height: 990px;
+  height: 795px;
  
 }
 
@@ -526,17 +684,82 @@
   display: none;
 }
 
-
-.left-arrow {
-  left: 10px;
+.product-card {
+  margin: 10px 0;
 }
 
-.right-arrow {
-  right: 10px;
+.product-image {
+  height: 80px;
 }
 
-    }
+/* Contenedor de productos destacados  */
+.products-container {
+  padding: 1rem 0.5rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-row {
+  flex-wrap: wrap; /* Permitir que los elementos ocupen múltiples filas */
+  justify-content: center; /* Centrar elementos */
+}
+
+.product-card {
+  width: 90px; /* Reducir tamaño de las tarjetas */
+  margin: 0.5rem; /* Agregar espacio entre tarjetas */
+}
+
+/* Productos destacados  */
+  .products-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .carousel-row {
+    flex-wrap: wrap; /* Permitir varias filas */
+    justify-content: center;
+  }
+
+  .product-card {
+    max-width: 150px; /* Reducir tamaño de las tarjetas */
+    margin: 0.5rem;
+  }
+
+  .product-image {
+    height: 100px; /* Ajustar altura de la imagen */
+  }
+
+  .buy-button {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .carousel-arrow {
+    width: 30px;
+    height: 30px;
+  }
+
+  .carousel-arrow-left {
+    left: 5px;
+  }
+
+  .carousel-arrow-right {
+    right: 5px;
+  }
+
+
+
+
+}
   
+
+
 /* Responsivo para pantallas muy pequeñas (350px o menos) */
 @media (max-width: 350px) {
   /* Ajustar el contenedor del carrusel */
@@ -570,8 +793,5 @@
     font-size: 24px;
   }
 
-  .pain-point p, .benefit p {
-    font-size: 16px;
-  }
 }
 

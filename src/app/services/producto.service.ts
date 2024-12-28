@@ -25,6 +25,7 @@ export class ProductoService {
   getAllProducts():Observable<any[]>{
     return this.http.get<any[]>(`${this.apiUrl}/All`)
   }
+  
   getTiposLicores(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/categoria/tipos-licores');
   }
@@ -63,5 +64,9 @@ getPresentacionesConCantidad(): Observable<any[]> {
 
   deleteProducto(id_producto: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id_producto}`);
+  }
+  // Productos destacados 
+  getProductosDestacados(): Observable<any[]>{
+    return this.http.get<any[]>('http://localhost:3000/producto/destacados')
   }
 }

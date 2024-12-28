@@ -2,6 +2,7 @@
   display: flex;
   padding: 20px;
   margin-top: 80px;
+
 }
 
 
@@ -119,12 +120,13 @@ nz-menu-item.active {
     margin-right: 100px;
 }
 
+
 .licores-header {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 0;   
-    height: 25%;
+    max-height: 25%;
     width: 100%;
     margin-bottom: 20px;
     padding: 0;

@@ -1,1 +1,38 @@
-<p>promociones works!</p>
+
+<nz-card class="promociones-container">
+  <!-- Encabezado -->
+  <div class="promociones-header">
+    <h2>¡Promociones Exclusivas!</h2>
+    <p>Descubre nuestras mejores ofertas por tiempo limitado.</p>
+  </div>
+
+  <!-- Promoción destacada -->
+  <nz-card *ngIf="promocionDestacada" class="promocion-destacada" [nzBordered]="true">
+    <nz-card-meta
+      [nzTitle]="promocionDestacada.nombrePromocion"
+      [nzDescription]="'Descuento: ' + (promocionDestacada.descuento * 100) + '%'"
+    ></nz-card-meta>
+    <img
+      class="promocion-img"
+      [src]="promocionDestacada.imagen "
+      [alt]="promocionDestacada.nombrePromocion"
+    />
+    <button nz-button nzType="primary" class="cta-btn">Agregar al carrito</button>
+  </nz-card>
+  
+  
+
+  
+
+  <!-- Listado de promociones -->
+  <div class="promociones-grid">
+    <nz-card *ngFor="let promo of promociones" [nzBordered]="true">
+      <img class="promo-img" [src]="promo.imagen" [alt]="promo.nombrePromocion" />
+      <nz-card-meta
+        [nzTitle]="promo.nombrePromocion"
+        [nzDescription]="'Precio: $' + promo.precio"
+      ></nz-card-meta>
+      <button nz-button nzType="default" class="cta-btn">Ver más</button>
+    </nz-card>
+  </div>
+</nz-card>

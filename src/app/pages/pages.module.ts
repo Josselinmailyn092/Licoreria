@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactoComponent } from './contacto/contacto.component';
 import { HomeComponent } from './home/home.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
 import { ConfiteriaComponent } from './confiteria/confiteria.component';
@@ -22,19 +21,20 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n'; import { registerLocaleData
 import en from '@angular/common/locales/en';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import {  ArrowRightOutline } from '@ant-design/icons-angular/icons';
+import { ConfiteriaModule } from './confiteria/confiteria.module';
 const icons = [ ArrowRightOutline];
 @NgModule({
   declarations: [
     HomeComponent,
-    ConfiteriaComponent,
+    
     PromocionesComponent,
-    NosotrosComponent,
-    ContactoComponent,
+    NosotrosComponent
   ],
   imports: [
     
     CommonModule,
     LicoresModule,
+    ConfiteriaModule,
     FormsModule,
     NzSelectModule, // Para los selects
     BrowserAnimationsModule, // Necesario para la funcionalidad de los componentes de NG Zorro

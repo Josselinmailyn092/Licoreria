@@ -51,12 +51,7 @@ private subMenuItems =[
     label:'Nosotros',
     path:'/nosotros',
     subMenu: []
-  },
-  {
-    label:'Contacto',
-    path:'/contacto',
-    subMenu: []
-  },
+  }
 ];
 
 geSubMenuItems() {
