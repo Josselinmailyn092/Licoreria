@@ -27,11 +27,11 @@ export class HeaderComponent implements OnInit {
 
   // Modal de búsqueda
   ModalBuscar: boolean = false;
+  menuItems: any[] = []; // Aquí almacenaremos los items del menú principal con submenús
 
   // Caena de texto para busqueda 
   search: string = ''; 
- 
-
+  isSideMenuOpen = false;
   constructor(private linkService: LinkService, private router: Router,private subMenu: SubmenuService) {}
 
   // Método ngOnInit se ejecuta al inicializar el componente.
@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit {
 
     //obtener links del sub menu
     this.links = this.subMenu.geSubMenuItems();
+    this.menuItems = this.subMenu.geSubMenuItems();
 
   }
 
@@ -60,6 +61,10 @@ export class HeaderComponent implements OnInit {
   // Método para abrir/cerrar el menú
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleSideMenu(){
+    this.isSideMenuOpen = !this.isSideMenuOpen;
   }
 
    // Método para cerrar el menú y redirigir al enlace correspondiente

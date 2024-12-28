@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // Asegúrate de importar RouterModule aquí
 
 import { PagesModule } from './pages/pages.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { SearchOutline, ShoppingCartOutline, MenuOutline } from '@ant-design/icons-angular/icons'; const icons = [SearchOutline, ShoppingCartOutline, MenuOutline];
 registerLocaleData(en);
 
@@ -41,6 +41,7 @@ registerLocaleData(en);
     HttpClientModule // Asegúrate de crear este módulo si es necesario
   ],
   providers: [
+    provideHttpClient(withFetch())
    
   
    

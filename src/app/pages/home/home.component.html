@@ -1,1 +1,169 @@
+<div class="home-container">
 
+  <div class="whatsapp-container">
+    <button class="whatsapp-button" (click)="toggleWhatsAppPopup()">
+      <img src="assets/images/whatsapp.png" alt="WhatsApp Icon" width="80" height="80">
+    </button>
+  
+    <div class="whatsapp-popup" *ngIf="showWhatsAppPopup">
+      <div class="popup-header">
+        <span>WhatsApp</span>
+        <button (click)="toggleWhatsAppPopup()">✖</button>
+      </div>
+      <div class="popup-body">
+        <p>¡Hola! ¿En qué podemos ayudarte?</p>
+        <button class="chat-button" (click)="redirectToWhatsApp()">
+          Ir al chat <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <nz-carousel
+  [nzAutoPlay]="true"
+  [nzEffect]="'scrollx'"
+  [nzAutoPlaySpeed]="3000" 
+  class="full-screen-carousel">
+  <!-- Slide 1 -->
+  <div nz-carousel-content>
+    <div 
+      class="carousel-item" 
+      [ngClass]="animationActive ? 'animation-card1' : ''" 
+    >
+      <img [src]="'assets/images/slide2.jpg'" alt="Slide 1">
+      <div class="carousel-caption">
+        <div class="welcome-section">
+          <h1 class="welcome-title">¡Bienvenido a Licorería El Chinito!</h1>
+          <p class="welcome-text">
+            Descubre nuestra selección de licores de alta calidad, perfecta para cualquier ocasión. 
+            Celebremos juntos con estilo y sabor.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<!-- Slide 2 -->
+<div nz-carousel-content>
+  <div class="carousel-item" [ngClass]="animationActive ? 'animate-card2' : ''">
+    <img [src]="'assets/images/slide3.jpg'" alt="Slide 2">
+    <div class="carousel-caption2">
+      <div class="card2-section">
+        <h1 class="card2-title">Toda la web -10% de descuento</h1>
+        <p class="card2-text">Ve a comprar y aprovecha esta oferta exclusiva en productos seleccionados.</p>
+        <button class="btn-shop" (click)="goToLiquor()">Ir a Licorería</button>
+      </div>
+    </div>
+  </div>
+</div>
+</nz-carousel>
+
+<!-- Ver categorias disponibles -->
+<div class="carousel-container">
+  <h1>Categorias</h1>
+  <p class="descubre">Descubre nuestras categorias</p>
+  <!-- Flecha izquierda -->
+  <button class="arrow left-arrow" (click)="prev()">
+    <i nz-icon nzType="left" nzTheme="outline"></i>
+  </button>
+
+  <!-- Carrusel -->
+  <nz-carousel
+    [nzEffect]="'scrollx'"
+    [nzDots]="false"
+    [nzAutoplay]="true"
+    [nzAutoplaySpeed]="3000"
+    [nzSwiping]="true"
+    [nzArrow]="true"
+    [nzInfinite]="true"
+    #categoryCarousel
+  >
+    <div nz-carousel-content>
+      <div class="horizontal-container">
+        <div *ngFor="let category of categorias" class="horizontal-item">
+          <div 
+            (click)="navigateToCategory(category.route)"
+            [ngStyle]="{ 'background-color': category.color }"
+            class="category-card"
+          >
+            <img [src]="category.image" alt="{{ category.name }}" class="category-image" />
+            <div class="category-info">
+              <h3>{{ category.name }}</h3>
+              <p>{{ category.products }} productos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nz-carousel>
+
+  <!-- Flecha derecha -->
+  <button class="arrow right-arrow" (click)="next()">
+    <i nz-icon nzType="right" nzTheme="outline"></i>
+  </button>
+</div>
+
+
+
+  
+
+<div class="container">
+  <div class="brand-logo">
+    <img [src]="'assets/images/Licores.png'" alt="Licores">
+  </div>
+  <div class="text-content">
+    <span>Encuentra aquí </span>
+    <span class="category" id="dynamic-text">{{ categoryText }}</span>
+    <span>...</span>
+  </div>
+</div>
+
+<!-- <Productos destacados -->
+  <div class="products-container">
+    <h2 class="title">Productos Destacados</h2>
+    <button
+      class="carousel-arrow carousel-arrow-left"
+      (click)="prevPage()"
+      [disabled]="currentPage === 0"
+    >
+      &#9664;
+    </button>
+    <div nz-row [nzGutter]="16" class="carousel-row">
+      <div nz-col nzSpan="6" *ngFor="let product of paginatedProducts">
+        <nz-card [nzBordered]="false" class="product-card">
+          <img
+            [src]="product.imagenUrl"
+            [alt]="product.nombreProducto"
+            class="product-image"
+          />
+          <nz-card-meta
+            [nzTitle]="product.nombreProducto"
+            [nzDescription]="'$' + product.precio + ' / ' + product.presentacion_ml + 'ml'"
+          ></nz-card-meta>
+          <div class="buy-button-container">
+            <button nz-button nzType="primary" class="buy-button">Comprar ahora</button>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <button
+      class="carousel-arrow carousel-arrow-right"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages - 1"
+    >
+      &#9654;
+    </button>
+  </div>
+    
+    <!-- Sección: Call to Action -->
+    <div class="cta-section">
+      <hr class="cta-divider">
+      <h2>¡Ven a visitarnos o haz tu pedido online!</h2>
+      <a href='https://wa.link/iecfyy' target="_blank" rel="noopener noreferrer">
+        <button nz-button nzType="primary" nzSize="large">Contáctanos</button>
+      </a>
+    </div>
+    
+    
+  </div>
+  

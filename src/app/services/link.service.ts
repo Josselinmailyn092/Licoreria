@@ -13,12 +13,11 @@ interface Link {
 export class LinkService {
   // links un array de objetos Link
   links: Link[] = [
-    { path: '/home', label: 'INICIO' },
-    { path: '/licores', label: 'LICORES' },
-    { path: '/confiteria', label: 'CONFITERIA' },
-    { path: '/promociones', label: 'PROMOCIONES' },
-    { path: '/nosotros', label: 'NOSOTROS' },
-    { path: '/contacto', label: 'CONTACTO' }
+    { path: '/home', label: 'Inicio' },
+    { path: '/licores', label: 'Licores' },
+    { path: '/confiteria', label: 'Confiteria' },
+    { path: '/promociones', label: 'Promociones' },
+    { path: '/nosotros', label: 'Nosotros' }
   ];
 
   // devuleve array de enlaces de links 

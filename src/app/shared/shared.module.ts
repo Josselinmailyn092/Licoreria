@@ -12,8 +12,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { FormsModule } from '@angular/forms';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NZ_ICONS, NzIconModule } from 'ng-zorro-antd/icon';
-import { ArrowDownOutline, MenuOutline, SearchOutline, ShoppingCartOutline } from '@ant-design/icons-angular/icons';
-const icons = [ShoppingCartOutline, MenuOutline,SearchOutline];
+import { ArrowDownOutline, MenuOutline, SearchOutline, ShoppingCartOutline, ArrowRightOutline } from '@ant-design/icons-angular/icons';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { FacebookOutline, InstagramOutline } from '@ant-design/icons-angular/icons'
+const icons = [ShoppingCartOutline, MenuOutline,SearchOutline, ArrowRightOutline,FacebookOutline, InstagramOutline];
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -33,7 +36,7 @@ const icons = [ShoppingCartOutline, MenuOutline,SearchOutline];
     NzDropDownModule,
     NzIconModule, 
     NzIconModule.forRoot(icons),
-    NzImageModule,NzPaginationModule
+    NzImageModule,NzPaginationModule,NzGridModule, NzInputModule
     
   ],
   providers: [

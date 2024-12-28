@@ -7,7 +7,6 @@ import {LicoresComponent} from './pages/licores/licores.component';
 import { ConfiteriaComponent } from './pages/confiteria/confiteria.component';
 import { PromocionesComponent } from './pages/promociones/promociones.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
-import { ContactoComponent } from './pages/contacto/contacto.component';
 import { CaramelosComponent } from './pages/confiteria/caramelos/caramelos.component';
 import { ChicleComponent } from './pages/confiteria/chicle/chicle.component';
 import { ChocolateComponent } from './pages/confiteria/chocolate/chocolate.component';
@@ -25,9 +24,7 @@ import { GinComponent } from './pages/licores/gin/gin.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'licores',component: LicoresComponent
-    
-    },
+  { path: 'licores',component: LicoresComponent },
     { path: 'licores', component: LicoresComponent },
     { path: 'vinos', component: VinosComponent },
     { path: 'cerveza', component: CervezaComponent },
@@ -37,10 +34,7 @@ const routes: Routes = [
     { path: 'tequila', component: TequilaComponent },
     { path: 'gin', component: GinComponent },
   
-  { 
-    path: 'confiteria',
-     component: ConfiteriaComponent ,
-     children: [
+  { path: 'confiteria',component: ConfiteriaComponent} ,
       { path: 'galletas', component: GalletasComponent },
       { path: 'chocolates', component: ChocolateComponent },
       { path: 'chupetes', component: ChupetesComponent },
@@ -49,14 +43,9 @@ const routes: Routes = [
       { path: 'chicle', component: ChicleComponent },
       { path: 'snaks', component: SnaksComponent },
       
-      
-      
-      
-    ]
-    },
+    
   { path: 'promociones', component: PromocionesComponent },
   { path: 'nosotros', component: NosotrosComponent },
-  { path: 'contacto', component: ContactoComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirecciona a /home por defecto
   { path: '**', redirectTo: '/home', pathMatch: 'full' } // Redirecciona a /home para rutas no encontradas
 ];

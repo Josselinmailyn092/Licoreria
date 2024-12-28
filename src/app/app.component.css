@@ -1,5 +1,27 @@
 /* styles.css */
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #F8F5F3; 
   }
+ 
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Toda la altura de la pantalla */
+  }
+  
+  .content {
+    flex: 1; /* El contenido toma el espacio necesario */
+    padding-bottom: 10px; /* Espacio suficiente para el footer */
+  }
+  
+  app-footer {
+    width: 100%;
+    position: relative;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 15px 0;
+    
+  }
+  
   

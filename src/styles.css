@@ -5,3 +5,7 @@ margin: 0; /* Elimina los márgenes */
   border: none; /* Elimina cualquier borde */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
 }
+body{
+  font-family: 'Mona Sans', sans-serif;
+  background-color: #F8F5F3; 
+}
