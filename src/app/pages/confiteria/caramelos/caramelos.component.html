@@ -88,7 +88,7 @@
               <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
               <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
             </div>
-            <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
+            <button nz-button nzType="primary" class="Boton-comprar"  (click)="agregarProductoAlCarrito(producto)">Comprar</button>
           </div>
         </div>
       </div>

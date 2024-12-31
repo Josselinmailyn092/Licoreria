@@ -23,8 +23,10 @@ import { TequilaComponent } from './pages/licores/tequila/tequila.component';
 import { GinComponent } from './pages/licores/gin/gin.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'licores',component: LicoresComponent },
+  { path: 'home', component: HomeComponent 
+  },
+  { path: 'licores',component: LicoresComponent
+   },
     { path: 'licores', component: LicoresComponent },
     { path: 'vinos', component: VinosComponent },
     { path: 'cerveza', component: CervezaComponent },

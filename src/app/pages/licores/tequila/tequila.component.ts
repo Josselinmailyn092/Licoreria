@@ -3,7 +3,7 @@ import { ProductoTequilaService } from '../../../services/productoTequila.servic
 import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-tequila',
   templateUrl: './tequila.component.html',
@@ -28,8 +28,9 @@ export class TequilaComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Tequila';
+  carrito: Producto[] = [];
   url='http://localhost:3000/uploads'; 
-  constructor(private productoTequilaService: ProductoTequilaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private productoTequilaService: ProductoTequilaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 
   ngOnInit(): void {
     this.selectedCategoria = 'Tequila'; // Establece la categoría activada por defecto
@@ -90,6 +91,11 @@ export class TequilaComponent implements OnInit {
     });
   }
 
+    // Carrito
+    agregarProductoAlCarrito(producto: Producto): void {
+      this.carritoService.agregarProducto(producto);
+    }
+    
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }

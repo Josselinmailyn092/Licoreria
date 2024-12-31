@@ -3,7 +3,7 @@ import { Producto } from '../../../models/licores.models';
 import { ProductoWhiskeyService } from '../../../services/productoWhiskey.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-whiskey',
   templateUrl: './whiskey.component.html',
@@ -28,9 +28,10 @@ export class WhiskeyComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Whiskey';
+  carrito: Producto[] = [];
   url='http://localhost:3000/uploads'; 
 
-  constructor(private productoWhiskeyService : ProductoWhiskeyService, private productoService: ProductoService ,private router: Router, private route: ActivatedRoute) {}
+  constructor(private productoWhiskeyService : ProductoWhiskeyService, private productoService: ProductoService ,private router: Router, private route: ActivatedRoute,private carritoService: CarritoService) {}
 
 
   ngOnInit(): void {
@@ -92,6 +93,10 @@ export class WhiskeyComponent implements OnInit {
     });
   }
 
+    // Carrito
+    agregarProductoAlCarrito(producto: Producto): void {
+      this.carritoService.agregarProducto(producto);
+    }
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }

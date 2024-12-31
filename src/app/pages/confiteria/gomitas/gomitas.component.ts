@@ -3,6 +3,7 @@ import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfiteriaService } from '../../../services/Confiteria.service';
 import { GomitasService } from '../../../services/gomitas.service';
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-gomitas',
   templateUrl: './gomitas.component.html',
@@ -26,9 +27,10 @@ export class GomitasComponent implements OnInit{
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Gomitas'
+  carrito: Producto[] = [];
   url='http://localhost:3000/uploads'; 
 
-    constructor( private confiteriaService: ConfiteriaService,private gomitasService : GomitasService,  private route: ActivatedRoute, private router: Router){}
+    constructor( private confiteriaService: ConfiteriaService,private gomitasService : GomitasService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
       ngOnInit(): void {
 
       // obtener categria de licores
@@ -81,6 +83,10 @@ export class GomitasComponent implements OnInit{
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
+    // Carrito
+    agregarProductoAlCarrito(producto: Producto): void {
+      this.carritoService.agregarProducto(producto);
+    }
 
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);

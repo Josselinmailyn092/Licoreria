@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
-// Inyección de servio link
-import { LinkService } from '../../services/link.service'; 
-// Inyeccion de servico
-import { SubmenuService } from '../../services/submenu.service';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-// Estructura de la interfaz link 
+import { Producto } from '../../models/licores.models';
+import { LinkService } from '../../services/link.service'; 
+import { SubmenuService } from '../../services/submenu.service';
+import { CarritoService } from '../../services/carrito.service';
+
 interface Link {
   path: string;
   label: string;
@@ -16,62 +14,92 @@ interface Link {
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'] // Corrección aquí
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  imagenLogo: string = 'assets/images/logo-chinito.jpg';
-  // Exportar clase 
+  
+
   links: Link[] = [];
-// Indica si el menu esta abierto o cerrado 
   isMenuOpen: boolean = false;
-
-  // Modal de búsqueda
   ModalBuscar: boolean = false;
-  menuItems: any[] = []; // Aquí almacenaremos los items del menú principal con submenús
+  search: string = '';
+//  Carrito
 
-  // Caena de texto para busqueda 
-  search: string = ''; 
-  isSideMenuOpen = false;
-  constructor(private linkService: LinkService, private router: Router,private subMenu: SubmenuService) {}
+isCarritoVisible: boolean = false; // Controla la visibilidad del modal
+carrito: Producto[] = [];
+total:number=0;
 
-  // Método ngOnInit se ejecuta al inicializar el componente.
+  constructor(
+    private linkService: LinkService,
+    private router: Router,
+    private subMenu: SubmenuService,
+    private carritoService : CarritoService
+  ) {}
+
   ngOnInit(): void {
-
-    // Obtener los enlaces desde el servicio
     this.links = this.linkService.getLinks();
 
-    //obtener links del sub menu
-    this.links = this.subMenu.geSubMenuItems();
-    this.menuItems = this.subMenu.geSubMenuItems();
-
+    this.carritoService.carrito$.subscribe((productos) => {
+      this.carrito = productos;
+      this.total = productos.reduce((total, producto) => total + producto.precio * producto.cantidad, 0);
+    });
+    
+    this.carritoService.total$.subscribe((total) => {
+      this.total = total;
+    });
+    
   }
 
-  // Método para abrir/cerrar el modal de búsqueda
   toggleSearchModal(): void {
     this.ModalBuscar = !this.ModalBuscar;
   }
 
-  // Método de búsqueda
   onSearch(): void {
     console.log('Buscando:', this.search);
-    // Cierra el modal después de buscar
     this.ModalBuscar = false;
   }
 
-  // Método para abrir/cerrar el menú
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  toggleSideMenu(){
-    this.isSideMenuOpen = !this.isSideMenuOpen;
+  closeMenuAndNavigate(path: string): void {
+    this.isMenuOpen = false;
+    this.router.navigate([path]);
   }
 
-   // Método para cerrar el menú y redirigir al enlace correspondiente
-   closeMenuAndNavigate(path: string): void {
-    this.isMenuOpen = false; // Cierra el menú al hacer clic
-    this.router.navigate([path]); // Redirige a la ruta seleccionada
+  // Carrito 
+  agregarProducto(producto: Producto): void {
+    this.carritoService.agregarProducto(producto);
   }
+
+  disminuirCantidad(producto:Producto):void{
+    this.carritoService.disminuirCantidad(producto);
+  }
+
+  eliminarProducto(productoId: number): void {
+    this.carritoService.eliminarProducto(productoId);
+  }
+   
+  abrirCarrito(): void {
+    this.isCarritoVisible = true;
+  }
+
+  cerrarCarrito(): void {
+    this.isCarritoVisible = false;
+  }
+
+  enviarPedidoPorWhatsApp(): void {
+    const mensaje = this.carrito.map(producto => 
+      `Hola buenas tardes me gustaria realizar un pedido :${producto.nombreProducto} (${producto.presentacion_ml} ml) - $${(producto.precio * 0.9).toFixed(2)}`
+    ).join('\n');
+    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`);
+  }
+
+  limpiarCarrito(): void {
+    this.carritoService.limpiarCarrito();
+  }
+  
 
   
 }

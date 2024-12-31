@@ -3,8 +3,7 @@ import { ProductoCervezaService } from '../../../services/productoCerveza.servic
 import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-import { subscribe } from 'diagnostics_channel';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-cerveza',
   templateUrl: './cerveza.component.html',
@@ -29,8 +28,10 @@ export class CervezaComponent implements OnInit{
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Cerveza';
+  carrito: Producto[] = [];
+
   url='http://localhost:3000/uploads'; 
-  constructor(private productoCervezaService: ProductoCervezaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private productoCervezaService: ProductoCervezaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
  ngOnInit(): void {
 
   
@@ -100,6 +101,10 @@ export class CervezaComponent implements OnInit{
     });
   }
 
+    // Carrito
+    agregarProductoAlCarrito(producto: Producto): void {
+      this.carritoService.agregarProducto(producto);
+    }
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
