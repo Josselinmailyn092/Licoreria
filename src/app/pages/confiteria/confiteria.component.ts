@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfiteriaService } from '../../services/Confiteria.service';
 import { Producto } from '../../models/licores.models';
-import { CarritoService } from '../../services/carrito.service';
+
 @Component({
   selector: 'app-confiteria',
   templateUrl: './confiteria.component.html',
@@ -25,11 +25,10 @@ export class ConfiteriaComponent implements OnInit {
   selectedMarca: string = '';
   selectedPresentacion: number =0;
   isCollapsed: boolean = false;
-  selectedSubMenu: string = 'Confiteria';
-  carrito: Producto[] = [];
+  selectedSubMenu: string = 'Licores';
   url='http://localhost:3000/uploads'; 
 
-   constructor( private confiteriaService: ConfiteriaService,private route: ActivatedRoute, private router: Router, private carritoService: CarritoService) {}
+   constructor( private confiteriaService: ConfiteriaService,private route: ActivatedRoute, private router: Router) {}
   
    ngOnInit(): void {
     // obtener categria de licores
@@ -76,10 +75,6 @@ this.confiteriaService.getCategoriasConCantidad().subscribe((data) => {
     });
   }
 
-    // Carrito
-    agregarProductoAlCarrito(producto: Producto): void {
-      this.carritoService.agregarProducto(producto);
-    }
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }

@@ -3,7 +3,6 @@ import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfiteriaService } from '../../../services/Confiteria.service';
 import { ChupetesService } from '../../../services/chupetes.service';
-import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-chupetes',
   templateUrl: './chupetes.component.html',
@@ -28,10 +27,9 @@ export class ChupetesComponent implements OnInit {
     selectedPresentacion: number = 0;
     isCollapsed: boolean = false;
     selectedSubMenu: string = 'Chupetes'
-    carrito: Producto[] = [];
     url='http://localhost:3000/uploads'; 
   
-      constructor( private confiteriaService: ConfiteriaService,private chupeteService : ChupetesService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
+      constructor( private confiteriaService: ConfiteriaService,private chupeteService : ChupetesService,  private route: ActivatedRoute, private router: Router){}
         ngOnInit(): void {
   
         // obtener categria de licores
@@ -84,10 +82,6 @@ export class ChupetesComponent implements OnInit {
         this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
       });
     }
-      // Carrito
-  agregarProductoAlCarrito(producto: Producto): void {
-    this.carritoService.agregarProducto(producto);
-  }
   
     private capitalize(text: string): string {
       return text.charAt(0).toUpperCase() + text.slice(1);

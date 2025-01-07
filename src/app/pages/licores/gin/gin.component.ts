@@ -3,7 +3,6 @@ import { ProductoGinService } from '../../../services/productoGin.service';
 import { ProductoService } from '../../../services/producto.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { Producto } from '../../../models/licores.models';
-import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-gin',
   templateUrl: './gin.component.html',
@@ -28,9 +27,8 @@ export class GinComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Gin';
-  carrito: Producto[] = [];
   url='http://localhost:3000/uploads'; 
-constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
+constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router){}
  ngOnInit(): void {
 
   this.selectedCategoria = 'Gin'; // Establece la categoría activada por defecto
@@ -90,11 +88,6 @@ constructor(private productoGinService: ProductoGinService,private productoServi
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
-
-    // Carrito
-    agregarProductoAlCarrito(producto: Producto): void {
-      this.carritoService.agregarProducto(producto);
-    }
 
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);

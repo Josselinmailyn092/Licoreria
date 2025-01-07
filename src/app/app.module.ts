@@ -22,20 +22,23 @@ registerLocaleData(en);
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
-    AppComponent
+    AppComponent,
    
   ],
   imports: [
     BrowserModule,NzIconModule.forRoot(icons),
-    AppRoutingModule, 
+    AppRoutingModule
+    , 
     FormsModule,
+    
     RouterModule,
     CoreModule,
     SharedModule,
     FeaturesModule,
     PagesModule,
+    
     FormsModule,
-    HttpClientModule,
+    HttpClientModule // Asegúrate de crear este módulo si es necesario
   ],
   providers: [
     provideHttpClient(withFetch())

@@ -1,6 +1,4 @@
 <div class="licores-container">
-  <app-cart></app-cart>
-
   <!-- Menu lateral -->
   <div class="side-menu">
     <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
@@ -59,8 +57,6 @@
       <img [src]="'assets/images/imagenLicores.jpg'" alt="Licor" class="header-image">
     </div>
 
-
-    <app-cart #carritoComponent [carrito]="carrito"></app-cart>
     <!-- Filtros y Opciones de Ordenamiento -->
     <div class="filters">
       <!-- Mostrar productos encontrados -->
@@ -123,11 +119,7 @@
             <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
             <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
           </div>
-          <button nz-button nzType="primary" class="Boton-comprar" (click)="agregarProductoAlCarrito(producto)">
-            Comprar
-          </button>
-          
-          
+          <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
         </div>
       </div>
     </div>
@@ -173,5 +165,3 @@
 
   </div>
 </div>
-
-<app-cart></app-cart>

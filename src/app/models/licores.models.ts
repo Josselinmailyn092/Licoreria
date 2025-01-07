@@ -1,8 +1,5 @@
 // producto.model.ts
 export interface Producto {
-    id:number
-    cantidad:number
-    
     nombreProducto: string;
     presentacion_ml: number;
     descripcion: string;

@@ -1,9 +1,8 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CarritoService } from '../../services/carrito.service';
 @Component({
   selector: 'app-licores',
   templateUrl: './licores.component.html',
@@ -29,20 +28,11 @@ export class LicoresComponent implements OnInit {
   selectedPresentacion: number =0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Licores';
-  carrito: Producto[] = [];
-
   url='http://localhost:3000/uploads'; 
 
-  constructor(
-    private productoService: ProductoService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private carritoService: CarritoService) {}
+  constructor(private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-
-   
-    
 // obtener categria de licores
 this.productoService.getTiposLicores().subscribe((data) =>{
   this.tiposLicores = data;
@@ -94,11 +84,6 @@ this.productoService.getCategoriasConCantidad().subscribe((data) => {
       const subMenu = url[1] ? url[1].path : null;
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
-  }
-
-  // Carrito
-  agregarProductoAlCarrito(producto: Producto): void {
-    this.carritoService.agregarProducto(producto);
   }
 
   private capitalize(text: string): string {
@@ -221,5 +206,4 @@ filtrarPorCategoria(categoria: string | null): void {
       console.log('Página actual:', this.paginaActual);
     
   }
-}
-}
+}}
