@@ -19,7 +19,7 @@
             </div>
           </nz-submenu>
         </nz-menu>
-  
+
         <h2 class="menu-titleMarca">MARCA</h2>
         <!-- Título del componente -->
         <nz-menu nzMode="vertical" nzTheme="light">
@@ -32,36 +32,36 @@
             </div>
           </nz-submenu>
         </nz-menu>
-  
-      
+
+
       </nz-sider>
     </div>
-  
+
     <div class="confiteria-content">
       <!-- Header Image and Title -->
       <div class="confiteria-header">
         <img [src]="'assets/images/imagenConfiteria.jpg'" alt="Confitería" class="header-image">
       </div>
-  
+
       <!-- Filtros y Opciones de Ordenamiento -->
       <div class="filters">
         <!-- Mostrar productos encontrados -->
         <div>
           <label>Productos encontrados: {{ productos.length }}</label>
         </div>
-  
+
         <!-- Filtro por Marca -->
         <div class="filter-item" style="position: relative;">
           <label>Seleccione Marca</label>
-          <select class="custom-select" 
+          <select class="custom-select"
           nz-dropdown-match-select-with="true" [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)">
             <option value="">Todas las marcas</option>
             <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
           </select>
         </div>
-  
-       
-  
+
+
+
         <!-- Cambiar Artículos por Página -->
         <div class="filter-item" style="position: relative;">
           <label>Artículos por página:</label>
@@ -73,8 +73,8 @@
       <div *ngIf="productos.length === 0" class="no-products-message">
         No hay productos disponibles para los filtros seleccionados.
       </div>
-  
-      <!-- Products List --> 
+
+      <!-- Products List -->
       <div class="products-grid">
         <div class="product-card" *ngFor="let producto of productosPaginados">
           <div class="product-image">
@@ -88,11 +88,12 @@
               <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
               <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
             </div>
-            <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
-          </div>
+            <button nz-button nzType="primary" class="Boton-comprar" (click)="agregarProductoAlCarrito(producto)">Comprar</button>
+
+            </div>
         </div>
       </div>
-  
+
       <!-- Paginación -->
       <div class="custom-pagination-row">
         <!-- Botón para ir a la página anterior -->
@@ -105,7 +106,7 @@
         >
           <i nz-icon nzType="double-left" nzTheme="outline"></i>
         </button>
-  
+
         <!-- Botones de número de página -->
         <span *ngFor="let pagina of paginas">
           <button
@@ -118,7 +119,7 @@
             {{ pagina }}
           </button>
         </span>
-  
+
         <!-- Botón para ir a la página siguiente -->
         <button
           nz-button
@@ -132,5 +133,5 @@
       </div>
     </div>
   </div>
-  
+
 

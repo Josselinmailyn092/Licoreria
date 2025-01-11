@@ -1,0 +1,86 @@
+<nz-layout>
+  <nz-header class="dashboard-header">
+    <div class="header-title">Listado de Categorias </div>
+  </nz-header>
+  <nz-content class="dashboard-content">
+
+    <div class="page-container">
+      <!-- Barra de búsqueda -->
+      <div class="search-bar">
+        <input
+          nz-input
+          placeholder="Buscar Categoria"
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (input)="buscarCategoria()"
+        />
+        <button nz-button nzType="primary" class="add-product-button" (click)="openModal()">
+          Agregar Categoria
+        </button>
+      </div>
+
+      <!-- Botones de exportación -->
+      <div class="export-buttons">
+        <button nz-button nzType="default">Exportar a PDF</button>
+        <button nz-button nzType="default" (click)="exportToXLSX()">Exportar a XLSX</button>
+        <button nz-button nzType="default" (click)="exportToCSV()">Exportar a CSV</button>
+
+      </div>
+
+      <!-- Tabla de productos -->
+      <nz-card>
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Nombre Categoria </th>
+              <th>Tipo de producto</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of filteredCategories">
+              <td>{{ category.nombre }}</td>
+              <td>{{ category.tipo }}</td>
+              <td>
+                <button nz-button nzType="link" (click)="editCategory(categories)">Editar</button>
+                <button nz-button nzType="link" nzDanger (click)="deleteCategory(categories)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </nz-card>
+    </div>
+  </nz-content>
+
+   <!-- Modal para mostrar mensaje cuando no hay resultados -->
+   <div *ngIf="isNoCategoryModalVisible" class="no-products-modal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeNoCategoryModal()">×</span>
+      <h3>No se encontraron productos para la búsqueda: "{{ searchQuery }}"</h3>
+    </div>
+  </div>
+
+  <div *ngIf="isModalVisible" class="custom-modal">
+    <div class="modal-header">
+      <h3>{{ selectedCategory?.nombre ? 'Editar Categoría' : 'Agregar Categoría' }}</h3>
+      <span class="close-btn" (click)="closeModal()">×</span>
+    </div>
+    <form (ngSubmit)="saveCategory()">
+      <div>
+        <label>Nombre</label>
+        <input [(ngModel)]="selectedCategory.nombre" name="nombre" required />
+      </div>
+      <div>
+        <label>Tipo</label>
+        <select [(ngModel)]="selectedCategory.tipo" name="tipo" required>
+          <option value="licores">Licores</option>
+          <option value="confiteria">Confitería</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="submit">{{ selectedCategory?.nombre ? 'Guardar' : 'Agregar' }}</button>
+        <button type="button" (click)="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+

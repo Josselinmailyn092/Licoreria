@@ -16,37 +16,37 @@ import { RouterModule } from '@angular/router'; // Asegúrate de importar Router
 
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
-import { SearchOutline, ShoppingCartOutline, MenuOutline } from '@ant-design/icons-angular/icons'; const icons = [SearchOutline, ShoppingCartOutline, MenuOutline];
+import { SearchOutline, ShoppingCartOutline, MenuOutline } from '@ant-design/icons-angular/icons';import { DashboardModule } from './pages/dashboard/dashboard.module';
+ const icons = [SearchOutline, ShoppingCartOutline, MenuOutline];
 registerLocaleData(en);
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
-   
+
   ],
   imports: [
     BrowserModule,NzIconModule.forRoot(icons),
     AppRoutingModule
-    , 
+    ,
     FormsModule,
-    
+
     RouterModule,
     CoreModule,
     SharedModule,
-    FeaturesModule,
     PagesModule,
-    
+    DashboardModule,
     FormsModule,
     HttpClientModule // Asegúrate de crear este módulo si es necesario
   ],
   providers: [
     provideHttpClient(withFetch())
-   
-  
-   
+
+
+
   ],
-  
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

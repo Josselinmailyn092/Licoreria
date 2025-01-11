@@ -1,0 +1,127 @@
+<nz-layout>
+  <nz-header class="dashboard-header">
+    <div class="header-title">Listado de Productos</div>
+  </nz-header>
+
+  <nz-content class="dashboard-content">
+    <div class="page-container">
+      <!-- Barra de búsqueda -->
+      <div class="search-bar">
+        <input
+          nz-input
+          placeholder="Buscar por nombre o mililitros"
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (input)="buscarProducto()"
+        />
+        <button nz-button nzType="primary" class="add-product-button" (click)="openModal()">
+          Agregar Producto
+        </button>
+      </div>
+
+      <!-- Botones de exportación -->
+      <div class="export-buttons">
+        <button nz-button nzType="default">Exportar a PDF</button>
+        <button nz-button nzType="default" (click)="exportToXLSX()">Exportar a XLSX</button>
+        <button nz-button nzType="default" (click)="exportToCSV()">Exportar a CSV</button>
+
+      </div>
+
+      <!-- Tabla de productos -->
+      <nz-card>
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Marca</th>
+
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Presentación (ml)</th>
+              <th>Categoria</th>
+              <th>Imagen</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of productosFiltrados">
+              <td>{{ producto.nombre }}</td>
+              <th>{{producto.marca}}</th>
+              <td>{{ producto.cantidad }}</td>
+              <td>{{ producto.precio }}</td>
+              <td>{{ producto.presentacion }}</td>
+              <td>{{ producto.categoria }}</td>
+              <td>
+                <img *ngIf="producto.imagen" [src]="producto.imagen" alt="Imagen del producto" class="product-image" />
+              </td>
+              <td>
+                <button nz-button nzType="link" (click)="editProduct(producto)">Editar</button>
+                <button nz-button nzType="link" nzDanger (click)="deleteProduct(producto)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </nz-card>
+    </div>
+  </nz-content>
+
+  <!-- Modal para mostrar mensaje cuando no hay resultados -->
+  <div *ngIf="isNoProductsModalVisible" class="no-products-modal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeNoProductsModal()">×</span>
+      <h3>No se encontraron productos para la búsqueda: "{{ searchQuery }}"</h3>
+    </div>
+  </div>
+
+  <!-- Modal para agregar/editar producto -->
+  <!-- Modal para agregar/editar producto -->
+  <div *ngIf="isModalVisible" class="custom-modal">
+    <div class="modal-header">
+      <h3>{{ selectedProduct.nombre ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+      <span class="close-btn" (click)="closeModal()">×</span>
+    </div>
+
+    <form (ngSubmit)="saveProduct()">
+      <div>
+        <label>Nombre</label>
+        <input [(ngModel)]="selectedProduct.nombre" name="nombre" required />
+      </div>
+
+      <div>
+        <label>Marca</label>
+        <input [(ngModel)]="selectedProduct.marca" name="marca" required />
+      </div>
+
+      <div>
+        <label>Cantidad</label>
+        <input type="number" [(ngModel)]="selectedProduct.cantidad" name="cantidad" required />
+      </div>
+
+      <div>
+        <label>Precio</label>
+        <input type="number" [(ngModel)]="selectedProduct.precio" name="precio" required />
+      </div>
+
+      <div>
+        <label>Presentación (ml)</label>
+        <input type="number" [(ngModel)]="selectedProduct.presentacion" name="presentacion" required />
+      </div>
+
+      <div>
+        <label>Categoría</label>
+        <input [(ngModel)]="selectedProduct.categoria" name="categoria" required />
+      </div>
+
+      <div>
+        <label>Imagen URL</label>
+        <input [(ngModel)]="selectedProduct.imagen" name="imagen" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit">{{ selectedProduct.nombre ? 'Guardar Cambios' : 'Agregar Producto' }}</button>
+      </div>
+    </form>
+  </div>
+
+
+</nz-layout>

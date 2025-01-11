@@ -22,23 +22,25 @@ import en from '@angular/common/locales/en';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import {  ArrowRightOutline } from '@ant-design/icons-angular/icons';
 import { ConfiteriaModule } from './confiteria/confiteria.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 const icons = [ ArrowRightOutline];
 @NgModule({
   declarations: [
     HomeComponent,
-    
+
     PromocionesComponent,
     NosotrosComponent
   ],
   imports: [
-    
+
     CommonModule,
     LicoresModule,
     ConfiteriaModule,
+    DashboardModule,
     FormsModule,
     NzSelectModule, // Para los selects
     BrowserAnimationsModule, // Necesario para la funcionalidad de los componentes de NG Zorro
-    NzButtonModule, // Solo si estás usando botones también  
+    NzButtonModule, // Solo si estás usando botones también
     NzPaginationModule,
     NzPaginationModule,
     BrowserAnimationsModule,
@@ -50,11 +52,11 @@ const icons = [ ArrowRightOutline];
     NzIconModule.forRoot(icons),
   ],
   exports: [
-    
+
     ],
     providers: [{ provide: NZ_I18N, useValue: en_US }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class PagesModule { 
+export class PagesModule {
   links = links;
 }

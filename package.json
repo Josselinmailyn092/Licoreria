@@ -29,6 +29,7 @@
     "ng-zorro-antd": "^18.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "vite": "^6.0.7",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {

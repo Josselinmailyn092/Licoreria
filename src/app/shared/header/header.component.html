@@ -13,10 +13,10 @@
       <div class="nav-container" [ngClass]="{'menu-open': isMenuOpen}">
         <ul nz-menu nzTheme="light" nzMode="horizontal" class="nav-menu">
           <!-- Iteracion con ngFor sobre los enlaces de linksservice -->
-          <li class="menu-item" 
+          <li class="menu-item"
            *ngFor="let link of links"
             (click)="closeMenuAndNavigate(link.path)"
-            [routerLinkActive]="'active-menu-item'"> 
+            [routerLinkActive]="'active-menu-item'">
             <a class="menu-link" [routerLink]="link.path">{{ link.label }}</a>
           <!-- Submenú -->
           <ul class="sub-menu" *ngIf="link.subMenu && link.subMenu.length">
@@ -34,7 +34,7 @@
         <a href="javascript:void(0)" class="iconSearch" (click)="toggleSearchModal()">
           <i nz-icon nzType="search" nzTheme="outline"></i>
         </a>
-        <a href="javascript:void(0)" class="cart-icon">
+        <a href="javascript:void(0)" class="cart-icon" (click)="abrirCarrito()" >
           <i nz-icon nzType="shopping-cart" nzTheme="outline"></i>
         </a>
         <!-- Botón responsive para menú -->
@@ -42,13 +42,57 @@
           <span nz-icon nzType="menu" nzTheme="outline" role="button" tabindex="0" class="icon-button"></span>
         </button>
       </div>
-      
 
-     
+
+
     </div>
 
-   
+
   </nz-header>
+
+    <!-- Side Menu (Carrito) -->
+    <div class="side-menu" [class.open]="isCarritoVisible">
+      <div class="side-menu-header">
+        <h2>Tu Carrito</h2>
+        <button class="close-btn" (click)="cerrarCarrito()">&#10005;</button>
+      </div>
+
+      <div class="side-menu-body">
+        <!-- Carrito vacío -->
+        <div *ngIf="carrito.length === 0" class="carrito-vacio">
+          <p>Tu carrito está vacío.</p>
+        </div>
+
+        <!-- Carrito con productos -->
+        <div *ngIf="carrito.length > 0">
+          <div *ngFor="let producto of carrito" class="carrito-item">
+            <img [src]="producto.imagenUrl" alt="{{ producto.nombreProducto}}" class="producto-imagen">
+            <div class="producto-detalles">
+              <h3>{{ producto.nombreProducto }}</h3>
+              <p>{{ producto.presentacion_ml }}</p>
+              <p>
+                <span *ngIf="producto.precio" class="precio-original">{{ producto.precio | currency }}</span>
+                <span class="precio-descuento">{{ producto.precio || producto.precio | currency }}</span>
+              </p>
+            </div>
+            <div class="producto-cantidad">
+              <button (click)="disminuirCantidad(producto)">-</button>
+              <span>{{ producto.cantidad }}</span>
+              <button (click)="agregarProducto(producto)">+</button>
+            </div>
+          </div>
+          <div class="carrito-total">
+            <h2>Total: {{ total | currency }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-menu-footer">
+        <button (click)="enviarPedidoPorWhatsApp()">Enviar pedido por WhatsApp</button>
+        <button (click)="limpiarCarrito()">Limpiar carrito</button>
+      </div>
+    </div>
+
    <!-- Modal de búsqueda -->
    <div class="search-modal" [ngClass]="{'active': ModalBuscar}">
     <div class="container">
@@ -75,5 +119,5 @@
       </div>
     </div>
   </div>
-  
+
 </nz-layout>

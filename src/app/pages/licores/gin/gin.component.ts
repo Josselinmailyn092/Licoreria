@@ -3,6 +3,7 @@ import { ProductoGinService } from '../../../services/productoGin.service';
 import { ProductoService } from '../../../services/producto.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { Producto } from '../../../models/licores.models';
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-gin',
   templateUrl: './gin.component.html',
@@ -27,9 +28,12 @@ export class GinComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Gin';
-  url='http://localhost:3000/uploads'; 
-constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router){}
- ngOnInit(): void {
+  carrito: Producto[] = [];
+  url='http://localhost:3000/uploads';
+
+constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
+
+  ngOnInit(): void {
 
   this.selectedCategoria = 'Gin'; // Establece la categoría activada por defecto
   this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
@@ -43,7 +47,7 @@ constructor(private productoGinService: ProductoGinService,private productoServi
   this.productoService.getCategoriasConCantidad().subscribe((data) => {
     this.categorias = data;
   });
-  
+
     // Obtener marcas desde la API
     this.productoGinService.getMarcasGin().subscribe((data) => {
       this.marcas = data.map((marca) => marca.nombreMarca); // Indica solo los nombres de las marcas
@@ -56,11 +60,11 @@ constructor(private productoGinService: ProductoGinService,private productoServi
 
     // Obtener productos desde la API
     this.productoGinService.getAllProductGin().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
 
@@ -88,6 +92,10 @@ constructor(private productoGinService: ProductoGinService,private productoServi
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
+   // Carrito
+   agregarProductoAlCarrito(producto: Producto): void {
+    this.carritoService.agregarProducto(producto);
+  }
 
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -105,7 +113,7 @@ constructor(private productoGinService: ProductoGinService,private productoServi
     }
   }
 
-  
+
 
   resetCategory() {
     this.selectedCategory = null;
@@ -199,11 +207,11 @@ constructor(private productoGinService: ProductoGinService,private productoServi
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }}
 
-  
-     
- 
+
+
+
 

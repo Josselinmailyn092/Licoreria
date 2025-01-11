@@ -1,0 +1,398 @@
+.dashboard-header {
+  background: #001529;
+  color: white;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.dashboard-content {
+  background: #f0f2f5;
+  padding: 16px;
+  overflow: auto;
+}
+
+.page-container {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.add-product-button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+
+
+}
+.add-product-button button{
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  color: #555;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Botones de exportación */
+.export-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.export-buttons button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  color: #555;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.export-buttons button:hover {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.export-buttons button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Estilos para cada tipo de exportación */
+.export-buttons button:first-child {
+  background-color: #1890ff;
+  color: white;
+  border: 2px solid #1890ff;
+}
+
+.export-buttons button:first-child:hover {
+  background-color: #40a9ff;
+  border: 2px solid #40a9ff;
+}
+
+.export-buttons button:nth-child(2) {
+  background-color: #52c41a;
+  color: white;
+  border: 2px solid #52c41a;
+}
+
+.export-buttons button:nth-child(2):hover {
+  background-color: #73d13d;
+  border: 2px solid #73d13d;
+}
+
+.export-buttons button:nth-child(3) {
+  background-color: #ffec3d;
+  color: #333;
+  border: 2px solid #ffec3d;
+}
+
+.export-buttons button:nth-child(3):hover {
+  background-color: #f4e200;
+  border: 2px solid #f4e200;
+}
+
+.export-buttons button:nth-child(4) {
+  background-color: #f5222d;
+  color: white;
+  border: 2px solid #f5222d;
+}
+
+.export-buttons button:nth-child(4):hover {
+  background-color: #ff4d4f;
+  border: 2px solid #ff4d4f;
+}
+
+.export-buttons button:nth-child(5) {
+  background-color: #2f54eb;
+  color: white;
+  border: 2px solid #2f54eb;
+}
+
+.export-buttons button:nth-child(5):hover {
+  background-color: #4051b5;
+  border: 2px solid #4051b5;
+}
+/* Tabla de productos */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.dashboard-table th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.dashboard-table td {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dashboard-table tr:hover {
+  background: #fafafa;
+}
+
+/* Ajustes del modal */
+.nz-modal-content {
+  max-width: 95%;
+}
+
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 600px;
+  max-width: 95%;
+  padding: 20px 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+.custom-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.custom-modal h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-modal .close-btn {
+  font-size: 24px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.custom-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.custom-modal .close-btn:hover {
+  color: #333;
+}
+.custom-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.custom-modal label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.custom-modal input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-modal input:focus {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  outline: none;
+}
+
+.custom-modal .modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-modal button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-modal button:first-child {
+  background: linear-gradient(45deg, #1890ff, #40a9ff);
+  color: white;
+  border: 1px solid transparent;
+}
+
+.custom-modal button:first-child:hover {
+  background: linear-gradient(45deg, #40a9ff, #1890ff);
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.custom-modal button:last-child {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #d9d9d9;
+}
+
+.custom-modal button:last-child:hover {
+  background-color: #d9d9d9;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.custom-modal button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el modal de no productos */
+.no-products-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.no-products-modal .modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.no-products-modal h3 {
+  font-size: 18px;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.no-products-modal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+}
+
+.no-products-modal .close-btn:hover {
+  color: #333;
+}
+
+/* Responsividad general */
+@media screen and (max-width: 768px) {
+  .dashboard-header {
+    text-align: center;
+  }
+
+  .header-title {
+    font-size: 16px;
+  }
+
+  .page-container {
+    padding: 16px;
+  }
+
+  .export-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .export-buttons button {
+    flex: unset;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .dashboard-table td {
+    font-size: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header-title {
+    font-size: 14px;
+  }
+
+  .add-product-button {
+    width: 100%;
+  }
+}

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { Producto } from '../../models/licores.models';
 // Inyección de servio link
-import { LinkService } from '../../services/link.service'; 
+import { LinkService } from '../../services/link.service';
 // Inyeccion de servico
 import { SubmenuService } from '../../services/submenu.service';
+import { CarritoService } from '../../services/carrito.service';
 
-import { Router } from '@angular/router';
-// Estructura de la interfaz link 
+
+// Estructura de la interfaz link
 interface Link {
   path: string;
   label: string;
@@ -20,21 +22,33 @@ interface Link {
 })
 export class HeaderComponent implements OnInit {
   imagenLogo: string = 'assets/images/logo-chinito.jpg';
-  // Exportar clase 
+  // Exportar clase
   links: Link[] = [];
-// Indica si el menu esta abierto o cerrado 
+// Indica si el menu esta abierto o cerrado
   isMenuOpen: boolean = false;
 
   // Modal de búsqueda
   ModalBuscar: boolean = false;
   menuItems: any[] = []; // Aquí almacenaremos los items del menú principal con submenús
 
-  // Caena de texto para busqueda 
-  search: string = ''; 
+  // Caena de texto para busqueda
+  search: string = '';
   isSideMenuOpen = false;
-  constructor(private linkService: LinkService, private router: Router,private subMenu: SubmenuService) {}
 
   // Método ngOnInit se ejecuta al inicializar el componente.
+  //  Carrito
+
+isCarritoVisible: boolean = false; // Controla la visibilidad del modal
+carrito: Producto[] = [];
+total:number=0;
+
+  constructor(
+    private linkService: LinkService,
+    private router: Router,
+    private subMenu: SubmenuService,
+    private carritoService : CarritoService
+  ) {}
+
   ngOnInit(): void {
 
     // Obtener los enlaces desde el servicio
@@ -43,6 +57,14 @@ export class HeaderComponent implements OnInit {
     //obtener links del sub menu
     this.links = this.subMenu.geSubMenuItems();
     this.menuItems = this.subMenu.geSubMenuItems();
+    this.carritoService.carrito$.subscribe((productos) => {
+      this.carrito = productos;
+      this.total = productos.reduce((total, producto) => total + producto.precio * producto.cantidad, 0);
+    });
+
+    this.carritoService.total$.subscribe((total) => {
+      this.total = total;
+    });
 
   }
 
@@ -63,15 +85,45 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  toggleSideMenu(){
-    this.isSideMenuOpen = !this.isSideMenuOpen;
+
+    closeMenuAndNavigate(path: string): void {
+      this.isMenuOpen = false;
+      this.router.navigate([path]);
+
   }
 
-   // Método para cerrar el menú y redirigir al enlace correspondiente
-   closeMenuAndNavigate(path: string): void {
-    this.isMenuOpen = false; // Cierra el menú al hacer clic
-    this.router.navigate([path]); // Redirige a la ruta seleccionada
-  }
 
-  
+// Carrito
+agregarProducto(producto: Producto): void {
+  this.carritoService.agregarProducto(producto);
+}
+
+disminuirCantidad(producto:Producto):void{
+  this.carritoService.disminuirCantidad(producto);
+}
+
+eliminarProducto(productoId: number): void {
+  this.carritoService.eliminarProducto(productoId);
+}
+
+abrirCarrito(): void {
+  this.isCarritoVisible = true;
+}
+
+cerrarCarrito(): void {
+  this.isCarritoVisible = false;
+}
+
+enviarPedidoPorWhatsApp(): void {
+  const mensaje = this.carrito.map(producto =>
+    `Hola buenas tardes me gustaria realizar un pedido :${producto.nombreProducto} (${producto.presentacion_ml} ml) - $${(producto.precio * 0.9).toFixed(2)}`
+  ).join('\n');
+  window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`);
+}
+
+limpiarCarrito(): void {
+  this.carritoService.limpiarCarrito();
+}
+
+
 }

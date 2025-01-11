@@ -1,0 +1,32 @@
+<nz-layout class="dashboard-layout">
+  <!-- Sidebar -->
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200" nzTheme="light">
+    <div class="logo">Licorería El Chinito</div>
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-menu-item routerLink="/dashboard/products">
+        <span nz-icon nzType="shopping"></span>
+        <span>Productos</span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/categories">
+        <span nz-icon nzType="appstore"></span>
+        <span>Categorías</span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/brands">
+        <span nz-icon nzType="tags"></span>
+        <span>Marcas</span>
+      </li>
+      <li nz-menu-item routerLink="/dashboard/sales">
+        <span nz-icon nzType="dollar"></span>
+        <span>Ventas</span>
+      </li>
+    </ul>
+  </nz-sider>
+
+  <!-- Main Content -->
+  <nz-layout>
+    <nz-header class="dashboard-header">Panel de Control</nz-header>
+    <nz-content class="dashboard-content">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

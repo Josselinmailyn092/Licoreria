@@ -3,6 +3,7 @@ import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfiteriaService } from '../../../services/Confiteria.service';
 import { ChicleService } from '../../../services/chicle.service';
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-chicle',
   templateUrl: './chicle.component.html',
@@ -27,9 +28,12 @@ export class ChicleComponent {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Chicle'
-  url='http://localhost:3000/uploads'; 
+  carrito: Producto[] = [];
 
-    constructor( private confiteriaService: ConfiteriaService,private chicleService : ChicleService,  private route: ActivatedRoute, private router: Router){}
+  url='http://localhost:3000/uploads';
+
+    constructor( private confiteriaService: ConfiteriaService,private chicleService : ChicleService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
+
       ngOnInit(): void {
 
       // obtener categria de licores
@@ -41,11 +45,11 @@ export class ChicleComponent {
         this.tiposConfiteria = data.map((tiposConfiteria) => tiposConfiteria.nombreCategoria)// Data tendrá el formato [{nombreTipo: 'Ron', cantidad: 10}, ...]
       });
 
-      // Obtenr cantidad de las categoria de licores 
+      // Obtenr cantidad de las categoria de licores
       this.confiteriaService.getCategoriasConCantidad().subscribe((data) => {
         this.categorias = data;
       });
-    
+
         // Obtener marcas desde la API
     this.chicleService.getMarcasChicle().subscribe((data) => {
       this.marcas = data.map((marca) => marca.nombreMarca); // Indica solo los nombres de las marcas
@@ -58,16 +62,16 @@ export class ChicleComponent {
 
      // Obtener productos desde la API
      this.chicleService.getAllProductChicle().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
 
 
-  
+
     // Suscribirse a los cambios en la ruta
     this.route.params.subscribe((params) => {
       const category = params['category'];
@@ -82,6 +86,10 @@ export class ChicleComponent {
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
+    // Carrito
+    agregarProductoAlCarrito(producto: Producto): void {
+      this.carritoService.agregarProducto(producto);
+    }
 
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -123,7 +131,7 @@ export class ChicleComponent {
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
-  
+
     if (!marca || marca.trim() === '') {
       // Si no hay marca seleccionada, aplica el filtro solo por presentación
       if (this.selectedPresentacion) {
@@ -139,14 +147,14 @@ export class ChicleComponent {
       this.productos = this.productosOriginales.filter((producto) =>
         producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
       );
-  
+
       if (this.selectedPresentacion) {
         this.productos = this.productos.filter(
           (producto) => producto.presentacion_ml === this.selectedPresentacion
         );
       }
     }
-  
+
     this.verificarProductosDisponibles();
     this.cambiarPagina(1); // Resetear a la primera página
   }
@@ -194,10 +202,10 @@ export class ChicleComponent {
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }}
 
 
- 
+
 

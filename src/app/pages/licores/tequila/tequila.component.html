@@ -17,8 +17,8 @@
   <span class="item-count"  [ngClass]="{'selected': selectedCategoria === categoria.Categoria}">{{ categoria.TotalProductos }}</span>
 </nz-menu-item>
 
-            
-            
+
+
           </div>
         </nz-submenu>
       </nz-menu>
@@ -29,7 +29,7 @@
         <nz-submenu nzTitle="Marcas">
           <div class="menu-columns menu-columns-scrollable">
             <nz-menu-item *ngFor="let marca of marcasCantidad" (click)="filtrarPorMarca(marca.nombreMarca)" [ngClass]="{'active-item': selectedMarca === marca.nombreMarca}">{{marca.nombreMarca}}
-              
+
               <span class="item-count">{{ marca.cantidad }}</span>
             </nz-menu-item>
           </div>
@@ -42,8 +42,8 @@
         <nz-submenu nzTitle="presentaciones">
           <div class="menu-columns menu-columns-scrollable">
             <nz-menu-item *ngFor="let presentacion of presentacionesCantidad" (click)="filtrarPorPresentacion(presentacion.presentacion_ml)" [ngClass]="{'active-item': selectedPresentacion === presentacion.presentacion_ml}"
-  
-            >{{ presentacion.presentacion_ml}}ml 
+
+            >{{ presentacion.presentacion_ml}}ml
             <span class="item-count">{{ presentacion.cantidad }}</span></nz-menu-item>
           </div>
         </nz-submenu>
@@ -63,13 +63,13 @@
       <div>
         <label>Productos encontrados: {{ productos.length }}</label>
       </div>
-      
-       
+
+
 
       <!-- Filtro por Marca -->
       <div class="filter-item" style="position: relative;">
         <label>Seleccione Marca</label>
-        <select class="custom-select" 
+        <select class="custom-select"
         nz-dropdown-match-select-with="true" [(ngModel)]="selectedMarca" (ngModelChange)="filtrarPorMarca(selectedMarca)">
         <option value="">Todas las marcas</option>
           <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
@@ -79,10 +79,10 @@
       <!-- Filtro por Presentación -->
       <div class="filter-item" style="position: relative;">
         <label>Seleccione Presentación</label>
-        <select class="custom-select" 
+        <select class="custom-select"
         nz-dropdown-match-select-with="true"
-           [(ngModel)]="selectedPresentacion" 
-           (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)" 
+           [(ngModel)]="selectedPresentacion"
+           (ngModelChange)="filtrarPorPresentacion(selectedPresentacion)"
            placeholder="Seleccione presentación">
            <option [ngValue]="null">Todas</option>
            <option *ngFor="let presentacion of presentaciones" [ngValue]="presentacion">
@@ -91,8 +91,8 @@
         </select>
       </div>
 
-    
-      
+
+
       <!-- Cambiar Artículos por Página -->
       <div class="filter-item" style="position: relative;">
         <label>Artículos por página:</label>
@@ -105,7 +105,7 @@
       No hay productos disponibles para los filtros seleccionados.
     </div>
 
-    <!-- Products List --> 
+    <!-- Products List -->
     <div class="products-grid">
       <div class="product-card" *ngFor="let producto of productosPaginados">
         <div class="product-image">
@@ -118,7 +118,7 @@
             <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
             <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
           </div>
-          <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
+          <button nz-button nzType="primary" class="Boton-comprar"  (click)="agregarProductoAlCarrito(producto)">Comprar </button>
         </div>
       </div>
     </div>

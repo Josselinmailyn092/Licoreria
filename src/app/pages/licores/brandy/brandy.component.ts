@@ -3,7 +3,7 @@ import { ProductoBrandyService } from '../../../services/productoBrandy.service'
 import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-brandy',
   templateUrl: './brandy.component.html',
@@ -28,15 +28,16 @@ export class BrandyComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Brandy';
-  url='http://localhost:3000/uploads'; 
+  carrito: Producto[] = [];
+  url='http://localhost:3000/uploads';
 
-  constructor(private productoBrandyService: ProductoBrandyService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private productoBrandyService: ProductoBrandyService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 
   ngOnInit(): void {
 
     this.selectedCategoria = 'Brandy'; // Establece la categoría activada por defecto
     this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
-  
+
     // Obtener categorias de licores
     this.productoService.getTiposLicores().subscribe((data) => {
       this.tiposLicores = data;
@@ -59,11 +60,11 @@ export class BrandyComponent implements OnInit {
 
     // Obtener productos desde la API
     this.productoBrandyService.getAllProductBrandy().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
     // Obtener presentaciones desde la API
@@ -90,7 +91,10 @@ export class BrandyComponent implements OnInit {
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
-
+ // Carrito
+ agregarProductoAlCarrito(producto: Producto): void {
+  this.carritoService.agregarProducto(producto);
+}
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
@@ -131,7 +135,7 @@ export class BrandyComponent implements OnInit {
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
-  
+
     if (!marca || marca.trim() === '') {
       // Si no hay marca seleccionada, aplica el filtro solo por presentación
       if (this.selectedPresentacion) {
@@ -147,14 +151,14 @@ export class BrandyComponent implements OnInit {
       this.productos = this.productosOriginales.filter((producto) =>
         producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
       );
-  
+
       if (this.selectedPresentacion) {
         this.productos = this.productos.filter(
           (producto) => producto.presentacion_ml === this.selectedPresentacion
         );
       }
     }
-  
+
     this.verificarProductosDisponibles();
     this.cambiarPagina(1); // Resetear a la primera página
   }
@@ -202,6 +206,6 @@ export class BrandyComponent implements OnInit {
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }}

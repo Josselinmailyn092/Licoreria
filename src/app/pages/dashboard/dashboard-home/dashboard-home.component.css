@@ -1,0 +1,14 @@
+.dashboard-layout {
+  height: 100vh;
+}
+
+.dashboard-header {
+  background: #001529;
+  color: white;
+  padding: 0 16px;
+}
+
+.dashboard-content {
+  padding: 16px;
+  background: #f0f2f5;
+}

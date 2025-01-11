@@ -1,0 +1,53 @@
+/* General Layout */
+.dashboard-layout {
+  height: 100vh;
+  display: flex;
+  background-color: white; /* Fondo blanco general */
+}
+
+.nz-sider {
+  background-color: white !important; /* Fondo blanco del menú lateral */
+  border-right: 1px solid #ddd; /* Línea divisoria */
+}
+
+.logo {
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Color de texto oscuro */
+  border-bottom: 1px solid #ddd;
+}
+
+ul[nz-menu] {
+  margin-top: 8px;
+}
+
+ul[nz-menu] li[nz-menu-item] {
+  font-size: 16px;
+  padding: 12px 20px;
+  color: #333; /* Color de texto de los ítems */
+}
+
+ul[nz-menu] li[nz-menu-item]:hover {
+  background: #f5f5f5; /* Fondo claro al pasar el mouse */
+}
+
+.dashboard-header {
+  background: white; /* Fondo blanco del encabezado */
+  color: #333; /* Texto oscuro */
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  border-bottom: 1px solid #ddd; /* Línea divisoria */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dashboard-content {
+  background: white; /* Fondo blanco del contenido */
+  padding: 24px;
+  overflow: auto;
+}

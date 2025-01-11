@@ -3,7 +3,7 @@ import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfiteriaService } from '../../../services/Confiteria.service';
 import { ChocolateService } from '../../../services/chocolate.service';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-chocolate',
   templateUrl: './chocolate.component.html',
@@ -29,10 +29,13 @@ export class ChocolateComponent  implements OnInit{
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Chocolates'
-  url='http://localhost:3000/uploads'; 
+  carrito: Producto[] = [];
 
-    constructor( private confiteriaService: ConfiteriaService,private chocolateService : ChocolateService,  private route: ActivatedRoute, private router: Router){}
-      ngOnInit(): void {
+  url='http://localhost:3000/uploads';
+
+  constructor( private confiteriaService: ConfiteriaService,private chocolateService : ChocolateService,  private route: ActivatedRoute, private router: Router, private carritoService: CarritoService){}
+
+  ngOnInit(): void {
 
       // obtener categria de licores
       this.confiteriaService.getTiposConfiteria().subscribe((data) =>{
@@ -43,11 +46,11 @@ export class ChocolateComponent  implements OnInit{
         this.tiposConfiteria = data.map((tiposConfiteria) => tiposConfiteria.nombreCategoria)// Data tendrá el formato [{nombreTipo: 'Ron', cantidad: 10}, ...]
       });
 
-      // Obtenr cantidad de las categoria de licores 
+      // Obtenr cantidad de las categoria de licores
       this.confiteriaService.getCategoriasConCantidad().subscribe((data) => {
         this.categorias = data;
       });
-    
+
         // Obtener marcas desde la API
     this.chocolateService.getMarcasChocolate().subscribe((data) => {
       this.marcas = data.map((marca) => marca.nombreMarca); // Indica solo los nombres de las marcas
@@ -60,16 +63,16 @@ export class ChocolateComponent  implements OnInit{
 
      // Obtener productos desde la API
      this.chocolateService.getAllProductChocolate().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
 
 
-  
+
     // Suscribirse a los cambios en la ruta
     this.route.params.subscribe((params) => {
       const category = params['category'];
@@ -84,6 +87,11 @@ export class ChocolateComponent  implements OnInit{
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
+      // Carrito
+      agregarProductoAlCarrito(producto: Producto): void {
+        this.carritoService.agregarProducto(producto);
+      }
+
 
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -125,7 +133,7 @@ export class ChocolateComponent  implements OnInit{
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
-  
+
     if (!marca || marca.trim() === '') {
       // Si no hay marca seleccionada, aplica el filtro solo por presentación
       if (this.selectedPresentacion) {
@@ -141,14 +149,14 @@ export class ChocolateComponent  implements OnInit{
       this.productos = this.productosOriginales.filter((producto) =>
         producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
       );
-  
+
       if (this.selectedPresentacion) {
         this.productos = this.productos.filter(
           (producto) => producto.presentacion_ml === this.selectedPresentacion
         );
       }
     }
-  
+
     this.verificarProductosDisponibles();
     this.cambiarPagina(1); // Resetear a la primera página
   }
@@ -196,10 +204,10 @@ export class ChocolateComponent  implements OnInit{
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }}
 
 
- 
+
 

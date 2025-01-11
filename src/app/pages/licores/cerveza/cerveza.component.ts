@@ -4,7 +4,7 @@ import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
 import { subscribe } from 'diagnostics_channel';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-cerveza',
   templateUrl: './cerveza.component.html',
@@ -29,11 +29,13 @@ export class CervezaComponent implements OnInit{
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Cerveza';
-  url='http://localhost:3000/uploads'; 
-  constructor(private productoCervezaService: ProductoCervezaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
- ngOnInit(): void {
+  carrito: Producto[] = [];
+  url='http://localhost:3000/uploads';
 
-  
+  constructor(private productoCervezaService: ProductoCervezaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
+  ngOnInit(): void {
+
+
   this.selectedCategoria = 'Cerveza'; // Establece la categoría activada por defecto
   this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
 
@@ -47,27 +49,27 @@ export class CervezaComponent implements OnInit{
       this.categorias = data;
     });
 
-    // Obtener marcas desde la API 
+    // Obtener marcas desde la API
     this.productoCervezaService.getMarcasCerveza().subscribe((data)=>{
       this.marcas = data.map((marca)=> marca.nombreMarca);//Indica solo los nombre de la marca
     })
 
     // Contar cantidad disponible
     this.productoCervezaService.getCountMarcaCerveza().subscribe((data)=>{
-      this.marcasCantidad =data; //indica el nombre y la cantidad 
+      this.marcasCantidad =data; //indica el nombre y la cantidad
     })
 
-    // Obtner productos desde la Api 
+    // Obtner productos desde la Api
     this.productoCervezaService.getAllProductCerveza().subscribe((data)=>{
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
 
-    // Obtener presentaciones desde la API 
+    // Obtener presentaciones desde la API
     this.productoCervezaService.getPresentacionesCerveza().subscribe((data)=>{
       this.presentaciones = data;
     });
@@ -82,7 +84,7 @@ export class CervezaComponent implements OnInit{
       this.presentacionesCantidad = data;
     });
 
-    // Suscrebirse a los cambios de la ruta 
+    // Suscrebirse a los cambios de la ruta
     this.route.params.subscribe((params)=>{
       const category = params['category'];
       if (category) {
@@ -99,7 +101,10 @@ export class CervezaComponent implements OnInit{
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
-
+ // Carrito
+ agregarProductoAlCarrito(producto: Producto): void {
+  this.carritoService.agregarProducto(producto);
+}
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
@@ -208,7 +213,7 @@ export class CervezaComponent implements OnInit{
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }}
 

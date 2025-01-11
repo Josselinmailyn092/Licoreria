@@ -3,7 +3,7 @@ import { ProductoVodkaService } from '../../../services/productoVodka.service';
 import { Producto } from '../../../models/licores.models';
 import { ActivatedRoute, Router  } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-
+import { CarritoService } from '../../../services/carrito.service';
 @Component({
   selector: 'app-vodka',
   templateUrl: './vodka.component.html',
@@ -28,13 +28,15 @@ export class VodkaComponent implements OnInit {
   selectedPresentacion: number = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Vodka';
-  url='http://localhost:3000/uploads'; 
-  constructor(private productoVodkaService: ProductoVodkaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router) {}
+  carrito: Producto[] = [];
+  url='http://localhost:3000/uploads';
+
+  constructor(private productoVodkaService: ProductoVodkaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 
   ngOnInit(): void {
     this.selectedCategoria = 'Vodka'; // Establece la categoría activada por defecto
     this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
-  
+
     // Obtener categorias de licores
     this.productoService.getTiposLicores().subscribe((data) => {
       this.tiposLicores = data;
@@ -57,11 +59,11 @@ export class VodkaComponent implements OnInit {
 
     // Obtener productos desde la API
     this.productoVodkaService.getAllProductVodka().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({ 
-        ...producto, 
-        imagenUrl: `${this.url}/${producto.imagen}` 
-      })); 
-      this.productos = [...this.productosOriginales]; 
+      this.productosOriginales = data.map((producto) => ({
+        ...producto,
+        imagenUrl: `${this.url}/${producto.imagen}`
+      }));
+      this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
 
@@ -88,6 +90,10 @@ export class VodkaComponent implements OnInit {
       const subMenu = url[1] ? url[1].path : null;
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
+  }
+  // Carrito
+  agregarProductoAlCarrito(producto: Producto): void {
+    this.carritoService.agregarProducto(producto);
   }
 
   private capitalize(text: string): string {
@@ -198,7 +204,7 @@ export class VodkaComponent implements OnInit {
       const fin = inicio + this.productosPorPagina;
       this.productosPaginados = this.productos.slice(inicio, fin);
       console.log('Página actual:', this.paginaActual);
-    
+
   }
 }
 }
