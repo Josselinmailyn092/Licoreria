@@ -32,11 +32,11 @@
 }
 
 /* estilos de menu  */
-.side-menu .nz-menu { 
+.side-menu .nz-menu {
   background-color: #fff; /* Fondo blanco para el menú */
-   display: flex; 
-   flex-direction: column; 
-  
+   display: flex;
+   flex-direction: column;
+
    /* Asegúrate de que los elementos se apilen en columna */
    }
    .menu-columns {
@@ -55,7 +55,7 @@
     padding: 0.2rem; /* Ajusta el espacio interno */
     border: 1px solid #dddddd00; /* Opcional: agrega un borde */
   }
-  
+
   nz-menu-item {
     cursor: pointer;
     display: flex;
@@ -125,7 +125,7 @@ nz-menu-item.active {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 0;   
+    margin-bottom: 0;
     max-height: 25%;
     width: 100%;
     margin-bottom: 20px;
@@ -140,6 +140,7 @@ nz-menu-item.active {
 }
 /* Estilos generales del contenedor */
 .filters {
+  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -366,7 +367,7 @@ nz-menu-item.active {
     margin-top: 118px;
   }
   .side-menu{
-     display: none; 
+     display: none;
   }
   .licores-content{
     flex-grow: 1;
@@ -379,7 +380,7 @@ nz-menu-item.active {
   .licores-header{
     display: flex;
     align-items: center;
-    gap: 5px;  
+    gap: 5px;
     height: 15%;
     width: 100%;
     margin-bottom: 5px;
@@ -393,7 +394,7 @@ nz-menu-item.active {
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 0;
-   
+
   }
   .filters Label{
     color:#5b5959;
@@ -417,7 +418,7 @@ nz-menu-item.active {
     flex-direction: row;
     align-items: center;
     gap: 12px;
-  
+
   }
 
   .custom-select {
@@ -449,11 +450,11 @@ nz-menu-item.active {
 
 .product-card {
   padding: 5px 30px;
- 
+
 }
 .product-image img {
   width: 70%;
- 
+
 }
 .custom-pagination-row {
   display: flex;

@@ -7,6 +7,8 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { HttpClient } from '@angular/common/http';
 import { Producto } from '../../../models/licores.models';
+import { NzMessageService } from 'ng-zorro-antd/message'; // Si usas Ng-Zorro
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-products',
@@ -29,7 +31,7 @@ export class ProductsComponent implements OnInit {
   form: FormGroup;
 
   url='http://localhost:3000/uploads';
-  constructor(private http: HttpClient,private fb: FormBuilder, private dashboardService: DashboardService) {
+  constructor(private http: HttpClient,private fb: FormBuilder, private dashboardService: DashboardService,private message: NzMessageService,  private modal: NzModalService,) {
     this.form = this.fb.group({
       nombreProducto: ['', Validators.required],
       id_marca: ['', Validators.required],
@@ -154,6 +156,7 @@ saveProduct() {
   formData.append('cantidad', this.form.get('cantidad')?.value.toString());
   formData.append('precio', this.form.get('precio')?.value.toString());
   formData.append('presentacion_ml', this.form.get('presentacion_ml')?.value.toString());
+
   if (this.selectedImage) {
     formData.append('imagen', this.selectedImage, this.selectedImage.name);
   }
@@ -163,16 +166,21 @@ saveProduct() {
     : this.dashboardService.insertProduct(formData);
 
   saveObservable.subscribe(
-    () => {
-      console.log('Producto guardado/actualizado con éxito');
-      this.loadProducts(); // Recargar la lista de productos
-      this.closeModal(); // Cerrar el modal
+    (response) => {
+      if (response) {
+        console.log('Producto guardado/actualizado con éxito');
+        this.loadProducts(); // Recargar la lista de productos
+        this.closeModal(); // Cerrar el modal
+        this.message.success('Producto guardado con éxito');
+      }
     },
     (error) => {
       console.error('Error al guardar/actualizar el producto:', error);
+      this.message.error('Error al guardar/actualizar el producto. Inténtalo nuevamente.');
     }
   );
 }
+
 
 
 editProduct(producto: any): void {
@@ -181,28 +189,37 @@ editProduct(producto: any): void {
 }
 
 deleteProduct(producto: any): void {
-  console.log('Producto a eliminar:', producto);
-  const productId = Number(producto.id); // Asegúrate de que sea un número
-  if (!isNaN(productId)) {
-    console.log('ID del producto a eliminar:', productId);
-    this.dashboardService.deleteProduct(productId).subscribe(
-      () => {
-        console.log('Producto eliminado con éxito');
-        this.loadProducts(); // Recargar los productos después de eliminar
-      },
-      (error) => {
-        console.error('Error al eliminar el producto:', error);
-      }
-    );
-  } else {
-    console.error('ID del producto no válido:', producto);
-  }
+  this.modal.confirm({
+    nzTitle: '¿Estás seguro de que deseas eliminar este producto?',
+    nzContent: `<b style="color: red;">${producto.nombreProducto}</b> será eliminado permanentemente.`,
+    nzOkText: 'Sí',
+    nzOkType: 'primary',
+    nzOkDanger: true,
+    nzOnOk: () => {
+      const productId = Number(producto.id_producto);
+      this.dashboardService.deleteProduct(productId).subscribe(
+        (response) => {
+          if (response.message === 'Producto eliminado correctamente') {
+            this.message.success('Producto eliminado con éxito.');
+            this.loadProducts(); // Refresca la lista de productos.
+          } else {
+            this.message.warning('No se encontró el producto.');
+          }
+        },
+        (error) => {
+          console.error('Error al eliminar el producto:', error);
+          this.message.error('Error al eliminar el producto. Inténtalo nuevamente.');
+        }
+      );
+
+    },
+    nzCancelText: 'No',
+    nzOnCancel: () => {
+      this.message.info('Eliminación cancelada.');
+    }
+  });
+  this.loadProducts();
 }
-
-
-
-
-
   // Exportar a XLSX
    exportToXLSX() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.productosFiltrados);

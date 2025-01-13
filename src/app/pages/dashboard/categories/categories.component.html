@@ -40,10 +40,10 @@
           <tbody>
             <tr *ngFor="let categoria of categoriasFiltradas">
               <td>{{ categoria.nombreCategoria }}</td>
-              <td>{{ categoria.descripcion }}</td>
+              <td>{{ categoria.tipo }}</td>
               <td>
                 <button nz-button nzType="link" (click)="editCategory(categoria)">Editar</button>
-                <button nz-button nzType="link" nzDanger (click)="deleteCategory()">Eliminar</button>
+                <button nz-button nzType="link" nzDanger (click)="deleteCategory(categoria)">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -79,13 +79,11 @@
         </div>
       </div>
 
-      <div>
-        <label for="descripcion">Descripción</label>
-        <textarea
-          nz-input
-          id="descripcion"
-          formControlName="descripcion"
-        ></textarea>
+      <div class="form-group">
+        <label for="tipoProducto">Tipo de Producto</label>
+        <select id="tipoProducto" formControlName="tipoProducto" class="form-control">
+          <option *ngFor="let tipo of tiposProducto" [value]="tipo.value">{{ tipo.name }}</option>
+        </select>
       </div>
 
       <div class="modal-actions">

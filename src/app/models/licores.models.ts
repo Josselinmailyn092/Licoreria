@@ -12,7 +12,7 @@ export interface Producto {
     marca: string;
   }
   export interface Categoria {
-    id: number;
-    nombreCategoria: string;
-    descripcion?: string;
+    id_categoria: number;
+  nombreCategoria: string;
+  tipo: string;
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable , throwError} from 'rxjs';
 import { catchError } from 'rxjs';
 @Injectable({
@@ -7,7 +7,7 @@ import { catchError } from 'rxjs';
 })
 export class DashboardService {
   private apiUrl = 'http://localhost:3000/dashboard';
-
+  private headers = new HttpHeaders({'Content-Type': 'application/json; charset-utf-8'});
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<any[]> {
@@ -33,24 +33,35 @@ private handleError(error: HttpErrorResponse): Observable<never> {
   return throwError(() => new Error(error.message || 'Error en la API'));
 }
 
-deleteProduct(id: number) : Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/deleteProducto/${id}`);
+deleteProduct(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.apiUrl}/deleteProducto/${id}`);
 }
+
 
 getCategories() {
   return this.http.get<any[]>('http://localhost:3000/dashboard/categorias');
 }
 
-insertCategory(categoryData: any) {
-  return this.http.post('http://localhost:3000/dashboard/categorias', categoryData);
+
+// CATEGORIAS
+getCategorias() {
+  return this.http.get<any[]>('http://localhost:3000/dashboard/categoria');
 }
 
-updateCategory(categoryData: any, id: number) {
-  return this.http.put(`http://localhost:3000/dashboard/categorias/${id}`, categoryData);
+insertCategory(categoryData: any): Observable<any> {
+  return this.http.post('http://localhost:3000/dashboard/categorias', categoryData)
+    .pipe(catchError(this.handleError));
 }
 
-deleteCategory(id: number) {
-  return this.http.delete(`http://localhost:3000/dashboard/categorias/${id}`);
-}
+
+  // Actualizar una categoría existente
+  updateCategory(id: number, categoryData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, categoryData);
+  }
+
+  // Eliminar una categoría
+  deleteCategory(id: number){
+    return this.http.delete(`${this.apiUrl}/categoria/${id}`);
+  }
 
 }

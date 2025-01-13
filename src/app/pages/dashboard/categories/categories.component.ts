@@ -10,7 +10,7 @@ import { Categoria } from '../../../models/licores.models';
 })
 export class CategoriesComponent implements OnInit {
   categorias: any[] = [];
-  categoriasFiltradas: any[] = [...this.categorias];
+  categoriasFiltradas: Categoria[] = [];
   searchQuery: string = '';
   isModalVisible = false;
   selectedCategory: any = null;
@@ -18,36 +18,57 @@ export class CategoriesComponent implements OnInit {
   editingCategory: any = null;
 
   form: FormGroup;
-
+  categoriasLicores: Categoria[] = [];  // Definimos el tipo de datos
+  categoriasConfiteria: Categoria[] = []; // Definimos el tipo de datos
+   tiposProducto = [
+    { value: 'licores', name: 'Licores' },
+    { value: 'Confiteria', name: 'Confitería' }
+  ];
   constructor(private fb: FormBuilder, private http: HttpClient, private dashboardService: DashboardService) {
     this.form = this.fb.group({
       nombreCategoria: ['', Validators.required],
-      descripcion: ['']
+      tipo: ['']
     });
   }
 
   ngOnInit() {
     this.loadCategories();
+    this.form = this.fb.group({
+      tipoProducto: ['', Validators.required],  // Selección del tipo de producto
+      categoria: ['', Validators.required],     // Selección de categoría
+    });
+
+      // Obtener categorías desde la API
+      this.dashboardService.getCategories().subscribe((categorias: any[]) => {
+        this.categoriasLicores = categorias.filter(c => c.tipo === 'licores');
+        this.categoriasConfiteria = categorias.filter(c => c.tipo === 'Confiteria');
+      });
+
   }
 
   loadCategories() {
-    this.dashboardService.getCategories().subscribe((data) => {
-      this.categorias = data;
-      this.categoriasFiltradas = [...this.categorias];
-    });
+    this.dashboardService.getCategorias().subscribe(
+      (data: Categoria[]) => {
+        this.categorias = data;
+        this.categoriasFiltradas = data; // Sincronizar la tabla filtrada
+      },
+      (error) => {
+        console.error('Error al cargar categorías:', error);
+        alert('Error al cargar las categorías. Por favor, intente nuevamente.');
+      }
+    );
   }
 
   // Funciones de barra de búsqueda
   buscarCategoria() {
-    const query = this.searchQuery.trim().toLowerCase();
-    if (!query) {
-      this.categoriasFiltradas = [...this.categorias];
-      return;
-    }
     this.categoriasFiltradas = this.categorias.filter(categoria =>
-      categoria.nombreCategoria.toLowerCase().includes(query)
+      categoria.nombreCategoria.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+    if (this.categoriasFiltradas.length === 0) {
+
+    }
   }
+
 
   // Modal para agregar/editar categoría
   openModal(categoria?: Categoria): void {
@@ -56,7 +77,7 @@ export class CategoriesComponent implements OnInit {
       this.editingCategory = categoria;
       this.form.patchValue({
         nombreCategoria: categoria.nombreCategoria,
-        descripcion: categoria.descripcion
+        descripcion: categoria.tipo
       });
     } else {
       this.editingCategory = null;
@@ -69,43 +90,82 @@ export class CategoriesComponent implements OnInit {
     this.editingCategory = null;
     this.form.reset();
   }
-  closeNoCategoryModal(){
-
+  closeNoCategoryModal(): void {
+    this.isNoCategoryModalVisible = false;
   }
-  deleteCategory(){
 
-  }
-  saveCategory() {
-    if (this.form.invalid) {
-      console.error('El formulario no es válido:', this.form.errors);
-      return;
+
+  deleteCategory(categoria: Categoria): void {
+    const confirmation = confirm('¿Estás seguro de que deseas eliminar esta categoría?');
+
+    if (confirmation) {
+      this.dashboardService.deleteCategory(categoria.id_categoria).subscribe(
+        (response) => {
+          console.log('Categoría eliminada exitosamente:', response);
+          alert('Categoría eliminada exitosamente.');
+
+          // Actualizar la lista de categorías después de la eliminación
+          this.loadCategories(); // Recargar las categorías para reflejar la eliminación
+        },
+        (error) => {
+          console.error('Error al eliminar la categoría:', error);
+          alert('Hubo un error al eliminar la categoría.');
+        }
+      );
     }
-
-    const categoryData = {
-      nombreCategoria: this.form.get('nombreCategoria')?.value,
-      descripcion: this.form.get('descripcion')?.value
-    };
-
-    const saveObservable = this.editingCategory?.id
-      ? this.dashboardService.updateCategory(categoryData, this.editingCategory.id)
-      : this.dashboardService.insertCategory(categoryData);
-
-    saveObservable.subscribe(
-      () => {
-        console.log('Categoría guardada/actualizada con éxito');
-        this.loadCategories();
-        this.closeModal();
-      },
-      (error) => {
-        console.error('Error al guardar/actualizar la categoría:', error);
-      }
-    );
   }
+
+
+  saveCategory() {
+    if (this.form.valid) {
+      const categoryData = {
+        nombreCategoria: this.form.get('nombreCategoria')?.value,
+        tipo: this.form.get('tipo')?.value
+      };
+
+      if (this.editingCategory) {
+        this.dashboardService.updateCategory(this.editingCategory.id, categoryData)
+          .subscribe(
+            (response) => {
+              console.log('Categoría actualizada con éxito:', response);
+              this.loadCategories();
+              this.closeModal();
+            },
+            (error) => {
+              console.error('Error al actualizar la categoría:', error);
+              alert('Hubo un error al actualizar la categoría.');
+            }
+          );
+      } else {
+        this.dashboardService.insertCategory(categoryData)
+          .subscribe(
+            (response) => {
+              console.log('Categoría agregada exitosamente:', response);
+              this.loadCategories();
+              this.closeModal();
+            },
+            (error) => {
+              console.error('Error al agregar la categoría:', error);
+              alert('Hubo un error al agregar la categoría.');
+            }
+          );
+      }
+    } else {
+      alert('Por favor, complete todos los campos del formulario.');
+    }
+  }
+
 
   editCategory(categoria: any): void {
-    this.editingCategory = categoria;
-    this.openModal(categoria);
+    this.openModal(categoria); // Abrir el modal
+    this.form.patchValue({
+      nombreCategoria: categoria.nombreCategoria,
+      tipoProducto: categoria.tipo
+    });
+    this.editingCategory = categoria; // Guardar la categoría en edición
   }
+
+
 // Modal para mostrar mensaje de "No se encontraron productos"
 showNoResultsModal(query: string) {
   this.isModalVisible = true;
