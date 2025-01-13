@@ -24,7 +24,6 @@
         <button nz-button nzType="default">Exportar a PDF</button>
         <button nz-button nzType="default" (click)="exportToXLSX()">Exportar a XLSX</button>
         <button nz-button nzType="default" (click)="exportToCSV()">Exportar a CSV</button>
-
       </div>
 
       <!-- Tabla de productos -->
@@ -34,25 +33,24 @@
             <tr>
               <th>Nombre</th>
               <th>Marca</th>
-
               <th>Cantidad</th>
               <th>Precio</th>
               <th>Presentación (ml)</th>
-              <th>Categoria</th>
+              <th>Categoría</th>
               <th>Imagen</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let producto of productosFiltrados">
-              <td>{{ producto.nombre }}</td>
-              <th>{{producto.marca}}</th>
+              <td>{{ producto.nombreProducto }}</td>
+              <td>{{ producto.nombreMarca }}</td>
               <td>{{ producto.cantidad }}</td>
               <td>{{ producto.precio }}</td>
-              <td>{{ producto.presentacion }}</td>
-              <td>{{ producto.categoria }}</td>
+              <td>{{ producto.presentacion_ml }}</td>
+              <td>{{ producto.nombreCategoria }}</td>
               <td>
-                <img *ngIf="producto.imagen" [src]="producto.imagen" alt="Imagen del producto" class="product-image" />
+                <img *ngIf="producto.imagen" [src]="producto.imagen" [alt]= "producto.nombreProducto" />
               </td>
               <td>
                 <button nz-button nzType="link" (click)="editProduct(producto)">Editar</button>
@@ -65,63 +63,110 @@
     </div>
   </nz-content>
 
-  <!-- Modal para mostrar mensaje cuando no hay resultados -->
-  <div *ngIf="isNoProductsModalVisible" class="no-products-modal">
-    <div class="modal-content">
-      <span class="close-btn" (click)="closeNoProductsModal()">×</span>
-      <h3>No se encontraron productos para la búsqueda: "{{ searchQuery }}"</h3>
-    </div>
-  </div>
-
-  <!-- Modal para agregar/editar producto -->
   <!-- Modal para agregar/editar producto -->
   <div *ngIf="isModalVisible" class="custom-modal">
     <div class="modal-header">
-      <h3>{{ selectedProduct.nombre ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+      <h3>{{ editingProduct?.id ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
       <span class="close-btn" (click)="closeModal()">×</span>
     </div>
-
-    <form (ngSubmit)="saveProduct()">
+    <form [formGroup]="form" (ngSubmit)="saveProduct()">
       <div>
-        <label>Nombre</label>
-        <input [(ngModel)]="selectedProduct.nombre" name="nombre" required />
+        <label for="nombre_Producto">Nombre</label>
+        <input
+          nz-input
+          id="nombre_Producto"
+          type="text"
+          formControlName="nombreProducto"
+        />
+        <div *ngIf="form.get('nombreProducto')?.invalid && form.get('nombreProducto')?.touched">
+          <small class="error">El nombre es obligatorio.</small>
+        </div>
       </div>
 
       <div>
-        <label>Marca</label>
-        <input [(ngModel)]="selectedProduct.marca" name="marca" required />
+        <label for="marca">Marca:</label>
+        <select formControlName="id_marca" id="marca" required>
+          <option *ngFor="let marca of marcas" [value]="marca.id_marca">
+            {{ marca.nombreMarca }}
+          </option>
+        </select>
+        <div *ngIf="form.get('nombreMarca')?.invalid && form.get('nombreMarca')?.touched">
+          <small class="error">La marca es obligatoria.</small>
+        </div>
       </div>
 
       <div>
-        <label>Cantidad</label>
-        <input type="number" [(ngModel)]="selectedProduct.cantidad" name="cantidad" required />
+        <label for="cantidad">Cantidad</label>
+        <input
+          nz-input
+          id="cantidad"
+          type="number"
+          formControlName="cantidad"
+        />
+        <div *ngIf="form.get('cantidad')?.invalid && form.get('cantidad')?.touched">
+          <small class="error">La cantidad es obligatoria.</small>
+        </div>
       </div>
 
       <div>
-        <label>Precio</label>
-        <input type="number" [(ngModel)]="selectedProduct.precio" name="precio" required />
+        <label for="precio">Precio</label>
+        <input
+          nz-input
+          id="precio"
+          type="number"
+          formControlName="precio"
+        />
+        <div *ngIf="form.get('precio')?.invalid && form.get('precio')?.touched">
+          <small class="error">El precio es obligatorio.</small>
+        </div>
       </div>
 
       <div>
-        <label>Presentación (ml)</label>
-        <input type="number" [(ngModel)]="selectedProduct.presentacion" name="presentacion" required />
+        <label for="presentacion">Presentación (ml)</label>
+        <input
+          nz-input
+          id="presentacion"
+          type="number"
+          formControlName="presentacion_ml"
+        />
+        <div *ngIf="form.get('presentacion_ml')?.invalid && form.get('presentacion_ml')?.touched">
+          <small class="error">La presentación es obligatoria.</small>
+        </div>
       </div>
 
       <div>
-        <label>Categoría</label>
-        <input [(ngModel)]="selectedProduct.categoria" name="categoria" required />
+        <label for="categoria">Categoría:</label>
+        <select formControlName="id_categoria" id="categoria" required>
+          <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+            {{ categoria.nombreCategoria }}
+          </option>
+        </select>
+        <div *ngIf="form.get('nombreCategoria')?.invalid && form.get('nombreCategoria')?.touched">
+          <small class="error">La categoría es obligatoria.</small>
+        </div>
       </div>
 
       <div>
-        <label>Imagen URL</label>
-        <input [(ngModel)]="selectedProduct.imagen" name="imagen" />
+        <label>Imagen</label>
+        <input
+          nz-input
+          type="file"
+          (change)="onImageSelected($event)"
+          accept="image/*"
+        />
       </div>
 
       <div class="modal-actions">
-        <button type="submit">{{ selectedProduct.nombre ? 'Guardar Cambios' : 'Agregar Producto' }}</button>
+        <button
+          nz-button
+          nzType="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          {{ editingProduct?.id ? 'Guardar Cambios' : 'Agregar Producto' }}
+        </button>
       </div>
     </form>
+
   </div>
-
-
 </nz-layout>

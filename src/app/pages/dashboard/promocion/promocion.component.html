@@ -1,0 +1,97 @@
+<nz-layout>
+  <nz-header class="dashboard-header">
+    <div class="header-title">Listado de Promociones </div>
+  </nz-header>
+
+  <nz-content class="page-container">
+    <div class="page-container">
+       <!-- Barra de búsqueda -->
+       <div class="search-bar">
+        <input
+          nz-input
+          placeholder="Buscar Categoria"
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (input)="buscarPromocion()"
+        />
+        <button nz-button nzType="primary" class="add-product-button" (click)="openModal()">
+          Agregar Promoción
+        </button>
+       </div>
+
+       <!-- Botones de exportación -->
+       <div class="export-buttons">
+        <button nz-button nzType="default">Exportar a PDF</button>
+        <button nz-button nzType="default" (click)="exportToXLSX()">Exportar a XLSX</button>
+        <button nz-button nzType="default" (click)="exportToCSV()">Exportar a CSV</button>
+
+       </div>
+       <nz-card>
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Descuento</th>
+                <th>Precio</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let promotion of filteredPromotions">
+                <td>{{ promotion.nombrePromocion }}</td>
+                <td>{{ promotion.descripcion }}</td>
+                <td>{{ promotion.descuento | percent }}</td>
+                <td>{{ promotion.precio || 'N/A' }}</td>
+                <td>{{ promotion.fecha_inicio }}</td>
+                <td>{{ promotion.fecha_fin }}</td>
+                <td>
+                  <button  (click)="editPromotion(promotion)">Editar</button>
+                  <button (click)="deletePromotion(promotion)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </nz-card>
+    </div>
+  </nz-content>
+
+
+<!-- Modal -->
+
+   <!-- Modal para mostrar mensaje cuando no hay resultados -->
+   <div *ngIf="isNoPromocionModalVisible" class="no-products-modal">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closePromocionModal()">×</span>
+      <h3>No se encontraron productos para la búsqueda: "{{ searchQuery }}"</h3>
+    </div>
+  </div>
+  <div *ngIf="isModalVisible" class="custom-modal">
+    <div class="modal-header">
+      <h3>{{ selectedPromotion.id_promocion ? 'Editar' : 'Agregar' }} Promoción</h3>
+      <span class="close-btn" (click)="closeModal()">×</span>
+    </div>
+      <form (ngSubmit)="savePromotion()">
+
+        <label>Nombre</label>
+        <input [(ngModel)]="selectedPromotion.nombrePromocion" name="nombrePromocion" />
+        <label>Descripción</label>
+        <textarea [(ngModel)]="selectedPromotion.descripcion" name="descripcion"></textarea>
+        <label>Descuento</label>
+        <input [(ngModel)]="selectedPromotion.descuento" type="number" name="descuento" />
+        <label>Precio</label>
+        <input [(ngModel)]="selectedPromotion.precio" type="number" name="precio" />
+        <label>Fecha Inicio</label>
+        <input [(ngModel)]="selectedPromotion.fecha_inicio" type="date" name="fecha_inicio" />
+        <label>Fecha Fin</label>
+        <input [(ngModel)]="selectedPromotion.fecha_fin" type="date" name="fecha_fin" />
+      </form>
+      <div class="modal-actions">
+        <button type="submit">{{ selectedPromotion.id_promocion ? 'Guardar' : 'Agregar' }}</button>
+        <button type="button" (click)="closeModal()">Cancelar</button>
+      </div>
+
+  </div>
+</nz-layout>

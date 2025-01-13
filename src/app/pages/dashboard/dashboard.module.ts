@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import {NzModalModule} from 'ng-zorro-antd/modal'
+import {NzModalModule} from 'ng-zorro-antd/modal';
+import { PromocionComponent } from './promocion/promocion.component'
 @NgModule({
   declarations: [
     DashboardHomeComponent,
@@ -22,7 +23,8 @@ import {NzModalModule} from 'ng-zorro-antd/modal'
     BrandsComponent,
     CategoriesComponent,
     ProductsComponent,
-    DashboardLayoutComponent
+    DashboardLayoutComponent,
+    PromocionComponent
 
 
   ],

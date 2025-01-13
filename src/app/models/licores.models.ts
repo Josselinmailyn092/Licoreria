@@ -11,3 +11,8 @@ export interface Producto {
     imagenUrl: string;
     marca: string;
   }
+  export interface Categoria {
+    id: number;
+    nombreCategoria: string;
+    descripcion?: string;
+  }

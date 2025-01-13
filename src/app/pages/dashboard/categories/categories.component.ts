@@ -1,95 +1,110 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { DashboardService } from '../../../services/dashboard.service';
+import { Categoria } from '../../../models/licores.models';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.css'
+  styleUrls: ['./categories.component.css']
 })
-export class CategoriesComponent {
-   // Datos de categorías predefinidos
-   categories = [
-    { nombre: 'Vinos', tipo: 'licores' },
-    { nombre: 'Cerveza', tipo: 'licores' },
-    { nombre: 'Dulces', tipo: 'confiteria' },
-    { nombre: 'Galletas', tipo: 'confiteria' },
-  ];
-
-  // Variables para gestionar la búsqueda y el modal
+export class CategoriesComponent implements OnInit {
+  categorias: any[] = [];
+  categoriasFiltradas: any[] = [...this.categorias];
   searchQuery: string = '';
-  filteredCategories = [...this.categories];
   isModalVisible = false;
   selectedCategory: any = null;
   isNoCategoryModalVisible: boolean = false;
+  editingCategory: any = null;
 
-   // Función para abrir el modal de "No hay categorias"
- showNoCategoryModal() {
-  this.isNoCategoryModalVisible = true;
-}
+  form: FormGroup;
 
-// Función para cerrar el modal de "No hay categoruas"
-closeNoCategoryModal() {
-  this.isNoCategoryModalVisible = false;
-}
-  // Función para filtrar categorías
-  buscarCategoria(): void {
+  constructor(private fb: FormBuilder, private http: HttpClient, private dashboardService: DashboardService) {
+    this.form = this.fb.group({
+      nombreCategoria: ['', Validators.required],
+      descripcion: ['']
+    });
+  }
+
+  ngOnInit() {
+    this.loadCategories();
+  }
+
+  loadCategories() {
+    this.dashboardService.getCategories().subscribe((data) => {
+      this.categorias = data;
+      this.categoriasFiltradas = [...this.categorias];
+    });
+  }
+
+  // Funciones de barra de búsqueda
+  buscarCategoria() {
     const query = this.searchQuery.trim().toLowerCase();
-
     if (!query) {
-      this.filteredCategories = [...this.categories];
+      this.categoriasFiltradas = [...this.categorias];
+      return;
+    }
+    this.categoriasFiltradas = this.categorias.filter(categoria =>
+      categoria.nombreCategoria.toLowerCase().includes(query)
+    );
+  }
+
+  // Modal para agregar/editar categoría
+  openModal(categoria?: Categoria): void {
+    this.isModalVisible = true;
+    if (categoria) {
+      this.editingCategory = categoria;
+      this.form.patchValue({
+        nombreCategoria: categoria.nombreCategoria,
+        descripcion: categoria.descripcion
+      });
+    } else {
+      this.editingCategory = null;
+      this.form.reset();
+    }
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
+    this.editingCategory = null;
+    this.form.reset();
+  }
+  closeNoCategoryModal(){
+
+  }
+  deleteCategory(){
+
+  }
+  saveCategory() {
+    if (this.form.invalid) {
+      console.error('El formulario no es válido:', this.form.errors);
       return;
     }
 
-    const results = this.categories.filter((category) =>
-      category.nombre.toLowerCase().includes(query)
-    );
+    const categoryData = {
+      nombreCategoria: this.form.get('nombreCategoria')?.value,
+      descripcion: this.form.get('descripcion')?.value
+    };
 
-    this.filteredCategories = results;
+    const saveObservable = this.editingCategory?.id
+      ? this.dashboardService.updateCategory(categoryData, this.editingCategory.id)
+      : this.dashboardService.insertCategory(categoryData);
 
-    if (results.length === 0) {
-      this.showNoCategoryModal(); // Mostrar el modal si no hay categorías
-    } else {
-      this.closeNoCategoryModal(); // Cerrar el modal si hay categorías
-    }
-  }
-
-
-  // Función para abrir el modal de edición o creación de categoría
-  openModal(category?: any): void {
-    this.isModalVisible = true;
-    this.selectedCategory = category ? { ...category } : { nombre: '', tipo: 'licores' };
-  }
-
-  // Función para cerrar el modal
-  closeModal(): void {
-    this.isModalVisible = false;
-  }
-
-  // Función para guardar o actualizar la categoría
-  saveCategory(): void {
-    if (this.selectedCategory.nombre) {
-      const index = this.categories.findIndex(category => category.nombre === this.selectedCategory.nombre);
-      if (index > -1) {
-        // Editamos la categoría existente
-        this.categories[index] = { ...this.selectedCategory };
-      } else {
-        // Agregamos una nueva categoría
-        this.categories.push({ ...this.selectedCategory });
+    saveObservable.subscribe(
+      () => {
+        console.log('Categoría guardada/actualizada con éxito');
+        this.loadCategories();
+        this.closeModal();
+      },
+      (error) => {
+        console.error('Error al guardar/actualizar la categoría:', error);
       }
-      this.closeModal();
-    } else {
-      alert('Por favor, completa todos los campos.');
-    }
+    );
   }
 
-  // Función para eliminar una categoría
-  deleteCategory(category: any): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
-      this.categories = this.categories.filter(c => c !== category);
-    }
-  }
-   // Función que no existía y ahora se agrega para editar una categoría
-   editCategory(category: any): void {
-    this.openModal(category);
+  editCategory(categoria: any): void {
+    this.editingCategory = categoria;
+    this.openModal(categoria);
   }
 // Modal para mostrar mensaje de "No se encontraron productos"
 showNoResultsModal(query: string) {
@@ -108,6 +123,7 @@ showNoResultsModal(query: string) {
     exportToCSV(): void {
       // Agregar lógica para exportar a CSV
       console.log('Exportando a CSV');
-    }
+      }
 
-}
+  }
+

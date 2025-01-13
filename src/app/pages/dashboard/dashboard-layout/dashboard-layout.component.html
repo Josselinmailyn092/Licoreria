@@ -3,6 +3,10 @@
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" nzWidth="200" nzTheme="light">
     <div class="logo">Licorería El Chinito</div>
     <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-menu-item routerLink="/dashboard">
+        <span nz-icon nzType="shopping"></span>
+        <span>Dashboard</span>
+      </li>
       <li nz-menu-item routerLink="/dashboard/products">
         <span nz-icon nzType="shopping"></span>
         <span>Productos</span>
@@ -15,16 +19,17 @@
         <span nz-icon nzType="tags"></span>
         <span>Marcas</span>
       </li>
-      <li nz-menu-item routerLink="/dashboard/sales">
-        <span nz-icon nzType="dollar"></span>
-        <span>Ventas</span>
+      <li nz-menu-item routerLink="/dashboard/promocion">
+        <span nz-icon nzType="tags"></span>
+        <span>Promoción</span>
       </li>
+
     </ul>
   </nz-sider>
 
   <!-- Main Content -->
   <nz-layout>
-    <nz-header class="dashboard-header">Panel de Control</nz-header>
+    <nz-header class="dashboard-header" style="justify-content: center; align-items: center;">Panel de Control</nz-header>
     <nz-content class="dashboard-content">
       <router-outlet></router-outlet>
     </nz-content>

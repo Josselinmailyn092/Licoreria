@@ -28,6 +28,7 @@ import { BrandsComponent } from './pages/dashboard/brands/brands.component';
 import { SalesComponent } from './pages/dashboard/sales/sales.component';
 import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/dashboard-layout.component';
 import { DashboardHomeComponent } from './pages/dashboard/dashboard-home/dashboard-home.component';
+import { PromocionComponent } from './pages/dashboard/promocion/promocion.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'licores',component: LicoresComponent },
@@ -59,6 +60,7 @@ const routes: Routes = [
           { path: 'categories', component: CategoriesComponent },
           { path: 'brands', component: BrandsComponent },
           { path: 'sales', component: SalesComponent },
+          {path:'promocion', component: PromocionComponent}
         ],
       },
   { path: 'promociones', component: PromocionesComponent },

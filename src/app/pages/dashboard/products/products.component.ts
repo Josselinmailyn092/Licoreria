@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { DashboardService } from './../../../services/dashboard.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import { HttpClient } from '@angular/common/http';
 import { Producto } from '../../../models/licores.models';
 
 @Component({
@@ -11,32 +14,89 @@ import { Producto } from '../../../models/licores.models';
   styleUrl: './products.component.css'
 })
 
-export class ProductsComponent {
-  productos = [
-    {
-      nombre: 'Producto 1',
-      marca: 'Marca 1',
-      cantidad: 100,
-      precio: 150.00,
-      presentacion: 250,
-      categoria: 'Categoría 1',
-      imagen: 'https://via.placeholder.com/50',
-    },
-    {
-      nombre: 'Producto 2',
-      marca: 'Marca 2',
-      cantidad: 200,
-      precio: 250.00,
-      presentacion: 500,
-      categoria: 'Categoría 2',
-      imagen: 'https://via.placeholder.com/50',
-    }, ];
-  // Barra de busqueda
-  searchQuery: string = '';
+export class ProductsComponent implements OnInit {
+  productos: any[] = [];
   productosFiltrados = [...this.productos];
-
+  searchQuery: string = '';
   isNoProductsModalVisible: boolean = false;
- // Función para abrir el modal de "No hay productos"
+  isModalVisible = false;
+  editingProduct: any = null;
+  selectedImage: File | null = null;
+  marcas: any[] = [];
+  categorias: any[] = [];
+
+
+  form: FormGroup;
+
+  url='http://localhost:3000/uploads';
+  constructor(private http: HttpClient,private fb: FormBuilder, private dashboardService: DashboardService) {
+    this.form = this.fb.group({
+      nombreProducto: ['', Validators.required],
+      id_marca: ['', Validators.required],
+      cantidad: [null, [Validators.required, Validators.min(1)]],
+      precio: [null, [Validators.required, Validators.min(0.01)]],
+      presentacion_ml: [null, Validators.required],
+      id_categoria: ['', Validators.required],
+
+      imagen: [null], // No es obligatorio
+    });
+  }
+
+  ngOnInit() {
+    this.initializeForm();
+    this.loadProducts();
+    this.obtenerMarcas();
+    this.obtenerCategorias();
+  }
+
+  obtenerMarcas() {
+    this.http.get('http://localhost:3000/dashboard/marcas').subscribe((data: any) => {
+      this.marcas = data;
+    });
+  }
+
+  obtenerCategorias() {
+    this.http.get('http://localhost:3000/dashboard/categorias').subscribe((data: any) => {
+      this.categorias = data;
+    });
+  }
+  loadProducts() {
+    this.dashboardService.getProducts().subscribe((data) => {
+      this.productos = data.map((producto) => ({
+        ...producto,
+        imagen: `http://localhost:3000/uploads/${producto.imagen}`
+      }));
+      this.productosFiltrados = [...this.productos];
+    });
+  }
+
+
+  initializeForm() {
+    this.form = this.fb.group({
+      nombreProducto: ['', Validators.required],
+      id_marca: ['', Validators.required],
+      cantidad: [null, [Validators.required, Validators.min(1)]],
+      precio: [null, [Validators.required, Validators.min(0.01)]],
+      presentacion_ml: [null, Validators.required],
+      id_categoria: ['', Validators.required], // Asegúrate de incluir este control
+      imagen: [null] // No obligatorio
+    });
+  }
+
+
+  // Funciones de barra de búsqueda
+  buscarProducto() {
+    const query = this.searchQuery.trim().toLowerCase();
+    if (!query) {
+      this.productosFiltrados = [...this.productos];
+      return;
+    }
+    this.productosFiltrados = this.productos.filter(producto =>
+      producto.nombreProducto.toLowerCase().includes(query) || producto.presentacion_ml.toString().includes(query)
+    );
+  }
+
+  // Modal para "No hay productos"
  showNoProductsModal() {
   this.isNoProductsModalVisible = true;
 }
@@ -45,103 +105,112 @@ export class ProductsComponent {
 closeNoProductsModal() {
   this.isNoProductsModalVisible = false;
 }
-  // Modal
-  isModalVisible = false;
-  // Productos
-  selectedProduct: any = {
-    nombre: '',
-    marca:'Marcar1',
-    cantidad: null,
-    precio: null,
-    presentacion: null,
-    categoria: 'Categoría 1',
-    imagen: 'https://via.placeholder.com/50',
-  };
+
+// Funciones de modal
+openModal(producto?: Producto): void {
+  this.isModalVisible = true;
+  if (producto) {
+    this.editingProduct = producto;
+    this.form.patchValue({
+      nombreProducto: producto.nombreProducto,
+      id_marca: producto.marca,
+      cantidad: producto.cantidad,
+      precio: producto.precio,
+      presentacion_ml: producto.presentacion_ml,
+      id_categoria: producto.categoria,
+    });
+  } else {
+    this.editingProduct = null;
+    this.form.reset();
+  }
+}
 
 
-// funciones de barra de busqueda
-buscarProducto() {
-  const query = this.searchQuery.trim().toLowerCase();
+closeModal(): void {
+  this.isModalVisible = false;
+  this.editingProduct = null; // Reinicia el producto en edición
+  this.form.reset(); // Reinicia el formulario
+  this.selectedImage = null; // Elimina la imagen seleccionada
+}
+ // Método que se llama cuando se selecciona una imagen
+ onImageSelected(event: any): void {
+  const file = event.target.files[0];  // Obtiene el archivo seleccionado
+  if (file) {
+    this.selectedImage = file;  // Asigna el archivo a la propiedad selectedImage
+  }
+}
 
-  if (!query) {
-    this.productosFiltrados = [...this.productos];
-    this.closeNoProductsModal(); // Cerrar el modal si no hay búsqueda
+
+saveProduct() {
+  if (this.form.invalid) {
+    console.error('El formulario no es válido:', this.form.errors);
     return;
   }
 
-  const results = this.productos.filter((producto) =>
-    producto.nombre.toLowerCase().includes(query) ||
-    producto.presentacion.toString() === query
+  const formData = new FormData();
+  formData.append('id_marca', this.form.get('id_marca')?.value);
+  formData.append('id_categoria', this.form.get('id_categoria')?.value);
+  formData.append('nombreProducto', this.form.get('nombreProducto')?.value);
+  formData.append('cantidad', this.form.get('cantidad')?.value.toString());
+  formData.append('precio', this.form.get('precio')?.value.toString());
+  formData.append('presentacion_ml', this.form.get('presentacion_ml')?.value.toString());
+  if (this.selectedImage) {
+    formData.append('imagen', this.selectedImage, this.selectedImage.name);
+  }
+
+  const saveObservable = this.editingProduct?.id
+    ? this.dashboardService.updateProduct(formData, this.editingProduct.id)
+    : this.dashboardService.insertProduct(formData);
+
+  saveObservable.subscribe(
+    () => {
+      console.log('Producto guardado/actualizado con éxito');
+      this.loadProducts(); // Recargar la lista de productos
+      this.closeModal(); // Cerrar el modal
+    },
+    (error) => {
+      console.error('Error al guardar/actualizar el producto:', error);
+    }
   );
-
-  this.productosFiltrados = results;
-
-  if (results.length === 0) {
-    this.showNoProductsModal(); // Mostrar el modal si no hay productos
-  } else {
-    this.closeNoProductsModal(); // Cerrar el modal si hay productos
-  }
-}
-// Modal para mostrar mensaje de "No hay resultados"
-// Modal para mostrar mensaje de "No se encontraron productos"
-showNoResultsModal(query: string) {
-  this.isModalVisible = true;
-  this.selectedProduct = {
-    nombre: `No se encontraron productos para la búsqueda: "${query}"`, // Mensaje con la búsqueda
-
-  };
-}
-// Funciones de modal
-openModal(producto?: any): void {
-  this.isModalVisible = true;
-  this.selectedProduct = producto ? { ...producto } : { nombre: '', marca: '', cantidad: null, precio: null, presentacion: null, categoria: 'Categoría 1', imagen: '' };
 }
 
 
-  closeModal(): void {
-    this.isModalVisible = false;
-  }
+editProduct(producto: any): void {
+  this.editingProduct = producto; // Asegura que se guarde el producto en edición
+  this.openModal(producto);
+}
 
-  saveProduct(): void {
-    if (this.selectedProduct.nombre && this.selectedProduct.precio !== null) {
-      const index = this.productos.findIndex(
-        (p) => p.nombre === this.selectedProduct.nombre
-      );
-
-      if (index > -1) {
-        // Editar producto existente
-        this.productos[index] = { ...this.selectedProduct }; // Usar spread operator para evitar problemas con la referencia
-      } else {
-        // Agregar nuevo producto
-        this.productos.push({ ...this.selectedProduct });
+deleteProduct(producto: any): void {
+  console.log('Producto a eliminar:', producto);
+  const productId = Number(producto.id); // Asegúrate de que sea un número
+  if (!isNaN(productId)) {
+    console.log('ID del producto a eliminar:', productId);
+    this.dashboardService.deleteProduct(productId).subscribe(
+      () => {
+        console.log('Producto eliminado con éxito');
+        this.loadProducts(); // Recargar los productos después de eliminar
+      },
+      (error) => {
+        console.error('Error al eliminar el producto:', error);
       }
-    }
-    this.closeModal(); // Cerrar el modal después de guardar
+    );
+  } else {
+    console.error('ID del producto no válido:', producto);
   }
-
-
-  editProduct(producto: any): void {
-    this.openModal(producto);
-  }
-
-  deleteProduct(producto: any): void {
-    // Confirmar eliminación antes de borrar
-    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      this.productos = this.productos.filter((p) => p !== producto); // Eliminamos el producto
-    }
-  }
+}
 
 
 
 
-   // Función para exportar a XLSX
+
+  // Exportar a XLSX
    exportToXLSX() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.productosFiltrados);
     const wb: XLSX.WorkBook = { Sheets: { 'Productos': ws }, SheetNames: ['Productos'] };
     XLSX.writeFile(wb, 'productos.xlsx');
   }
 
-  // Función para exportar a CSV
+  // Exportar a CSV
   exportToCSV() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.productosFiltrados);
     const csv: string = XLSX.utils.sheet_to_csv(ws);
@@ -151,8 +220,6 @@ openModal(producto?: any): void {
     a.download = 'productos.csv';
     a.click();
   }
-
-
 
   // Exportar a PDF
  /* exportToPDF() {
@@ -176,9 +243,5 @@ openModal(producto?: any): void {
     });
 
     doc.save('productos.pdf');
-  }
-*/
-
-
-
+  } */
 }
