@@ -31,9 +31,7 @@
 
       <!-- Íconos de búsqueda y carrito (siempre visibles) -->
       <div class="icons">
-        <a href="javascript:void(0)" class="iconSearch" (click)="toggleSearchModal()">
-          <i nz-icon nzType="search" nzTheme="outline"></i>
-        </a>
+
         <a href="javascript:void(0)" class="cart-icon" (click)="abrirCarrito()" >
           <i nz-icon nzType="shopping-cart" nzTheme="outline"></i>
         </a>
@@ -53,7 +51,7 @@
     <!-- Side Menu (Carrito) -->
     <div class="side-menu" [class.open]="isCarritoVisible">
       <div class="side-menu-header">
-        <h2>Tu Carrito</h2>
+        <h2>Carrito</h2>
         <button class="close-btn" (click)="cerrarCarrito()">&#10005;</button>
       </div>
 
@@ -69,7 +67,7 @@
             <img [src]="producto.imagenUrl" alt="{{ producto.nombreProducto}}" class="producto-imagen">
             <div class="producto-detalles">
               <h3>{{ producto.nombreProducto }}</h3>
-              <p>{{ producto.presentacion_ml }}</p>
+              <p>{{ producto.presentacion_ml }}ml</p>
               <p>
                 <span *ngIf="producto.precio" class="precio-original">{{ producto.precio | currency }}</span>
                 <span class="precio-descuento">{{ producto.precio || producto.precio | currency }}</span>
@@ -88,36 +86,15 @@
       </div>
 
       <div class="side-menu-footer">
-        <button (click)="enviarPedidoPorWhatsApp()">Enviar pedido por WhatsApp</button>
+        <button  (click)="enviarPedidoPorWhatsApp()">Enviar pedido por WhatsApp</button>
+
+      </div>
+
+      <div class="side-menu-footer-limpiar">
         <button (click)="limpiarCarrito()">Limpiar carrito</button>
       </div>
     </div>
 
-   <!-- Modal de búsqueda -->
-   <div class="search-modal" [ngClass]="{'active': ModalBuscar}">
-    <div class="container">
-      <div class="search-bar-modal d-flex justify-content-center align-items-center">
-        <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="suffixIcon">
-          <input
-            nz-input
-            type="text"
-            placeholder="¿Qué estás buscando?"
-            aria-label="Search"
-            [(ngModel)]="search"
-          />
-        </nz-input-group>
-        <ng-template #prefixIcon>
-          <!-- Icono de búsqueda al lado izquierdo -->
-          <i nz-icon nzType="search" nzTheme="outline"></i>
-        </ng-template>
-        <ng-template #suffixIcon>
-          <!-- Botón de envío -->
-          <button nz-button nzType="default" (click)="onSearch()">
-            <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
-          </button>
-        </ng-template>
-      </div>
-    </div>
-  </div>
+
 
 </nz-layout>

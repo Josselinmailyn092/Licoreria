@@ -2,13 +2,13 @@
     background-color: #F8F5F3;
     padding: 40px 20px;
     color: #333; /* Color de texto oscuro */
-    
+
   }
-  
+
   .footer-content {
     margin-bottom: 30px;
   }
-  
+
   .footer-content h3 {
     font-size: 16px;
     font-weight: 600; /* Negrita ligera */
@@ -17,14 +17,14 @@
     letter-spacing: 1px;
     margin-bottom: 8px;
   }
-  
+
   .footer-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    
+
   }
-  
+
   .footer-list li {
     font-size: 12px;
     font-weight: 400; /* Peso ligero */
@@ -33,17 +33,17 @@
     transition: color 0.3s ease; /* Transición suave */
     cursor: pointer;
   }
-  
+
   .footer-list li:hover {
     color:#ff4d4f ; /* Cambio de color al pasar el mouse */
   }
-  
+
   .payment-icons img {
     margin-right: 10px;
     width: 35px;
     height: 25px;
   }
-  
+
   .social-icons i {
     font-size: 18px;
     color: #333;
@@ -51,28 +51,28 @@
     cursor: pointer;
     transition: color 0.3s ease;
   }
-  
+
   .social-icons i:hover {
-    color: #d59d00; /* Amarillo minimalista al pasar mouse */
+    color: #ff4d4f; /* Amarillo minimalista al pasar mouse */
   }
-  
+
   .subscribe {
     margin-top: 20px;
   }
-  
+
   .subscribe h3 {
     font-size: 16px;
     font-weight: 600;
     color: #222;
     letter-spacing: 1px;
   }
-  
+
   .subscribe p {
     font-size: 14px;
     color: #555;
     margin-bottom: 10px;
   }
-  
+
   nz-input-group input[nz-input] {
     border: 1px solid #ccc;
     border-radius: 20px; /* Bordes redondeados */
@@ -81,11 +81,11 @@
     color: #333;
     outline: none;
   }
-  
+
   nz-input-group input[nz-input]:focus {
     border-color: #d59d00; /* Amarillo en foco */
   }
-  
+
   .footer-copyright {
     text-align: center;
     font-size: 12px;
@@ -94,28 +94,27 @@
     padding-top: 20px;
     margin-top: 20px;
   }
-  
+
   /* Media Queries para Responsive */
   @media (max-width: 768px) {
     .footer-container {
       text-align: center;
     }
-  
+
     .payment-icons img {
       display: inline-block;
       margin: 5px;
     }
-  
+
     .social-icons i {
       margin: 10px 5px;
     }
-  
+
     .footer-content h3 {
       margin-top: 20px;
     }
-  
+
     .subscribe input {
       width: 100%;
     }
   }
-  

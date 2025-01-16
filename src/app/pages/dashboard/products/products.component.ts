@@ -144,10 +144,7 @@ closeModal(): void {
 
 
 saveProduct() {
-  if (this.form.invalid) {
-    console.error('El formulario no es válido:', this.form.errors);
-    return;
-  }
+
 
   const formData = new FormData();
   formData.append('id_marca', this.form.get('id_marca')?.value);

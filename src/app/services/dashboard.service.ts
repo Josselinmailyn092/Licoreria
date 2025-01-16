@@ -45,17 +45,16 @@ getCategories() {
 
 // CATEGORIAS
 getCategorias() {
-  return this.http.get<any[]>('http://localhost:3000/dashboard/categoria');
+  return this.http.get<any[]>('http://localhost:3000/dashboard/categorias');
 }
-
-insertCategory(categoryData: any): Observable<any> {
+insertCategory(categoryData: any) {
   return this.http.post('http://localhost:3000/dashboard/categorias', categoryData)
     .pipe(catchError(this.handleError));
 }
 
 
   // Actualizar una categoría existente
-  updateCategory(id: number, categoryData: any): Observable<any> {
+  updateCategory(id: number, categoryData: any) {
     return this.http.put(`${this.apiUrl}/${id}`, categoryData);
   }
 

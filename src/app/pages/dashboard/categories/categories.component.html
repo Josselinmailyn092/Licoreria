@@ -67,21 +67,19 @@
     </div>
     <form [formGroup]="form" (ngSubmit)="saveCategory()">
       <div>
-        <label for="nombre_Categoria">Nombre</label>
+        <label for="nombreCategoria">Nombre</label>
         <input
           nz-input
-          id="nombre_Categoria"
+          id="nombreCategoria"
           type="text"
           formControlName="nombreCategoria"
         />
-        <div *ngIf="form.get('nombreCategoria')?.invalid && form.get('nombreCategoria')?.touched">
-          <small class="error">El nombre es obligatorio.</small>
-        </div>
+
       </div>
 
       <div class="form-group">
-        <label for="tipoProducto">Tipo de Producto</label>
-        <select id="tipoProducto" formControlName="tipoProducto" class="form-control">
+        <label for="tipo">Tipo de Producto</label>
+        <select id="tipo" formControlName="tipo" class="form-control">
           <option *ngFor="let tipo of tiposProducto" [value]="tipo.value">{{ tipo.name }}</option>
         </select>
       </div>
@@ -98,4 +96,6 @@
       </div>
     </form>
   </div>
+
+
 </nz-layout>

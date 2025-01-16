@@ -4,7 +4,7 @@
     <button class="whatsapp-button" (click)="toggleWhatsAppPopup()">
       <img src="assets/images/whatsapp.png" alt="WhatsApp Icon" width="80" height="80">
     </button>
-  
+
     <div class="whatsapp-popup" *ngIf="showWhatsAppPopup">
       <div class="popup-header">
         <span>WhatsApp</span>
@@ -18,31 +18,31 @@
       </div>
     </div>
   </div>
-  
+
   <nz-carousel
   [nzAutoPlay]="true"
   [nzEffect]="'scrollx'"
-  [nzAutoPlaySpeed]="3000" 
+  [nzAutoPlaySpeed]="3000"
   class="full-screen-carousel">
   <!-- Slide 1 -->
   <div nz-carousel-content>
-    <div 
-      class="carousel-item" 
-      [ngClass]="animationActive ? 'animation-card1' : ''" 
+    <div
+      class="carousel-item"
+      [ngClass]="animationActive ? 'animation-card1' : ''"
     >
       <img [src]="'assets/images/slide2.jpg'" alt="Slide 1">
       <div class="carousel-caption">
         <div class="welcome-section">
           <h1 class="welcome-title">¡Bienvenido a Licorería El Chinito!</h1>
           <p class="welcome-text">
-            Descubre nuestra selección de licores de alta calidad, perfecta para cualquier ocasión. 
+            Descubre nuestra selección de licores de alta calidad, perfecta para cualquier ocasión.
             Celebremos juntos con estilo y sabor.
           </p>
         </div>
       </div>
     </div>
   </div>
-  
+
 <!-- Slide 2 -->
 <div nz-carousel-content>
   <div class="carousel-item" [ngClass]="animationActive ? 'animate-card2' : ''">
@@ -81,7 +81,7 @@
     <div nz-carousel-content>
       <div class="horizontal-container">
         <div *ngFor="let category of categorias" class="horizontal-item">
-          <div 
+          <div
             (click)="navigateToCategory(category.route)"
             [ngStyle]="{ 'background-color': category.color }"
             class="category-card"
@@ -105,7 +105,7 @@
 
 
 
-  
+
 
 <div class="container">
   <div class="brand-logo">
@@ -113,7 +113,7 @@
   </div>
   <div class="text-content">
     <span>Encuentra aquí </span>
-    <span class="category" id="dynamic-text">{{ categoryText }}</span>
+    <span class="category" id="dynamic-text"> #Licores</span>
     <span>...</span>
   </div>
 </div>
@@ -141,7 +141,7 @@
             [nzDescription]="'$' + product.precio + ' / ' + product.presentacion_ml + 'ml'"
           ></nz-card-meta>
           <div class="buy-button-container">
-            <button nz-button nzType="primary" class="buy-button">Comprar ahora</button>
+            <button nz-button nzType="primary" class="buy-button" >Comprar ahora</button>
           </div>
         </nz-card>
       </div>
@@ -154,7 +154,7 @@
       &#9654;
     </button>
   </div>
-    
+
     <!-- Sección: Call to Action -->
     <div class="cta-section">
       <hr class="cta-divider">
@@ -163,7 +163,6 @@
         <button nz-button nzType="primary" nzSize="large">Contáctanos</button>
       </a>
     </div>
-    
-    
+
+
   </div>
-  

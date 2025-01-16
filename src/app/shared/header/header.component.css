@@ -313,6 +313,8 @@ i[nz-icon] {
   transform-origin: bottom left; /* Origen de la expansión */
   color: #ff8326;
 }
+
+
 /* Carrito */
 .side-menu {
   position: fixed;
@@ -345,6 +347,7 @@ i[nz-icon] {
 .side-menu-header h2 {
   margin: 0;
   font-size: 1.5rem;
+  color: #000000;
 }
 
 .close-btn {
@@ -352,6 +355,10 @@ i[nz-icon] {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  color: #000000;
+}
+.close-btn:hover{
+  color: #ff4100;
 }
 
 .side-menu-body {
@@ -363,6 +370,7 @@ i[nz-icon] {
 .carrito-vacio {
   text-align: center;
   color: #555;
+  font-size: 1rem;
 }
 
 .carrito-item {
@@ -386,7 +394,8 @@ i[nz-icon] {
 
 .producto-detalles h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: #000000;
 }
 
 .producto-detalles p {
@@ -402,33 +411,43 @@ i[nz-icon] {
 
 .precio-descuento {
   font-weight: bold;
-  color: #333;
+  color: #aa2202;
+  font-size: 1.1rem;
 }
 
 .producto-cantidad {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
 }
 
 .producto-cantidad button {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-}
 
+  border: 1px solid #ccc;
+  padding: 0.20rem 0.4rem;
+  border-radius: 13px;
+  border: none;
+  cursor: pointer;
+  background-color: #fbaa6c;
+}
+.producto-cantidad button:hover{
+  background-color: #f48a44;
+}
 .producto-cantidad span {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
+
 }
 
 .carrito-total {
   margin-top: 1rem;
   text-align: right;
   font-size: 1.2rem;
-  font-weight: bold;
+  color: #aa2202;
 }
-
+.carrito-total h2{
+  color: #aa2202;
+}
 .side-menu-footer {
   padding: 1rem;
   background-color: #f8f8f8;
@@ -439,7 +458,7 @@ i[nz-icon] {
 }
 
 .side-menu-footer button {
-  background-color: #007bff;
+  background-color: #2AA81A;
   color: #fff;
   border: none;
   padding: 0.75rem;
@@ -450,7 +469,30 @@ i[nz-icon] {
 }
 
 .side-menu-footer button:hover {
-  background-color: #0056b3;
+  background-color: #5fbd53;
+}
+
+.side-menu-footer-limpiar {
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.side-menu-footer-limpiar button {
+  background-color: #aa2202;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.side-menu-footer-limpiar button:hover {
+  background-color: #cf563b;
 }
 
 @media (max-width: 768px) {

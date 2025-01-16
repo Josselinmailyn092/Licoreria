@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 import { ProductoService } from '../../services/producto.service';
-
+import { CarritoService } from '../../services/carrito.service';
+import { Producto } from '../../models/licores.models';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,14 +25,17 @@ export class HomeComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 4;
   totalPages: number = 0;
-  url='http://localhost:3000/uploads'; 
-  constructor(private productoService: ProductoService, private router: Router) {}
+  url='http://localhost:3000/uploads';
+  constructor(private carritoService: CarritoService, private productoService: ProductoService, private router: Router) {}
 
   ngOnInit() {
     this.loadCategorias();
     this.loadFeaturedProducts();
   }
-
+  // Carrito
+   agregarProductoAlCarrito(producto: Producto): void {
+    this.carritoService.agregarProducto(producto);
+  }
   loadCategorias(): void {
     this.productoService.getCategoriasConCantidad().subscribe(
       (data) => {
@@ -70,7 +74,7 @@ export class HomeComponent implements OnInit {
     const end = start + this.pageSize;
     this.paginatedProducts = this.featuredProducts.slice(start, end);
   }
-  
+
    nextPage(): void {
     if (this.currentPage < this.totalPages - 1) {
       this.currentPage++;
@@ -86,8 +90,8 @@ export class HomeComponent implements OnInit {
   }
 
 
- 
-  
+
+
 
   getCategoryColor(category: string): string {
     const colors: { [key: string]: string } = {

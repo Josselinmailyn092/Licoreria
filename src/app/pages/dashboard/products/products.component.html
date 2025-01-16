@@ -32,11 +32,13 @@
           <thead>
             <tr>
               <th>Nombre</th>
+              <th>Categoría</th>
               <th>Marca</th>
+
               <th>Cantidad</th>
               <th>Precio</th>
               <th>Presentación (ml)</th>
-              <th>Categoría</th>
+
               <th>Imagen</th>
               <th>Acciones</th>
             </tr>
@@ -44,11 +46,12 @@
           <tbody>
             <tr *ngFor="let producto of productosFiltrados">
               <td>{{ producto.nombreProducto }}</td>
+              <td>{{ producto.nombreCategoria }}</td>
               <td>{{ producto.nombreMarca }}</td>
               <td>{{ producto.cantidad }}</td>
               <td>{{ producto.precio }}</td>
               <td>{{ producto.presentacion_ml }}</td>
-              <td>{{ producto.nombreCategoria }}</td>
+
               <td>
                 <img *ngIf="producto.imagen" [src]="producto.imagen" [alt]= "producto.nombreProducto" />
               </td>
@@ -80,6 +83,18 @@
         />
         <div *ngIf="form.get('nombreProducto')?.invalid && form.get('nombreProducto')?.touched">
           <small class="error">El nombre es obligatorio.</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="categoria">Categoría:</label>
+        <select formControlName="id_categoria" id="categoria" required>
+          <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+            {{ categoria.nombreCategoria }}
+          </option>
+        </select>
+        <div *ngIf="form.get('nombreCategoria')?.invalid && form.get('nombreCategoria')?.touched">
+          <small class="error">La categoría es obligatoria.</small>
         </div>
       </div>
 
@@ -134,17 +149,7 @@
         </div>
       </div>
 
-      <div>
-        <label for="categoria">Categoría:</label>
-        <select formControlName="id_categoria" id="categoria" required>
-          <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
-            {{ categoria.nombreCategoria }}
-          </option>
-        </select>
-        <div *ngIf="form.get('nombreCategoria')?.invalid && form.get('nombreCategoria')?.touched">
-          <small class="error">La categoría es obligatoria.</small>
-        </div>
-      </div>
+
 
       <div>
         <label>Imagen</label>

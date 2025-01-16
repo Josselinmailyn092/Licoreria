@@ -114,11 +114,18 @@ cerrarCarrito(): void {
   this.isCarritoVisible = false;
 }
 
+
 enviarPedidoPorWhatsApp(): void {
+  const numeroWhatsApp = '593939380666';
+  const saludo = "Hola buenas tardes me gustaría realizar un pedido:";
   const mensaje = this.carrito.map(producto =>
-    `Hola buenas tardes me gustaria realizar un pedido :${producto.nombreProducto} (${producto.presentacion_ml} ml) - $${(producto.precio * 0.9).toFixed(2)}`
+    `${producto.nombreProducto} (${producto.presentacion_ml} ml) - $${(producto.precio * 0.9).toFixed(2)}`
   ).join('\n');
-  window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`);
+
+  const textoCompleto = `${saludo}\n${mensaje}`;
+  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoCompleto)}`;
+
+  window.open(url, '_blank');
 }
 
 limpiarCarrito(): void {

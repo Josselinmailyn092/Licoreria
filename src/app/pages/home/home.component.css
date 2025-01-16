@@ -8,7 +8,7 @@
     right: 20px;
     z-index: 1000;
   }
-  
+
   .whatsapp-button {
     background-color: #2AA81A;
     border: none;
@@ -21,12 +21,12 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
-  
+
   .whatsapp-button i {
     font-size: 24px;
     color: white;
   }
-  
+
   .whatsapp-popup {
     position: fixed;
     bottom: 100px;
@@ -38,7 +38,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
   }
-  
+
   .popup-header {
     display: flex;
     justify-content: space-between;
@@ -48,12 +48,12 @@
     color: white;
     border-radius: 10px 10px 0 0;
   }
-  
+
   .popup-body {
     padding: 15px;
     text-align: center;
   }
-  
+
   .chat-button {
     background-color: #2AA81A;
     border: none;
@@ -62,11 +62,11 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   .chat-button i {
     margin-left: 5px;
   }
-  
+
   .full-screen-carousel {
     height: 85vh; /* Altura completa de la pantalla */
     width: 100vw;  /* Ancho completo de la pantalla */
@@ -74,29 +74,29 @@
     overflow: hidden;
     margin-bottom: 0;
   }
-  
+
   .carousel-item {
     position: relative;
     height: 100%;
   }
-  
+
   .carousel-item img {
     object-fit: cover;
     height: 100%;
     width: 100%;
     filter: brightness(0.7);
   }
-  
+
   .carousel-caption {
     position: absolute;
     top: 60%; /* Ubica el texto al pie de la imagen */
     color: white; /* Texto en color blanco */
     text-align: center;
-    right: 0; 
+    right: 0;
     padding: 10px 10px; /* Espaciado interno del texto */
-   
+
   }
-  
+
 
   .welcome-section {
     background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
@@ -105,7 +105,7 @@
     animation: slideIn 1s ease-out;
     width: 800px; /* Animación de entrada */
   }
-  
+
   .welcome-title {
     font-size: 38px;
     font-weight:800;
@@ -114,7 +114,7 @@
     margin-bottom: 10px;
     animation: fadeIn 2s ease-in; /* Animación específica para el título */
   }
-  
+
   .welcome-text {
     font-size: 25px;
     font-weight: 500;
@@ -122,7 +122,7 @@
     color: #ffffff; /* Color blanco para mayor contraste */
     animation: fadeIn 2.5s ease-in; /* Animación específica para el texto */
   }
-  
+
   /* Animaciones específicas para cada card */
 .card.animation-card1:hover .welcome-section {
   animation: bounceInRight 3s ease forwards;
@@ -317,8 +317,8 @@
   margin: auto;
   padding: 8px 0;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 .category-info {
@@ -365,6 +365,7 @@
   justify-content: center;
   background-color: #fff;
   padding: 20px;
+  margin-top: 90px;
 }
 
 .brand-logo {
@@ -411,6 +412,7 @@
   padding: 2rem 1rem;
   background: #ffb064;
   position: relative; /* For arrow positioning */
+  margin-top: 50px;
 }
 
 .title {
@@ -461,7 +463,7 @@
 }
 
 .product-image {
-  width: 100%;
+  width: 60%;
   height: 120px;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
@@ -472,10 +474,15 @@
 }
 
 .buy-button {
-  background-color: #ff5e00;
-  border-color: #ff4000;
-  color: #fff;
-  width: 100%;
+  background-color: #aa2202 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .buy-button:hover {
@@ -594,17 +601,17 @@
   .welcome-section {
     background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
     padding: 5px;
-    
+
     animation: slideIn 1s ease-out;
     width: 410px; /* Animación de entrada */
   }
-  
+
   .welcome-title {
     font-size: 20px;
     font-weight:700;
     margin-bottom: 8px;
-    
-   
+
+
   }
   .welcome-text {
     font-size: 15px;
@@ -614,10 +621,10 @@
     animation: fadeIn 2.5s ease-in; /* Animación específica para el texto */
   }
   .carousel-caption2 {
-   
+
     width: 100%;
     height: 100%;
-   
+
   }
   .card2-section {
     padding: 15px; /* Reducir el padding */
@@ -643,7 +650,8 @@
 .carousel-container {
   width: 90%;
   height: 795px;
- 
+  margin-top: 80px;
+
 }
 
 .horizontal-container {
@@ -656,7 +664,7 @@
 
 .horizontal-item {
  margin: 5px; /* Espaciado entre las tarjetas */
-  
+
 }
 .category-card{
   display: flex;
@@ -757,7 +765,7 @@
 
 
 }
-  
+
 
 
 /* Responsivo para pantallas muy pequeñas (350px o menos) */

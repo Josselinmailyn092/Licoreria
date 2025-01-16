@@ -26,29 +26,22 @@ export class CategoriesComponent implements OnInit {
   ];
   constructor(private fb: FormBuilder, private http: HttpClient, private dashboardService: DashboardService) {
     this.form = this.fb.group({
-      nombreCategoria: ['', Validators.required],
-      tipo: ['']
+      nombreCategoria: ['', Validators.required], // Campo 'nombreCategoria'
+      tipo: ['', Validators.required],           // Campo 'tipo'
     });
   }
 
   ngOnInit() {
     this.loadCategories();
-    this.form = this.fb.group({
-      tipoProducto: ['', Validators.required],  // Selección del tipo de producto
-      categoria: ['', Validators.required],     // Selección de categoría
-    });
 
-      // Obtener categorías desde la API
-      this.dashboardService.getCategories().subscribe((categorias: any[]) => {
-        this.categoriasLicores = categorias.filter(c => c.tipo === 'licores');
-        this.categoriasConfiteria = categorias.filter(c => c.tipo === 'Confiteria');
-      });
+
+
 
   }
-
   loadCategories() {
     this.dashboardService.getCategorias().subscribe(
       (data: Categoria[]) => {
+        console.log('Datos recibidos:', data); // Agrega esto
         this.categorias = data;
         this.categoriasFiltradas = data; // Sincronizar la tabla filtrada
       },
@@ -58,6 +51,7 @@ export class CategoriesComponent implements OnInit {
       }
     );
   }
+
 
   // Funciones de barra de búsqueda
   buscarCategoria() {
@@ -77,13 +71,14 @@ export class CategoriesComponent implements OnInit {
       this.editingCategory = categoria;
       this.form.patchValue({
         nombreCategoria: categoria.nombreCategoria,
-        descripcion: categoria.tipo
+        tipo: categoria.tipo, // Campo "tipo" para diferenciar entre licores y confitería
       });
     } else {
       this.editingCategory = null;
-      this.form.reset();
+      this.form.reset(); // Limpiar el formulario
     }
   }
+
 
   closeModal(): void {
     this.isModalVisible = false;
@@ -96,63 +91,49 @@ export class CategoriesComponent implements OnInit {
 
 
   deleteCategory(categoria: Categoria): void {
-    const confirmation = confirm('¿Estás seguro de que deseas eliminar esta categoría?');
-
-    if (confirmation) {
+    const confirmacion = confirm(`¿Estás seguro de eliminar la categoría "${categoria.nombreCategoria}"?`);
+    if (confirmacion) {
       this.dashboardService.deleteCategory(categoria.id_categoria).subscribe(
-        (response) => {
-          console.log('Categoría eliminada exitosamente:', response);
-          alert('Categoría eliminada exitosamente.');
-
-          // Actualizar la lista de categorías después de la eliminación
-          this.loadCategories(); // Recargar las categorías para reflejar la eliminación
+        () => {
+          this.loadCategories(); // Recargar categorías
+          alert('Categoría eliminada con éxito.');
         },
         (error) => {
-          console.error('Error al eliminar la categoría:', error);
-          alert('Hubo un error al eliminar la categoría.');
+          console.error('Error al eliminar categoría:', error);
+          alert('Error al eliminar la categoría. Inténtelo nuevamente.');
         }
       );
     }
   }
 
 
-  saveCategory() {
-    if (this.form.valid) {
-      const categoryData = {
-        nombreCategoria: this.form.get('nombreCategoria')?.value,
-        tipo: this.form.get('tipo')?.value
-      };
 
-      if (this.editingCategory) {
-        this.dashboardService.updateCategory(this.editingCategory.id, categoryData)
-          .subscribe(
-            (response) => {
-              console.log('Categoría actualizada con éxito:', response);
-              this.loadCategories();
-              this.closeModal();
-            },
-            (error) => {
-              console.error('Error al actualizar la categoría:', error);
-              alert('Hubo un error al actualizar la categoría.');
-            }
-          );
-      } else {
-        this.dashboardService.insertCategory(categoryData)
-          .subscribe(
-            (response) => {
-              console.log('Categoría agregada exitosamente:', response);
-              this.loadCategories();
-              this.closeModal();
-            },
-            (error) => {
-              console.error('Error al agregar la categoría:', error);
-              alert('Hubo un error al agregar la categoría.');
-            }
-          );
-      }
-    } else {
-      alert('Por favor, complete todos los campos del formulario.');
+  saveCategory(): void {
+    if (this.form.invalid) {
+      console.error('Formulario inválido:', this.form.errors);
+      return;
     }
+
+    const categoriaData = {
+      nombreCategoria: this.form.get('nombreCategoria')?.value,
+      tipo: this.form.get('tipo')?.value,
+    };
+
+    const saveObservable = this.editingCategory?.id
+      ? this.dashboardService.updateCategory(this.editingCategory.id, categoriaData)
+      : this.dashboardService.insertCategory(categoriaData);
+
+    saveObservable.subscribe(
+      () => {
+        this.loadCategories(); // Recargar categorías
+        this.closeModal(); // Cerrar el modal
+        alert('Categoría guardada con éxito.');
+      },
+      (error) => {
+        console.error('Error al guardar categoría:', error);
+        alert('Error al guardar la categoría. Inténtelo nuevamente.');
+      }
+    );
   }
 
 

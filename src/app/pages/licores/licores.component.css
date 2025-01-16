@@ -1,6 +1,7 @@
 .licores-container {
   display: flex;
   padding: 20px;
+  margin: 0;
   margin-top: 80px;
 
 }
@@ -122,6 +123,7 @@ nz-menu-item.active {
 
 
 .licores-header {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -130,6 +132,7 @@ nz-menu-item.active {
     width: 100%;
     margin-bottom: 20px;
     padding: 0;
+    overflow: hidden;
 }
 
 .header-image {
@@ -143,12 +146,14 @@ nz-menu-item.active {
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
   gap: 20px;
   justify-content: center; /* Centrado */
   margin: 20px auto;
   padding: 10px;
   font-family: Arial, sans-serif;
   color: #5b5959;
+  z-index: 1;
 }
 
 /* Estilo de cada filtro */
@@ -364,7 +369,7 @@ nz-menu-item.active {
     display: flex;
     padding: 0;
     margin: 0;
-    margin-top: 118px;
+    margin-top: 90px;
   }
   .side-menu{
      display: none;
