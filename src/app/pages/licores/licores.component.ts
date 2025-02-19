@@ -30,7 +30,7 @@ export class LicoresComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Licores';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor(
     private productoService: ProductoService,

@@ -30,7 +30,7 @@ export class ChicleComponent {
   selectedSubMenu: string = 'Chicle'
   carrito: Producto[] = [];
 
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
     constructor( private confiteriaService: ConfiteriaService,private chicleService : ChicleService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
 

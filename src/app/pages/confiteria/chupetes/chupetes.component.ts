@@ -31,7 +31,7 @@ export class ChupetesComponent implements OnInit {
     selectedSubMenu: string = 'Chupetes'
     carrito: Producto[] = [];
 
-    url='http://localhost:3000/uploads';
+    url='/uploads';
     constructor( private confiteriaService: ConfiteriaService,private chupeteService : ChupetesService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
 
 

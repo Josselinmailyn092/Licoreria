@@ -19,11 +19,14 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n'; import { registerLocaleData } from '@angular/common'
 import en from '@angular/common/locales/en';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NZ_ICONS, NzIconModule } from 'ng-zorro-antd/icon';
 import {  ArrowRightOutline } from '@ant-design/icons-angular/icons';
 import { ConfiteriaModule } from './confiteria/confiteria.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-const icons = [ ArrowRightOutline];
+import { DashboardRoutingModule } from './dashboard/dashboard-routing.module';
+import { AppstoreOutline, ShoppingCartOutline, LineChartOutline, SettingOutline } from '@ant-design/icons-angular/icons';
+
+const icons = [ ArrowRightOutline,AppstoreOutline, ShoppingCartOutline, LineChartOutline, SettingOutline];
 @NgModule({
   declarations: [
     HomeComponent,
@@ -37,6 +40,7 @@ const icons = [ ArrowRightOutline];
     LicoresModule,
     ConfiteriaModule,
     DashboardModule,
+    DashboardRoutingModule,
     FormsModule,
     NzSelectModule, // Para los selects
     BrowserAnimationsModule, // Necesario para la funcionalidad de los componentes de NG Zorro
@@ -54,7 +58,10 @@ const icons = [ ArrowRightOutline];
   exports: [
 
     ],
-    providers: [{ provide: NZ_I18N, useValue: en_US }],
+    providers: [
+      { provide: NZ_I18N, useValue: en_US },
+      { provide: NZ_ICONS, useValue: icons }
+    ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule {

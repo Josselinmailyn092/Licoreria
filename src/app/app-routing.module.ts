@@ -22,13 +22,14 @@ import { VodkaComponent } from './pages/licores/vodka/vodka.component';
 import { TequilaComponent } from './pages/licores/tequila/tequila.component';
 import { GinComponent } from './pages/licores/gin/gin.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
-import { ProductsComponent } from './pages/dashboard/products/products.component';
-import { CategoriesComponent } from './pages/dashboard/categories/categories.component';
-import { BrandsComponent } from './pages/dashboard/brands/brands.component';
-import { SalesComponent } from './pages/dashboard/sales/sales.component';
-import { DashboardLayoutComponent } from './pages/dashboard/dashboard-layout/dashboard-layout.component';
+
 import { DashboardHomeComponent } from './pages/dashboard/dashboard-home/dashboard-home.component';
-import { PromocionComponent } from './pages/dashboard/promocion/promocion.component';
+
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ConfiguracionComponent } from './pages/dashboard/configuracion/configuracion.component';
+import { InventarioComponent } from './pages/dashboard/inventario/inventario.component';
+import { PedidosComponent } from './pages/dashboard/pedidos/pedidos.component';
+import { ReporteComponent } from './pages/dashboard/reporte/reporte.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'licores',component: LicoresComponent },
@@ -51,16 +52,17 @@ const routes: Routes = [
       { path: 'snaks', component: SnaksComponent },
 
 
+
       {
         path: 'dashboard',
-        component: DashboardLayoutComponent, // Layout exclusivo del Dashboard
+        component: DashboardComponent,
         children: [
-          { path: '', component: DashboardHomeComponent },
-          { path: 'products', component: ProductsComponent },
-          { path: 'categories', component: CategoriesComponent },
-          { path: 'brands', component: BrandsComponent },
-          { path: 'sales', component: SalesComponent },
-          {path:'promocion', component: PromocionComponent}
+          { path: 'home', component: DashboardHomeComponent },
+          { path: 'configuracion', component: ConfiguracionComponent },
+          { path: 'inventario', component: InventarioComponent },
+          { path: 'pedidos', component: PedidosComponent },
+          { path: 'reportes', component: ReporteComponent },
+
         ],
       },
   { path: 'promociones', component: PromocionesComponent },

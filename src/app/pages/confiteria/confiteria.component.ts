@@ -28,7 +28,7 @@ export class ConfiteriaComponent implements OnInit {
   selectedSubMenu: string = 'Licores';
   carrito: Producto[] = [];
 
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor( private confiteriaService: ConfiteriaService,private route: ActivatedRoute, private router: Router, private carritoService: CarritoService) {}
 

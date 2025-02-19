@@ -29,7 +29,7 @@ export class VodkaComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Vodka';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor(private productoVodkaService: ProductoVodkaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 

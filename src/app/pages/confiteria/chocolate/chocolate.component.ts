@@ -31,7 +31,7 @@ export class ChocolateComponent  implements OnInit{
   selectedSubMenu: string = 'Chocolates'
   carrito: Producto[] = [];
 
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor( private confiteriaService: ConfiteriaService,private chocolateService : ChocolateService,  private route: ActivatedRoute, private router: Router, private carritoService: CarritoService){}
 

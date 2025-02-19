@@ -30,7 +30,7 @@ export class GalletasComponent implements OnInit{
     selectedSubMenu: string = 'Galletas'
     carrito: Producto[] = [];
 
-    url='http://localhost:3000/uploads';
+    url='/uploads';
 
 
     constructor( private confiteriaService: ConfiteriaService,private galletaService : GalletasService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}

@@ -15,14 +15,18 @@ import { NZ_ICONS, NzIconModule } from 'ng-zorro-antd/icon';
 import { ArrowDownOutline, MenuOutline, SearchOutline, ShoppingCartOutline, ArrowRightOutline } from '@ant-design/icons-angular/icons';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { FacebookOutline, InstagramOutline } from '@ant-design/icons-angular/icons'
+import { FacebookOutline, InstagramOutline } from '@ant-design/icons-angular/icons';
+import { HeaderDashboardComponent } from './header-dashboard/header-dashboard.component';
+import { SidebarDashboardComponent } from './sidebar-dashboard/sidebar-dashboard.component'
 const icons = [ShoppingCartOutline, MenuOutline,SearchOutline, ArrowRightOutline,FacebookOutline, InstagramOutline];
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderDashboardComponent,
+    SidebarDashboardComponent
   ],
   exports:[HeaderComponent,FooterComponent],
   imports: [

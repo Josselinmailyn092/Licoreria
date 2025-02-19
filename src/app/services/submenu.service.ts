@@ -47,6 +47,7 @@ private subMenuItems =[
     path:'/promociones',
     subMenu: []
   },
+  
   {
     label:'Nosotros',
     path:'/nosotros',

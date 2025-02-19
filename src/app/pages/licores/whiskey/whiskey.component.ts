@@ -29,7 +29,7 @@ export class WhiskeyComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Whiskey';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor(private productoWhiskeyService : ProductoWhiskeyService, private productoService: ProductoService ,private router: Router, private route: ActivatedRoute,private carritoService: CarritoService) {}
 

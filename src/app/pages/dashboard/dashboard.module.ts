@@ -1,44 +1,52 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { NzLayoutModule } from 'ng-zorro-antd/layout'; // Importa este módulo
+import { DashboardComponent } from './dashboard.component';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { SharedModule } from '../../shared/shared.module';
+import { InventarioComponent } from './inventario/inventario.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { ReporteComponent } from './reporte/reporte.component';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { BrowserModule } from '@angular/platform-browser';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { SalesComponent } from './sales/sales.component';
-import { BrandsComponent } from './brands/brands.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { ProductsComponent } from './products/products.component';
-import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import {NzModalModule} from 'ng-zorro-antd/modal';
-import { PromocionComponent } from './promocion/promocion.component'
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+
+import { IconDefinition } from '@ant-design/icons-angular';
+import { DollarOutline, LineChartOutline, ShoppingCartOutline, GiftOutline } from '@ant-design/icons-angular/icons';
+
 @NgModule({
   declarations: [
-    DashboardHomeComponent,
-    SalesComponent,
-    BrandsComponent,
-    CategoriesComponent,
-    ProductsComponent,
-    DashboardLayoutComponent,
-    PromocionComponent
-
-
+    DashboardComponent,
+    InventarioComponent,
+    PedidosComponent,
+    ReporteComponent,
+    ConfiguracionComponent,
+    DashboardHomeComponent
   ],
   imports: [
     CommonModule,
-    RouterModule,
+    DashboardRoutingModule,
     NzLayoutModule,
-    NzCardModule ,
-    FormsModule, // Necesario para [(ngModel)]
-    ReactiveFormsModule,
-    NzFormModule, // Importa los módulos de NG-ZORRO usados en el formulario
-    NzInputModule, // Si usas nz-input
-    NzButtonModule, // Si usas botones de NG-ZORRO
-    NzModalModule, // Para el modal // Inclúyelo aquí
-  ]
+    NzMenuModule,
+    SharedModule,
+    NzCardComponent,
+    BrowserModule,
+    NzTagModule,
+    NzTableModule,
+    NzListModule,
+    NzIconModule,
+    NzAvatarModule
+
+
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DashboardModule { }

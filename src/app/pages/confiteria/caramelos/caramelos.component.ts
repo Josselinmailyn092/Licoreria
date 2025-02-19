@@ -30,7 +30,7 @@ export class CaramelosComponent  implements OnInit{
   selectedSubMenu: string = 'Caramelos'
   carrito: Producto[] = [];
 
-  url='http://localhost:3000/uploads';
+  url='/uploads';
   constructor( private confiteriaService: ConfiteriaService,private carameloService : CaramelosService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
 
      ngOnInit(): void {

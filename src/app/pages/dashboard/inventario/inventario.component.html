@@ -1,0 +1,13 @@
+<div class="inventory-container">
+  <h2>Inventario</h2>
+  <div class="product-grid">
+    <div *ngFor="let producto of paginatedProducts" class="product-card">
+      <img [src]="producto.imagen || 'assets/default-image.png'" alt="Imagen del producto">
+      <h3>{{ producto.nombre }}</h3>
+      <p>{{ producto.categoria }}</p>
+      <p class="price">${{ producto.precio | number }}</p>
+      <p [class.low-stock]="producto.stock <= 5">{{ producto.stock }} unidades</p>
+    </div>
+  </div>
+  <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="productos.length" [nzPageSize]="pageSize"></nz-pagination>
+</div>

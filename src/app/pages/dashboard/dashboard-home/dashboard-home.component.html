@@ -1,0 +1,88 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+  <p class="bienvenido">Bienvenido al panel de administración de tu licorería</p>
+
+  <div class="stats">
+    <nz-card class="stat-card" nzBordered>
+      <div class="stat-content">
+        <div class="stat-text">
+          <h2>Ingresos Totales</h2>
+          <p class="stat-value">$125.840</p>
+          <p class="stat-change positive">+12.5% vs mes anterior</p>
+        </div>
+        <div class="stat-icon">
+          <nz-avatar nzSize="large" nzIcon="dollar" nzShape="square" ></nz-avatar>
+        </div>
+      </div>
+    </nz-card>
+
+    <nz-card class="stat-card" nzBordered>
+      <div class="stat-content">
+        <div class="stat-text">
+          <h2>Ticket Promedio</h2>
+          <p class="stat-value">$350</p>
+          <p class="stat-change positive">+8.2% vs mes anterior</p>
+        </div>
+        <div class="stat-icon">
+          <nz-avatar nzSize="large" nzIcon="line-chart" nzShape="square"></nz-avatar>
+        </div>
+      </div>
+    </nz-card>
+
+    <nz-card class="stat-card" nzBordered>
+      <div class="stat-content">
+        <div class="stat-text">
+          <h2>Total Pedidos</h2>
+          <p class="stat-value">359</p>
+          <p class="stat-change positive">+5.1% vs mes anterior</p>
+        </div>
+        <div class="stat-icon">
+          <nz-avatar nzSize="large" nzIcon="shopping-cart" nzShape="square"></nz-avatar>
+        </div>
+      </div>
+    </nz-card>
+
+    <nz-card class="stat-card" nzBordered>
+      <div class="stat-content">
+        <div class="stat-text">
+          <h2>Pedidos Pendientes</h2>
+          <p class="stat-value">45</p>
+          <p class="stat-change negative">-2.3% vs mes anterior</p>
+        </div>
+        <div class="stat-icon">
+          <nz-avatar nzSize="large" nzIcon="gift" nzShape="square"></nz-avatar>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+
+
+  <div class="content">
+    <nz-card class="products-card" nzBordered>
+      <h2>Productos Más Vendidos</h2>
+      <div class="product" *ngFor="let product of productos">
+        <div class="product-info">
+          <span class="product-name">{{ product.nombre }}</span>
+          <span class="product-sales">{{ product.unidades }} unidades vendidas</span>
+        </div>
+        <span class="product-price">{{ product.precio | currency:'USD' }}</span>
+      </div>
+    </nz-card>
+
+    <nz-card class="orders-card" nzBordered>
+      <h2>Pedidos Recientes</h2>
+      <div class="order" *ngFor="let order of pedidos">
+        <div class="order-info">
+          <span class="customer-name">{{ order.nombre }}</span>
+          <span class="order-date">{{ order.fecha }}</span>
+        </div>
+        <div class="order-details">
+          <span class="order-price">{{ order.monto | currency:'USD' }}</span>
+          <nz-tag class="order-status" [nzColor]="order.estadoColor">{{ order.estado }}</nz-tag>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+
+</div>

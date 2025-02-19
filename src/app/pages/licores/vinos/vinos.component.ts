@@ -30,7 +30,7 @@ export class VinosComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Vinos';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
   constructor(private productoVinosService: ProductoVinosService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 
   ngOnInit(): void {

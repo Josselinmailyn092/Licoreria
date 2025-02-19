@@ -29,7 +29,7 @@ export class GomitasComponent implements OnInit{
   selectedSubMenu: string = 'Gomitas'
   carrito: Producto[] = [];
 
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor( private confiteriaService: ConfiteriaService,private gomitasService : GomitasService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
 

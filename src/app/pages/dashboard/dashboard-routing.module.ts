@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard.component';
+import { InventarioComponent } from './inventario/inventario.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { ReporteComponent } from './reporte/reporte.component';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { ProductsComponent } from './products/products.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { BrandsComponent } from './brands/brands.component';
-import { SalesComponent } from './sales/sales.component';
-import { PromocionComponent } from './promocion/promocion.component';
+
+
+
 const routes: Routes = [
   { path: 'dashboard', component: DashboardHomeComponent },
-  { path: 'products', component: ProductsComponent },
-  { path: 'categories', component: CategoriesComponent },
-  { path: 'brands', component: BrandsComponent },
-  { path: 'sales', component: SalesComponent },
-  {path: 'promocion', component: PromocionComponent}
+  { path: 'home', component: DashboardComponent },
+  { path: 'inventario', component: InventarioComponent},
+  { path: 'configuracion', component: ConfiguracionComponent },
+  {path:'reportes', component: ReporteComponent},
+  { path: 'pedidos', component: PedidosComponent},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

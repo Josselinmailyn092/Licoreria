@@ -1,0 +1,27 @@
+
+.inventory-container {
+  text-align: center;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+.product-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.product-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.low-stock {
+  color: orange;
+  font-weight: bold;
+}
+

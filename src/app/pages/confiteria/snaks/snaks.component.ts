@@ -28,7 +28,7 @@ export class SnaksComponent implements OnInit{
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Snaks'
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor( private confiteriaService: ConfiteriaService,private snakService : SnaksService,  private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
   ngOnInit(): void {

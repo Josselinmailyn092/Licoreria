@@ -22,10 +22,10 @@
      cursor: pointer;
    }
    /* estilos de menu  */
-   .side-menu .nz-menu { 
+   .side-menu .nz-menu {
      background-color: #fff; /* Fondo blanco para el menú */
-      display: flex; 
-      flex-direction: column; 
+      display: flex;
+      flex-direction: column;
       /* Asegúrate de que los elementos se apilen en columna */
       }
       .menu-columns {
@@ -39,8 +39,7 @@
      nz-menu-item{
        cursor: pointer;
      }
-   
+
    .licores-content {
      flex: 1;
    }
-   

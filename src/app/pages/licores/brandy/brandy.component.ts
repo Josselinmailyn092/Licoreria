@@ -29,7 +29,7 @@ export class BrandyComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Brandy';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor(private productoBrandyService: ProductoBrandyService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 

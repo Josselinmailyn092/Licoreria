@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
 interface Link {
-  // Difine estructura del enlace con dos propiedades 
+  // Difine estructura del enlace con dos propiedades
   path: string;
   label: string;
 }
 // Poder inyectar servicio en otro componente o servicio
 @Injectable({
-  // Disponible en toda la app 
+  // Disponible en toda la app
   providedIn: 'root'
 })
 export class LinkService {
@@ -16,11 +16,11 @@ export class LinkService {
     { path: '/home', label: 'Inicio' },
     { path: '/licores', label: 'Licores' },
     { path: '/confiteria', label: 'Confiteria' },
-    { path: '/promociones', label: 'Promociones' },
+
     { path: '/nosotros', label: 'Nosotros' }
   ];
 
-  // devuleve array de enlaces de links 
+  // devuleve array de enlaces de links
   getLinks() :Link[]{
     return this.links;
   }

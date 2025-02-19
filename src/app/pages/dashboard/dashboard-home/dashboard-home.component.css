@@ -1,14 +1,136 @@
-.dashboard-layout {
-  height: 100vh;
+.dashboard-container {
+  padding: 0.3rem;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+.dashboard-container h2{
+  font-weight: bold;
+  font-size: 19px;
+}
+.bienvenido{
+  color: #555;
+  font-size: 14px;
+  margin-top: -12px;
+
+
+}
+.stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
-.dashboard-header {
-  background: #001529;
-  color: white;
-  padding: 0 16px;
+.stat-card {
+  flex: 1;
+  padding: 0px 2px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  height: auto;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
 }
 
-.dashboard-content {
-  padding: 16px;
-  background: #f0f2f5;
+.stat-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-text {
+  text-align: left;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f9ff;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.stat-content h2 {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-change {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.positive {
+  color: #28a745;
+}
+
+.negative {
+  color: #dc3545;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+}
+
+.products-card, .orders-card {
+  flex: 1;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product, .order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product-info, .order-info {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.product-sales, .order-date {
+  font-size: 12px;
+  color: gray;
+}
+
+.product-price, .order-price {
+  font-weight: bold;
+  color: #333;
+}
+
+.order-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-status {
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 3px 8px;
 }

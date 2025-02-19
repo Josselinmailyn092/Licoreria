@@ -9,7 +9,7 @@ export class FooterComponent {
 
   constructor(private router:Router){}
   irADashboard(){
-      this.router.navigate(['/dashboard/products'])
+      this.router.navigate(['/dashboard'])
   }
 
 }

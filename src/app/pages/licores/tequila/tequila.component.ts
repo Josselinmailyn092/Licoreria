@@ -29,7 +29,7 @@ export class TequilaComponent implements OnInit {
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Tequila';
   carrito: Producto[] = [];
-  url='http://localhost:3000/uploads';
+  url='/uploads';
 
   constructor(private productoTequilaService: ProductoTequilaService, private productoService: ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService) {}
 
