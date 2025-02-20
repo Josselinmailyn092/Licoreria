@@ -1,27 +1,134 @@
 
-.inventory-container {
-  text-align: center;
+.inventario-container {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  padding: 0.3rem;
+ }
+
+.inventario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  padding: 16px;
-}
-.product-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-.product-card img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-.low-stock {
-  color: orange;
+
+.info h2 {
+  margin: 0;
+  font-size: 19px;
   font-weight: bold;
 }
 
+.descripcion {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+  margin-top: -3px;
+}
+.contenedor{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-add {
+  background: #20c997;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-add:hover {
+  background: #17a589;
+}
+
+.inventario-search {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+}
+
+.filter-select {
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  margin-top: 5px;
+}
+.product-info h3{
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.category {
+  font-size: 14px;
+  color: #888;
+  margin-top: -10px;
+}
+
+.price-stock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stock {
+  font-size: 14px;
+  color: #666;
+}

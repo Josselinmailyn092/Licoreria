@@ -1,13 +1,39 @@
-<div class="inventory-container">
-  <h2>Inventario</h2>
+<div class="inventario-container">
+  <div class="inventario-header">
+    <div class="info">
+      <h2>Inventario</h2>
+      <p class="descripcion">Gestiona tu stock y productos</p>
+    </div>
+    <button class="btn-add">+ Añadir Producto</button>
+  </div>
+
+  <div class="inventario-search">
+    <input type="text" class="search-input" placeholder="Buscar productos...">
+    <select class="filter-select">
+      <option value="all">All</option>
+      <option value="category1">Categoría 1</option>
+      <option value="category2">Categoría 2</option>
+    </select>
+  </div>
   <div class="product-grid">
     <div *ngFor="let producto of paginatedProducts" class="product-card">
-      <img [src]="producto.imagen || 'assets/default-image.png'" alt="Imagen del producto">
-      <h3>{{ producto.nombre }}</h3>
-      <p>{{ producto.categoria }}</p>
-      <p class="price">${{ producto.precio | number }}</p>
-      <p [class.low-stock]="producto.stock <= 5">{{ producto.stock }} unidades</p>
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" class="product-image">
+      <div class="product-info">
+        <h3>{{ producto.nombre }}</h3>
+        <p class="category">{{ producto.categoria }}</p>
+        <div class="price-stock">
+          <p class="price">${{ producto.precio | number }}</p>
+          <p class="stock">{{ producto.stock }} unidades</p>
+        </div>
+      </div>
     </div>
   </div>
-  <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="productos.length" [nzPageSize]="pageSize"></nz-pagination>
-</div>
+
+  <nz-pagination [(nzPageIndex)]="pageIndex"
+                 [nzTotal]="productos.length"
+                 [nzPageSize]="pageSize">
+  </nz-pagination>
+
+
+
+ </div>
