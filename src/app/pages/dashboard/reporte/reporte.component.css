@@ -1,0 +1,91 @@
+
+.reporte-container {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  padding: 0.3rem;
+ }
+
+.reporte-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.info h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.descripcion {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+  margin-top: -3px;
+}
+.contenedor{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reports-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0.3rem;
+}
+.ant-select-dropdown {
+  z-index: 1050 !important;
+}
+
+
+  .report-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 32%;
+  }
+
+    h3 {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 22px;
+      margin-top: -5px;
+    }
+
+    .ant-select,
+    .action-button {
+      width: 100%;
+      margin-bottom: 15px;
+
+    }
+
+    .action-button {
+      background: #2ad4c5;
+      color: white;
+      font-weight: bold;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+      &:hover {
+        background: #23b4a8;
+      }

@@ -18,7 +18,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { DollarOutline, LineChartOutline, ShoppingCartOutline, GiftOutline } from '@ant-design/icons-angular/icons';
 
@@ -43,7 +43,9 @@ import { DollarOutline, LineChartOutline, ShoppingCartOutline, GiftOutline } fro
     NzTableModule,
     NzListModule,
     NzIconModule,
-    NzAvatarModule
+    NzAvatarModule,
+    FormsModule,
+    ReactiveFormsModule,
 
 
   ],
