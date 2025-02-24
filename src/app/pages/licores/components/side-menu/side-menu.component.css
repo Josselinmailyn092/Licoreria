@@ -1,0 +1,139 @@
+.licores-container {
+  display: flex;
+  padding: 20px;
+  margin: 0;
+  margin-top: 80px;
+
+}
+
+
+/* Estilo menu lateral */
+.side-menu{
+ height: 100vh;
+ margin-left: 100px;
+ width: 210px;
+ display: flex;
+ flex-direction: column;
+}
+.nz-submenu{
+  display: flex;
+  flex-direction: column;
+}
+/* titulo menulateral */
+.side-menu h2 {
+  color: rgb(38, 38, 38);
+  font-size: 18px;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Títulos del menú */
+.menu-title {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin-top: 15px;
+  border-bottom: 1px solid #cdcdcd; /* Resaltado con un solo color */
+}
+
+.menu-title, .menu-titleMarca, .menu-titlePresentacion{
+  padding: 0 20px;
+  margin-top: 30px;
+}
+
+/* estilos de menu  */
+.side-menu .nz-menu {
+  background-color: #fff; /* Fondo blanco para el menú */
+   display: flex;
+   flex-direction: column;
+
+   /* Asegúrate de que los elementos se apilen en columna */
+   }
+   .menu-columns {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 20px;
+    gap: 10px;
+    font-size: 16px;
+    color: rgb(96, 94, 94);
+  }
+  .menu-columns-scrollable {
+    max-height: 180px; /* Ajusta el tamaño según sea necesario */
+    overflow-y: auto; /* Agrega el scroll vertical */
+    width: 195px;
+    max-width: 700px;
+    padding: 0.2rem; /* Ajusta el espacio interno */
+    border: 1px solid #dddddd00; /* Opcional: agrega un borde */
+  }
+
+  nz-menu-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  /* Efecto al pasar el cursor */
+nz-menu-item:hover {
+  color: #ff4d4f !important;
+}
+
+
+  /* Estilo para el elemento seleccionado */
+/* Clase activa */
+nz-menu-item.active {
+  font-weight: bold;
+  color: #fff !important; /* Texto blanco */
+  background-color: #ff8326; /* Fondo verde */
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Círculo indicador */
+.circle-indicator {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #c3c3c3; /* Borde del círculo */
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0; /* Evita que el círculo afecte la alineación */
+  transition: all 0.3s ease;
+}
+
+.circle-indicator.selected {
+  background-color: #aa2202; /* Color de fondo del círculo activo */
+  border-color: #5F0F00;
+}
+/* Estilo para el nombre de la categoría */
+.category-name {
+  flex: 1; /* Asegura que el texto ocupe el espacio adecuado */
+}
+.item-count {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.item-count.custom-select{
+  background-color: #ff5f00; /* Color de fondo del círculo activo */
+  color: #fff;
+}
+/* Estilo para el hover normal */
+.licores-content {
+    flex-grow: 1;
+    margin-left: 50px;
+    margin-right: 100px;
+}
+
+@media (max-width: 768px) {
+  .side-menu{
+    display: none;
+  }
+
+}

@@ -26,6 +26,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { DoubleLeftOutline,DoubleRightOutline } from '@ant-design/icons-angular/icons';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { FiltrosComponenteComponent } from './components/filtros-componente/filtros-componente.component';
+import { PaginacionComponent } from './components/paginacion/paginacion.component';
 const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
 
 @NgModule({
@@ -37,7 +41,11 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     TequilaComponent,
     VinosComponent,
     VodkaComponent,
-    WhiskeyComponent
+    WhiskeyComponent,
+    SideMenuComponent,
+    ProductListComponent,
+    FiltrosComponenteComponent,
+    PaginacionComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +61,7 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     ReactiveFormsModule,
     NzSelectModule,
     BrowserAnimationsModule, // Obligatorio para NG Zorro
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     NzSelectModule,
     NzButtonModule,
@@ -66,7 +74,7 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     NzIconModule,
     NzButtonModule,
     NzPaginationModule,
-   
+
   ],
   exports: [
     WhiskeyComponent,

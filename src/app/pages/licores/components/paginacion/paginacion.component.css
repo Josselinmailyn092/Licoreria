@@ -1,0 +1,69 @@
+/* Contenedor de la paginación */
+.custom-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo general para los botones */
+.pagination-btn {
+  background-color: #fff;
+  border: 2px solid #aa2202;
+  color: #aa2202;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover: efecto al pasar el mouse */
+.pagination-btn:hover {
+  background-color: #aa2202;
+  color: #fff;
+  border-color: #aa2202;
+}
+
+/* Botón activo */
+.pagination-btn.active {
+  background-color: #aa2202;
+  color: #fff;
+  border-color: #aa2202;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones deshabilitados */
+.pagination-btn[disabled] {
+  background-color: #f0f0f0;
+  color: #aaa;
+  border-color: #ddd;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Iconos */
+.pagination-btn i {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+  .custom-pagination {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .pagination-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}

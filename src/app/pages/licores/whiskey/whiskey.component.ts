@@ -10,28 +10,29 @@ import { CarritoService } from '../../../services/carrito.service';
   styleUrls: ['./whiskey.component.css']
 })
 export class WhiskeyComponent implements OnInit {
-  selectedCategory: string | null = 'Whiskey';
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   tiposLicores: any[] = [];
   categorias: any[] = [];
-  selectedCategoria: string | null = null;
   presentaciones: any[] = [];
   presentacionesCantidad: any[] = [];
   productos: Producto[] = [];
   productosOriginales: Producto[] = [];
   productosPaginados: Producto[] = [];
   productosPorPagina: number = 8;
-  totalProductos = 100;
   paginaActual = 1;
   selectedMarca: string = '';
   selectedPresentacion: number = 0;
-  isCollapsed: boolean = false;
+  selectedCategoria: string | null = null;
   selectedSubMenu: string = 'Whiskey';
-  carrito: Producto[] = [];
   url='/uploads';
 
-  constructor(private productoWhiskeyService : ProductoWhiskeyService, private productoService: ProductoService ,private router: Router, private route: ActivatedRoute,private carritoService: CarritoService) {}
+  constructor(
+    private productoWhiskeyService : ProductoWhiskeyService,
+    private productoService: ProductoService ,
+    private router: Router,
+    private route: ActivatedRoute,
+    private carritoService: CarritoService) {}
 
 
   ngOnInit(): void {
@@ -113,9 +114,7 @@ export class WhiskeyComponent implements OnInit {
     }
   }
 
-  resetCategory() {
-    this.selectedCategory = null;
-  }
+
 
   filtrarPorCategoria(categoria: string | null): void {
     if (categoria) {
@@ -191,7 +190,7 @@ export class WhiskeyComponent implements OnInit {
   }
 
   get totalPaginas(): number {
-    return Math.ceil(this.totalProductos / this.productosPorPagina);
+    return Math.ceil(this.productos.length/ this.productosPorPagina);
   }
 
   get paginas(): number[] {

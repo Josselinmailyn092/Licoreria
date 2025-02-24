@@ -39,6 +39,7 @@ const icons = [ ArrowRightOutline,AppstoreOutline, ShoppingCartOutline, LineChar
     CommonModule,
     LicoresModule,
     ConfiteriaModule,
+
     DashboardModule,
     DashboardRoutingModule,
     FormsModule,

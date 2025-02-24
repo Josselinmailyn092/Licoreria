@@ -1,478 +1,82 @@
 .licores-container {
   display: flex;
-  padding: 20px;
-  margin-top: 80px;
+  padding: 20px 0;
+  margin: 0;
+  margin-top: 50px;
+  margin-left: 80px;
+  gap: 20px;
 }
 
-
-/* Estilo menu lateral */
-.side-menu{
- height: 100vh;
- margin-left: 100px;
- width: 210px;
- display: flex;
- flex-direction: column;
-}
-.nz-submenu{
-  display: flex;
-  flex-direction: column;
-}
-/* titulo menulateral */
-.side-menu h2 {
-  color: rgb(38, 38, 38);
-  font-size: 18px;
-  padding: 10px 20px;
-  margin-top: 15px;
-  border-bottom: 1px solid #e5e5e5;
-}
-.menu-title, .menu-titleMarca, .menu-titlePresentacion{
-  padding: 0 20px;
-  margin-top: 30px;
-}
-
-/* estilos de menu  */
-.side-menu .nz-menu { 
-  background-color: #fff; /* Fondo blanco para el menú */
-   display: flex; 
-   flex-direction: column; 
-  
-   /* Asegúrate de que los elementos se apilen en columna */
-   }
-   .menu-columns {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 20px;
-    gap: 10px;
-    font-size: 16px;
-    color: rgb(96, 94, 94);
-  }
-  .menu-columns-scrollable {
-    max-height: 180px; /* Ajusta el tamaño según sea necesario */
-    overflow-y: auto; /* Agrega el scroll vertical */
-    width: 195px;
-    max-width: 700px;
-    padding: 0.2rem; /* Ajusta el espacio interno */
-    border: 1px solid #dddddd00; /* Opcional: agrega un borde */
-  }
-  
-  nz-menu-item {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  /* Efecto al pasar el cursor */
-nz-menu-item:hover {
-  color: #ff4d4f !important;
-}
-
-
-  /* Estilo para el elemento seleccionado */
-/* Clase activa */
-nz-menu-item.active {
-  font-weight: bold;
-  color:  #ff5f00;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-/* Círculo indicador */
-.circle-indicator {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid #c3c3c3; /* Borde del círculo */
-  border-radius: 50%;
-  margin-right: 10px;
-  flex-shrink: 0; /* Evita que el círculo afecte la alineación */
-  transition: all 0.3s ease;
-}
-
-.circle-indicator.selected {
-  background-color: #ff5f00; /* Color de fondo del círculo activo */
-  border-color: #5F0F00;
-}
-/* Estilo para el nombre de la categoría */
-.category-name {
-  flex: 1; /* Asegura que el texto ocupe el espacio adecuado */
-}
-.item-count {
-  background-color: #f2f2f2;
-  color: #333;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: bold;
-}
-.item-count.selected{
-  font-weight: bold; /* Texto en negrita */
-  color: #fff;
-  background-color: #ff5f00;/* Fondo suave */
-  border-radius: 12px;
-  padding: 2px 6px; /* Espaciado alrededor del texto */
-}
-
-/* Estilo para el hover normal */
+/* Contenido principal */
 .licores-content {
-    flex-grow: 1;
-    margin-left: 50px;
-    margin-right: 100px;
-    
+  flex-grow: 1;
+  margin-left: 30px;
+  margin-right: 60px;
 }
 
+/* Header con imagen */
 .licores-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 0;   
-    height: 25%;
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .header-image {
-    width: 100%;
-    height:100%;
-    border-radius: 8px;
-    margin: auto;
-}
-/* Estilos generales del contenedor */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* Centrado */
-  margin: 20px auto;
-  padding: 10px;
-  font-family: Arial, sans-serif;
-  color: #5b5959;
-}
-
-/* Estilo de cada filtro */
-.filter-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  min-width: 150px;
-  flex: 1; /* Responsive */
-}
-
-.filter-item label {
-  font-size: 14px;
-  color: #333;
-  font-weight: 600;
-}
-
-/* Estilo de los selects */
-.custom-select {
-  width: 90%;
-  height: 28px;
-  padding: 0 10px;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  font-size: 14px;
-  color: #333;
-  background: #fff;
-  appearance: none; /* Quitar estilo nativo */
-  position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-/* Flecha personalizada */
-.custom-select::after {
-  content: '▼';
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-  pointer-events: none;
-}
-
-/* Efecto al pasar el mouse */
-.custom-select:hover {
-  border-color: #ff4d4f;
-  box-shadow: 0 0 5px rgba(95, 15, 0, 0.3);
-}
-
-
-/* Contenedor general de productos */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 1200px;
-  box-sizing: border-box;
-  background: #fff; /* Fondo limpio */
-}
-
-/* Tarjeta de producto */
-.product-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  background-color: #ffffff;
-  overflow: hidden;
-  text-align: center;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Imagen del producto */
-.product-image img {
   width: 100%;
-  max-height: 200px;
+  height: auto;
+  border-radius: 12px;
   object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Detalles del producto */
-.product-details h3 {
-  font-size: 20px;
-  margin: 10px 0;
-  color: #aa2202;
-  font-weight: bold;
-}
-
-.product-details p {
-  font-size: 14px;
-  color: #555;
-  margin: 5px 0;
-}
-
-/* Precio */
-.price {
-  margin: 10px 0;
-  font-size: 16px;
-}
-
-.price .old-price {
-  text-decoration: line-through;
-  color: #b0b0b0;
-  font-size: 14px;
-  margin-right: 8px;
-}
-
-.price .discount-price {
-  color: #881f06;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* Botón Comprar */
-.Boton-comprar {
-  background-color: #aa2202 !important;
-  color: #fff !important;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 15px;
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.Boton-comprar:hover {
-  background-color: #881f06 !important;
-  transform: scale(1.05);
-  color: #5F0F00;
-}
-
-/* Mensaje sin productos */
-.no-products-message {
-  text-align: center;
-  color: #aa2202;
-  font-weight: bold;
-  font-size: 18px;
-  margin-top: 20px;
-}
-
-/* Contenedor principal de la paginación */
-.custom-pagination-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px; /* Espaciado entre botones */
-  margin: 20px 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Estilo general para botones */
-.pagination-button {
-  background-color: #fff; /* Fondo blanco */
-  border: 1px solid #ddd; /* Borde sutil */
-  color: #5F0F00; /* Color principal */
-  border-radius: 4px; /* Bordes redondeados */
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 10px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-/* Hover: efecto al pasar el mouse */
-.pagination-button:hover {
-  background-color: #5F0F00; /* Color principal */
-  color: #fff; /* Texto blanco */
-  border-color: #5F0F00;
-}
-
-/* Botón activo */
-.pagination-button.active {
-  background-color: #5F0F00;
-  color: #fff;
-  border-color: #5F0F00;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave */
-}
-
-/* Botones deshabilitados */
-.pagination-button[disabled] {
-  background-color: #f0f0f0;
-  color: #aaa;
-  border-color: #ddd;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Iconos */
-.pagination-button i {
-  font-size: 16px;
-  vertical-align: middle;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 
-
-
+/* Responsive */
 @media (max-width: 768px) {
   .licores-container {
-    display: flex;
-    padding: 0;
-    margin: 0;
-    margin-top: 118px;
-  }
-  .side-menu{
-     display: none; 
-  }
-  .licores-content{
-    flex-grow: 1;
-    width: 100%;
-    height: 15%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-  }
-  .licores-header{
-    display: flex;
-    align-items: center;
-    gap: 5px;  
-    height: 15%;
-    width: 100%;
-    margin-bottom: 5px;
-  }
-  .filters {
-    display: flex;
-    align-items:flex-start;
     flex-direction: column;
-    gap: 0 !important;
-    background-color: transparent; /* Fondo ligero para mejor contraste */
+    align-items: center;
+    margin-top: 90px;
     padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 0;
-   
-  }
-  .filters Label{
-    color:#5b5959;
-    font-size: 14px;
-  }
-   .filters {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .filter-item {
-    width: 100%;
-  }
-  .filter-item{
-    flex-direction: row;
-    align-items: flex-start;
-    width: 100%;
-    margin-top: 12px;
-  }
-  .filter-item-licores{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-  
   }
 
-  .custom-select {
-    background-color: #ffffff; /* Fondo blanco */
-    border: 1px solid #adaaaa; /* Borde gris claro */
-    border-radius: 50px;
-    height: 20px;/* Espacio entre los selectores */
-    width: 30%;
-    display: flex;
-    align-items: center;
-    position: relative; /* Ensure relative positioning */
-    z-index: 1; /* Ensure select is above other elements */
-    color: #333;
-    font-size: 12px;
-  }
-  .product-details h3 {
-    font-size: 16px;
-}
-.product-details p {
-    font-size: 13px;
-}
-.price .discount-price {
-    font-size: 16px;
-}
-.products-grid {
-   gap: 20px;
-  padding: 10px;
-}
-
-.product-card {
-  padding: 5px 30px;
- 
-}
-.product-image img {
-  width: 70%;
- 
-}
-.custom-pagination-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0px;
-  font-family: Arial, sans-serif;
-  margin: 0;
-}
-
-.ant-btn{
-  padding: 4px 6px;
-}
-}
-
-@media (max-width: 350px) {
-  .side-menu{
+  app-side-menu {
     display: none;
+  }
+
+  .licores-content {
+    width: 100%;
+    margin: 0;
+    padding: 0 15px;
+  }
+
+  .licores-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    padding: 10px;
+  }
+
+  .product-card {
+    padding: 12px;
+  }
+
+  .product-image img {
+    max-height: 160px;
+  }
+
+  .custom-pagination-row {
+    gap: 4px;
+  }
+
+  .pagination-button {
+    font-size: 12px;
+    padding: 5px 8px;
   }
 }

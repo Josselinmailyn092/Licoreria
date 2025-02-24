@@ -1,0 +1,18 @@
+<div class="custom-pagination">
+  <!-- Página Anterior -->
+  <button nz-button nzType="default" class="pagination-btn prev" [disabled]="paginaActual === 1" (click)="cambiar(paginaActual - 1)">
+    <i nz-icon nzType="left" nzTheme="outline"></i>
+  </button>
+
+  <!-- Botones de Página -->
+  <span *ngFor="let pagina of paginas">
+    <button nz-button nzType="default" class="pagination-btn" [ngClass]="{'active': pagina === paginaActual}" (click)="cambiar(pagina)">
+      {{ pagina }}
+    </button>
+  </span>
+
+  <!-- Página Siguiente -->
+  <button nz-button nzType="default" class="pagination-btn next" [disabled]="paginaActual === totalPaginas" (click)="cambiar(paginaActual + 1)">
+    <i nz-icon nzType="right" nzTheme="outline"></i>
+  </button>
+</div>

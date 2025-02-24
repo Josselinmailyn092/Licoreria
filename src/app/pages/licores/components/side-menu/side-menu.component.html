@@ -1,0 +1,51 @@
+
+  <nz-sider [nzCollapsible]="true" [nzCollapsedWidth]="80" [nzWidth]="256" nzTheme="light">
+    <h2 [routerLink]="['/licores']" class="menu-title">LICORES</h2>
+
+    <!-- Categorías -->
+    <nz-menu nzMode="vertical" nzTheme="light">
+      <nz-submenu nzTitle="Categorías">
+        <div class="menu-columns">
+          <nz-menu-item *ngFor="let categoria of categorias"
+                        [ngClass]="{'active': selectedCategoria === categoria.Categoria}"
+                        (click)="selectCategory(categoria.Categoria)"
+                        [routerLink]="['/', categoria.Categoria]">
+            <span class="circle-indicator" [ngClass]="{'selected': selectedCategoria === categoria.Categoria}"></span>
+            <span class="category-name">{{ categoria.Categoria }}</span>
+            <span class="item-count">{{ categoria.TotalProductos }}</span>
+          </nz-menu-item>
+        </div>
+      </nz-submenu>
+    </nz-menu>
+
+    <!-- Marcas -->
+    <h2 class="menu-title">MARCA</h2>
+    <nz-menu nzMode="vertical" nzTheme="light">
+      <nz-submenu nzTitle="Marcas">
+        <div class="menu-columns menu-columns-scrollable">
+          <nz-menu-item *ngFor="let marca of marcas"
+                        (click)="filtrarPorMarca(marca.nombreMarca)"
+                        [ngClass]="{'active-item': selectedMarca === marca.nombreMarca}">
+            {{ marca.nombreMarca }}
+            <span class="item-count">{{ marca.cantidad }}</span>
+          </nz-menu-item>
+        </div>
+      </nz-submenu>
+    </nz-menu>
+
+    <!-- Presentaciones -->
+    <h2 class="menu-title">PRESENTACIÓN</h2>
+    <nz-menu nzMode="vertical" nzTheme="light">
+      <nz-submenu nzTitle="Presentaciones">
+        <div class="menu-columns menu-columns-scrollable">
+          <nz-menu-item *ngFor="let presentacion of presentaciones"
+                        (click)="filtrarPorPresentacion(presentacion.presentacion_ml)"
+                        [ngClass]="{'active-item': selectedPresentacion === presentacion.presentacion_ml}">
+            {{ presentacion.presentacion_ml }} ml
+            <span class="item-count">{{ presentacion.cantidad }}</span>
+          </nz-menu-item>
+        </div>
+      </nz-submenu>
+    </nz-menu>
+  </nz-sider>
+

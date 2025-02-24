@@ -1,0 +1,22 @@
+<div class="products-grid">
+  <div class="product-card" *ngFor="let producto of productos">
+    <div class="product-image">
+      <img [src]="producto.imagenUrl" [alt]="producto.nombreProducto" />
+    </div>
+    <div class="product-details">
+      <h3>{{ producto.nombreProducto }}</h3>
+      <p>{{ producto.presentacion_ml }} ml</p>
+      <div class="price">
+        <span class="old-price" *ngIf="producto.precio > 10">
+          ${{ producto.precio | number:'1.2-2' }}
+        </span>
+        <span class="discount-price">
+          ${{ (producto.precio * 0.9) | number:'1.2-2' }}
+        </span>
+      </div>
+      <button nz-button nzType="primary" class="boton-comprar" (click)="agregarProductoAlCarrito(producto)">
+        Comprar
+      </button>
+    </div>
+  </div>
+</div>

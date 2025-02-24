@@ -16,8 +16,6 @@ import { ArrowDownOutline, MenuOutline, SearchOutline, ShoppingCartOutline, Arro
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FacebookOutline, InstagramOutline } from '@ant-design/icons-angular/icons';
-import { HeaderDashboardComponent } from './header-dashboard/header-dashboard.component';
-import { SidebarDashboardComponent } from './sidebar-dashboard/sidebar-dashboard.component'
 const icons = [ShoppingCartOutline, MenuOutline,SearchOutline, ArrowRightOutline,FacebookOutline, InstagramOutline];
 
 @NgModule({
@@ -25,8 +23,7 @@ const icons = [ShoppingCartOutline, MenuOutline,SearchOutline, ArrowRightOutline
   declarations: [
     HeaderComponent,
     FooterComponent,
-    HeaderDashboardComponent,
-    SidebarDashboardComponent
+
   ],
   exports:[HeaderComponent,FooterComponent],
   imports: [
@@ -38,10 +35,10 @@ const icons = [ShoppingCartOutline, MenuOutline,SearchOutline, ArrowRightOutline
     RouterModule,
     NzButtonModule,
     NzDropDownModule,
-    NzIconModule, 
+    NzIconModule,
     NzIconModule.forRoot(icons),
     NzImageModule,NzPaginationModule,NzGridModule, NzInputModule
-    
+
   ],
   providers: [
     { provide: NZ_ICONS, useValue: [ShoppingCartOutline, SearchOutline, MenuOutline, ArrowDownOutline] }
