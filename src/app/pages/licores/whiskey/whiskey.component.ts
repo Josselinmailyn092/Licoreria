@@ -93,6 +93,7 @@ export class WhiskeyComponent implements OnInit {
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
+
    // Carrito
    agregarProductoAlCarrito(producto: Producto): void {
     this.carritoService.agregarProducto(producto);
