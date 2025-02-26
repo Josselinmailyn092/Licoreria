@@ -31,13 +31,4 @@ export class ProductosService {
   obtenerProducto(id: number): Observable<any> {
     return this.httpService.get<any>(`${this.url}/${id}`);
   }
-
-  // Obtener todos los productos según una categoría
-  obtenerProductosCategoria(nombreCategoria: string): Observable<any[]> {
-    return this.httpService.get<any[]>(
-      `${this.url}/categoria/${nombreCategoria}`
-    );
-  }
-
-  //
 }
