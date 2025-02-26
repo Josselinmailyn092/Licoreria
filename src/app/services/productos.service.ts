@@ -8,6 +8,7 @@ import { Observable, map } from 'rxjs';
 export class ProductosService {
   private url = 'http://localhost:3000/productos';
   constructor(private httpService: HttpClient) {}
+
   // Obtener todos los productos con filtros opcionales
   obtenerProductos(
     marca?: string,
@@ -26,7 +27,6 @@ export class ProductosService {
     if (tipoProducto) params.tipoProducto = tipoProducto;
     return this.httpService.get<any[]>(this.url, { params });
   }
-
   // Obtener información del producto desde su ID
   obtenerProducto(id: number): Observable<any> {
     return this.httpService.get<any>(`${this.url}/${id}`);
