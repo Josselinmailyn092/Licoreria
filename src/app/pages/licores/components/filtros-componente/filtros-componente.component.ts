@@ -19,10 +19,12 @@ export class FiltrosComponenteComponent {
   selectedPresentacion: number | null = null;
 
   onMarcaChange(marca: string) {
+    console.log('Marca seleccionada:', marca)
     this.filtrarPorMarca.emit(marca);
   }
 
   onPresentacionChange(presentacion: number | null) {
+    console.log('Presentación seleccionada:', presentacion);
     this.filtrarPorPresentacion.emit(presentacion ?? 0);
   }
 

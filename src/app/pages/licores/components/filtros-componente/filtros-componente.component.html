@@ -7,8 +7,8 @@
   <div class="filter-item">
     <label>Seleccione Marca</label>
     <select class="custom-select" [(ngModel)]="selectedMarca" (change)="onMarcaChange(selectedMarca)">
-      <option value="">Todas las marcas</option>
-      <option *ngFor="let marca of marcas" [value]="marca">{{ marca }}</option>
+      <option [ngValue]="null">Todas las marcas</option>
+      <option *ngFor="let marca of marcas" [ngValue]="marca">{{ marca }}</option>
     </select>
   </div>
 

@@ -69,6 +69,7 @@ export class WhiskeyComponent implements OnInit {
       this.productos = [...this.productosOriginales];
       this.cambiarPagina(this.paginaActual);
     });
+
     // Obtener presentaciones desde la API
     this.productoWhiskeyService.getPresentacionesWhiskey().subscribe((data) => {
       this.presentaciones = data;
