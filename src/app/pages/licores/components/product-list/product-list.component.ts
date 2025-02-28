@@ -8,6 +8,7 @@ import { Component,Input, Output, EventEmitter } from '@angular/core';
 export class ProductListComponent {
   @Input() productos: any[] = [];
   @Output() agregarAlCarrito = new EventEmitter<any>();
+productosPaginados: any;
 
   agregarProductoAlCarrito(producto: any) {
     this.agregarAlCarrito.emit(producto);

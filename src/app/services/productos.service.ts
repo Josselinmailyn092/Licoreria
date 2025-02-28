@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductosService {
-  private url = 'http://localhost:3000/productos';
-  constructor(private httpService: HttpClient) {}
+  private apiUrl = 'http://localhost:3000/productos'; // Reemplaza con tu URL real
 
-  // Obtener todos los productos con filtros opcionales
-  obtenerProductos(
-    marca?: string,
-    categegoria?: string,
-    presentacion?: number,
-    esDestacado?: boolean,
-    tieneDescuento?: boolean,
-    tipoProducto?: string
-  ): Observable<any[]> {
-    const params: any = {};
-    if (marca) params.marca = marca;
-    if (categegoria) params.categoria = categegoria;
-    if (presentacion) params.presentacion = presentacion;
-    if (esDestacado) params.esDestacado = esDestacado;
-    if (tieneDescuento) params.tieneDescuento = tieneDescuento;
-    if (tipoProducto) params.tipoProducto = tipoProducto;
-    return this.httpService.get<any[]>(this.url, { params });
+  constructor(private http: HttpClient) {}
+
+  obtenerProductoPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
-  // Obtener información del producto desde su ID
-  obtenerProducto(id: number): Observable<any> {
-    return this.httpService.get<any>(`${this.url}/${id}`);
+
+  obtenerProductos(filtros: any = {}): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, { params: filtros });
+  }
+
+  añadirProducto(producto: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, producto);
+  }
+
+  actualizarProducto(producto: FormData): Observable<any> {
+    return this.http.put<any>(this.apiUrl, producto);
+  }
+
+  eliminarProducto(id: number): Observable<any> {
+    return this.http.request<any>('delete', this.apiUrl, { body: { id } });
   }
 }

@@ -5,33 +5,43 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MarcasService {
-  private url = 'http://localhost:3000/marcas'; // Ajusta según tu configuración
+export class MarcaService {
+  private url = 'http://localhost:3000/marcas'; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
-  // Obtener marcas por categoría
-  getMarcasByCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get<any>(`${this.url}/${nombreCategoria}`);
+  // Obtener todas las marcas
+  obtenerMarcas(): Observable<any> {
+    return this.http.get(`${this.url}/`);
   }
 
-  // Obtener total de productos por marca en una categoría
-  getTotalProductosByMarcasByCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get<any>(`${this.url}/total/${nombreCategoria}`);
+  // Obtener el total de productos por marca
+  obtenerTotalProductosPorMarcas(): Observable<any> {
+    return this.http.get(`${this.url}/total-marca`);
+  }
+
+  // Obtener marcas por categoría
+  obtenerMarcasPorCategoria(nombreCategoria: string): Observable<any> {
+    return this.http.get(`${this.url}/${nombreCategoria}`);
+  }
+
+  // Obtener total de productos por marcas de una categoría
+  obtenerTotalProductosPorMarcasDeCategoria(nombreCategoria: string): Observable<any> {
+    return this.http.get(`${this.url}/total/${nombreCategoria}`);
   }
 
   // Añadir una nueva marca
-  addMarca(nombreMarca: string, categoria_id: number): Observable<any> {
-    return this.http.post<any>(`${this.url}/`, { nombreMarca, categoria_id });
+  añadirMarca(nombreMarca: string, categoria_id: number): Observable<any> {
+    return this.http.post(`${this.url}/`, { nombreMarca, categoria_id });
   }
 
-  // Actualizar una marca existente
-  updateMarca(id: number, nombreMarca: string): Observable<any> {
-    return this.http.put<any>(`${this.url}/`, { id, nombreMarca });
+  // Actualizar una marca
+  actualizarMarca(id: number, nombreMarca: string): Observable<any> {
+    return this.http.put(`${this.url}/`, { id, nombreMarca });
   }
 
   // Eliminar una marca
-  deleteMarca(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.url}/`, { body: { id } });
+  eliminarMarca(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/`, { body: { id } });
   }
 }

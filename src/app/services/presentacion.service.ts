@@ -6,42 +6,42 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PresentacionService {
-  private apiUrl = 'http://localhost:3000/presentaciones'; // Ajusta según tu configuración
+  private url = 'http://localhost:3000/presentaciones'; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
   // Obtener presentaciones por categoría
-  getPresentacionesByCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/categoria/${nombreCategoria}`);
+  getPresentacionesPorCategoria(nombreCategoria: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/categoria/${nombreCategoria}`);
   }
 
   // Obtener total de productos por presentación en una categoría
-  getTotalProductosByPresentacionesByCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/categoria/total/${nombreCategoria}`);
+  getTotalProductosPorCategoria(nombreCategoria: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/total/categoria/${nombreCategoria}`);
   }
 
   // Obtener todas las presentaciones disponibles
-  getTodasPresentaciones(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/`);
+  getTodasPresentaciones(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}`);
   }
 
-  // Obtener cantidad de productos distintos por cada presentación disponible
+  // Obtener la cantidad de presentaciones distintas
   getCantidadTodasPresentaciones(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/total`);
+    return this.http.get<any>(`${this.url}/total`);
   }
 
   // Añadir una nueva presentación
-  addPresentacion(producto_id: number, presentacion_ml: number, precio: number, cantidad: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/`, { producto_id, presentacion_ml, precio, cantidad });
+  addPresentacion(presentacion: any): Observable<any> {
+    return this.http.post<any>(`${this.url}`, presentacion);
   }
 
   // Actualizar una presentación existente
-  updatePresentacion(producto_id: number, presentacion_ml_vieja: number, presentacion_ml_nueva: number, cantidad: number, precio: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/`, { producto_id, presentacion_ml_vieja, presentacion_ml_nueva, cantidad, precio });
+  updatePresentacion(presentacion: any): Observable<any> {
+    return this.http.put<any>(`${this.url}`, presentacion);
   }
 
   // Eliminar una presentación
-  deletePresentacion(producto_id: number, presentacion_ml: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/`, { body: { producto_id, presentacion_ml } });
+  deletePresentacion(data: { producto_id: number; presentacion_ml: number }): Observable<any> {
+    return this.http.request<any>('delete', `${this.url}`, { body: data });
   }
 }
