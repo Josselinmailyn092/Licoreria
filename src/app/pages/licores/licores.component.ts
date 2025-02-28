@@ -45,7 +45,7 @@ export class LicoresComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-// categorias
+    // categorias
     this.categoriaService.obtenerCategorias().subscribe({
       next: (data) => (this.categorias = data),
       error: (err) => console.error('Error al obtener categorías:', err),
@@ -55,7 +55,7 @@ export class LicoresComponent implements OnInit {
       error: (err) => console.error('Error al obtener categorías:', err),
     });
 
-// marcas
+    // marcas
     this.marcaService.obtenerMarcas().subscribe({
       next: (data) => (this.marcas = data),
       error: (err) => console.error('Error al obtener marcas:', err),
@@ -63,9 +63,10 @@ export class LicoresComponent implements OnInit {
 
     this.marcaService.obtenerTotalProductosPorMarcas().subscribe({
       next: (data) => (this.marcasCantidad = data),
-      error: (err) => console.error('Error al obtener total de productos por marca:', err),
+      error: (err) =>
+        console.error('Error al obtener total de productos por marca:', err),
     });
-// ´presentaciones
+    // ´presentaciones
     this.presentacionService.getTodasPresentaciones().subscribe({
       next: (data) => (this.presentaciones = data),
       error: (err) => console.error('Error al obtener presentaciones:', err),
@@ -73,7 +74,8 @@ export class LicoresComponent implements OnInit {
 
     this.presentacionService.getCantidadTodasPresentaciones().subscribe({
       next: (data) => (this.presentacionesCantidad = data),
-      error: (err) => console.error('Error al obtener cantidad de presentaciones:', err),
+      error: (err) =>
+        console.error('Error al obtener cantidad de presentaciones:', err),
     });
 
     // producto
@@ -113,14 +115,16 @@ export class LicoresComponent implements OnInit {
   filtrarPorCategoria(categoria: string | null): void {
     this.productos = categoria
       ? this.productosOriginales.filter((producto) =>
-          producto.nombreProducto.toLowerCase().includes(categoria.toLowerCase())
+          producto.nombreProducto
+            .toLowerCase()
+            .includes(categoria.toLowerCase())
         )
       : [...this.productosOriginales];
     this.cambiarPagina(1);
   }
 
   filtrarPorMarca(marca: string): void {
-    console.log('Marca seleccionada:', marca)
+    console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
     this.filtrarProductos();
   }
@@ -135,14 +139,13 @@ export class LicoresComponent implements OnInit {
     this.productos = this.productosOriginales.filter((producto) => {
       return (
         (!this.selectedMarca || producto.marca === this.selectedMarca) &&
-        (!this.selectedPresentacion || producto.presentacion_ml === this.selectedPresentacion)
+        (!this.selectedPresentacion ||
+          producto.presentacion_ml === this.selectedPresentacion)
       );
     });
 
     this.cambiarPagina(1); // Actualiza la paginación con los productos filtrados
   }
-
-
 
   get totalPaginas(): number {
     return Math.ceil(this.productos.length / this.productosPorPagina);
