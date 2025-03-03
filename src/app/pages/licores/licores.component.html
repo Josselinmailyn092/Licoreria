@@ -6,7 +6,7 @@
   [presentaciones]="presentacionesCantidad"
   (categoriaSeleccionada)="selectCategory($event)"
   (marcaSeleccionada)="filtrarPorMarca($event)"
-  (presentacionSeleccionada)="filtrarPorPresentacion(+($event))">
+  (presentacionSeleccionada)="filtrarPorPresentacion($event ? +$event : null)">
 >
 </app-side-menu>
 
@@ -35,8 +35,9 @@
 
     <!-- Products List -->
     <app-product-list
+    (agregarAlCarrito)="agregarProductoAlCarrito($event)"
     [productos]="productosPaginados"
-    (agregarAlCarrito)="agregarProductoAlCarrito($event)">
+    >
   </app-product-list>
 
 

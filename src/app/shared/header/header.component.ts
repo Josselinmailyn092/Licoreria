@@ -59,7 +59,7 @@ total:number=0;
     this.menuItems = this.subMenu.geSubMenuItems();
     this.carritoService.carrito$.subscribe((productos) => {
       this.carrito = productos;
-      this.total = productos.reduce((total, producto) => total + producto.precio * producto.cantidad, 0);
+      this.total = productos.reduce((total, producto) => total + producto.presentaciones[0].precio * (producto.cantidad ?? 0), 0);
     });
 
     this.carritoService.total$.subscribe((total) => {
@@ -94,8 +94,8 @@ total:number=0;
 
 
 // Carrito
-agregarProducto(producto: Producto): void {
-  this.carritoService.agregarProducto(producto);
+agregarProducto (evento: { producto: Producto; presentacion: any }) {
+  this.carritoService.agregarProducto(evento.producto, evento.presentacion);
 }
 
 disminuirCantidad(producto:Producto):void{
@@ -119,7 +119,7 @@ enviarPedidoPorWhatsApp(): void {
   const numeroWhatsApp = '593939380666';
   const saludo = "Hola buenas tardes me gustaría realizar un pedido:";
   const mensaje = this.carrito.map(producto =>
-    `${producto.nombreProducto} (${producto.presentacion_ml} ml) - $${(producto.precio * 0.9).toFixed(2)}`
+    `${producto.nombre} (${producto.presentaciones[0].presentacion_ml} ml) - $${(producto.presentaciones[0].precio * 0.9).toFixed(2)}`
   ).join('\n');
 
   const textoCompleto = `${saludo}\n${mensaje}`;

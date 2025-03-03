@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
     this.loadCategorias();
     this.loadFeaturedProducts();
   }
-  // Carrito
-   agregarProductoAlCarrito(producto: Producto): void {
-    this.carritoService.agregarProducto(producto);
-  }
+  // // Carrito
+  //  agregarProductoAlCarrito(producto: Producto): void {
+  //   this.carritoService.agregarProducto(producto);
+  // }
   loadCategorias(): void {
     this.productoService.getCategoriasConCantidad().subscribe(
       (data) => {

@@ -14,22 +14,27 @@ export class FiltrosComponenteComponent {
   @Output() filtrarPorMarca = new EventEmitter<string>();
   @Output() filtrarPorPresentacion = new EventEmitter<number>();
   @Output() cambiarProductosPorPagina = new EventEmitter<number>();
+  @Output() filtroSeleccionado = new EventEmitter<string>();
 
   selectedMarca: string = '';
-  selectedPresentacion: number | null = null;
+  selectedPresentacion: any;
 
-  onMarcaChange(marca: string) {
-    console.log('Marca seleccionada:', marca)
-    this.filtrarPorMarca.emit(marca);
-  }
+  // filtros-componente.component.ts
+onMarcaChange(marca: string) {
+  this.selectedMarca = marca;
+  this.filtrarPorMarca.emit(marca);
+}
 
-  onPresentacionChange(presentacion: number | null) {
-    console.log('Presentación seleccionada:', presentacion);
-    this.filtrarPorPresentacion.emit(presentacion ?? 0);
-  }
+onPresentacionChange(presentacion: number ) {
+  this.selectedPresentacion = presentacion;
+  this.filtrarPorPresentacion.emit(presentacion );
+}
 
   onProductosPorPaginaChange(value: number) {
     this.cambiarProductosPorPagina.emit(value);
+  }
+  cambiarFiltro(valor: string) {
+    this.filtroSeleccionado.emit(valor);
   }
 
 }

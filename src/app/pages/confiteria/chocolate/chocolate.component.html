@@ -79,15 +79,15 @@
       <div class="products-grid">
         <div class="product-card" *ngFor="let producto of productosPaginados">
           <div class="product-image">
-            <img [src]="producto.imagenUrl" [alt]="producto.nombreProducto" />
+            <img [src]="producto.imagen" [alt]="producto.nombre" />
             <!--http://localhost:3000/uploads-->
           </div>
           <div class="product-details">
-            <h3>{{ producto.nombreProducto }}</h3>
-            <p>{{ producto.presentacion_ml }} ml</p>
+            <h3>{{ producto.nombre }}</h3>
+            <p>{{ producto.presentaciones }} ml</p>
             <div class="price">
-              <span class="old-price" *ngIf="producto.precio > 10"> ${{ producto.precio | number:'1.2-2' }} </span>
-              <span class="discount-price"> ${{ (producto.precio * 0.9) | number:'1.2-2' }} </span>
+              <span class="old-price" *ngIf="producto.presentaciones[0].precio > 10"> ${{ producto.presentaciones[0].precio| number:'1.2-2' }} </span>
+              <span class="discount-price"> ${{ (producto.presentaciones[0].precio * 0.9) | number:'1.2-2' }} </span>
             </div>
            <button nz-button nzType="primary" class="Boton-comprar">Comprar</button>
 

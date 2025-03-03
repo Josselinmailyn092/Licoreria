@@ -64,19 +64,19 @@
         <!-- Carrito con productos -->
         <div *ngIf="carrito.length > 0">
           <div *ngFor="let producto of carrito" class="carrito-item">
-            <img [src]="producto.imagenUrl" alt="{{ producto.nombreProducto}}" class="producto-imagen">
+            <img [src]="producto.imagen" alt="{{ producto.nombre}}" class="producto-imagen">
             <div class="producto-detalles">
-              <h3>{{ producto.nombreProducto }}</h3>
-              <p>{{ producto.presentacion_ml }}ml</p>
+              <h3>{{ producto.nombre }}</h3>
+              <p>{{ producto.presentaciones }}ml</p>
               <p>
-                <span *ngIf="producto.precio" class="precio-original">{{ producto.precio | currency }}</span>
-                <span class="precio-descuento">{{ producto.precio || producto.precio | currency }}</span>
+                <span *ngIf="producto.presentaciones[0].precio " class="precio-original">{{ producto.presentaciones[0].precio| currency }}</span>
+                <span class="precio-descuento">{{ producto.presentaciones[0].precio || producto.presentaciones[0].precio | currency }}</span>
               </p>
             </div>
             <div class="producto-cantidad">
               <button (click)="disminuirCantidad(producto)">-</button>
               <span>{{ producto.cantidad }}</span>
-              <button (click)="agregarProducto(producto)">+</button>
+              <button (click)="agregarProducto({ producto: producto, presentacion: producto.presentaciones[0] })">+</button>
             </div>
           </div>
           <div class="carrito-total">

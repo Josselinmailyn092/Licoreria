@@ -1,14 +1,16 @@
+// models/licores.models.ts
+// models/licores.models.ts
 export interface Producto {
   id: number;
-  cantidad: number;
-  nombreProducto: string;
-  presentacion_ml: number;
-  descripcion: string;
-  precio: number;
-  tipo: String;
-  categoria: String;
-  imagenUrl: string;
+  nombre: string;
   marca: string;
+  imagen: string;
+  presentaciones: {
+    presentacion_ml: number;
+    precio: number;
+    descuento: number;
+  }[];
+  cantidad?: number;
 }
 export interface Categoria {
   id_categoria: number;

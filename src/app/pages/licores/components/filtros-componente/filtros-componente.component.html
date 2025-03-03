@@ -6,7 +6,9 @@
   <!-- Filtro por Marca -->
   <div class="filter-item">
     <label>Seleccione Marca</label>
-    <select class="custom-select" [(ngModel)]="selectedMarca" (change)="onMarcaChange(selectedMarca)">
+    <select class="custom-select"
+    [(ngModel)]="selectedMarca"
+    (change)="onMarcaChange(selectedMarca)">
       <option [ngValue]="null">Todas las marcas</option>
       <option *ngFor="let marca of marcas" [ngValue]="marca">{{ marca }}</option>
     </select>
@@ -15,7 +17,9 @@
   <!-- Filtro por Presentación -->
   <div class="filter-item">
     <label>Seleccione Presentación</label>
-    <select class="custom-select" [(ngModel)]="selectedPresentacion" (change)="onPresentacionChange(selectedPresentacion)">
+    <select class="custom-select"
+    [(ngModel)]="selectedPresentacion"
+    (change)="onPresentacionChange(selectedPresentacion )">
       <option [ngValue]="null">Todas</option>
       <option *ngFor="let presentacion of presentaciones" [ngValue]="presentacion">
         {{ presentacion }} ml

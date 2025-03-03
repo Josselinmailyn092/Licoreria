@@ -7,7 +7,7 @@ import { PresentacionService } from '../../services/presentacion.service';
 import { Producto } from '../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-licores',
   templateUrl: './licores.component.html',
@@ -27,9 +27,11 @@ export class LicoresComponent implements OnInit {
   totalProductos = 100;
   paginaActual = 1;
   selectedMarca: string = '';
-  selectedPresentacion: number = 0;
+  selectedPresentacion: number | null = 0;
   isCollapsed: boolean = false;
   selectedSubMenu: string = 'Licores';
+  productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
+
   carrito: Producto[] = [];
   url = '/uploads';
 
@@ -41,7 +43,8 @@ export class LicoresComponent implements OnInit {
     private marcaService: MarcaService,
     private route: ActivatedRoute,
     private router: Router,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +69,7 @@ export class LicoresComponent implements OnInit {
       error: (err) =>
         console.error('Error al obtener total de productos por marca:', err),
     });
+
     // ´presentaciones
     this.presentacionService.getTodasPresentaciones().subscribe({
       next: (data) => (this.presentaciones = data),
@@ -87,6 +91,7 @@ export class LicoresComponent implements OnInit {
         }));
         this.productos = [...this.productosOriginales];
         this.cambiarPagina(this.paginaActual);
+
       },
       error: (err) => console.error('Error al obtener productos:', err),
     });
@@ -97,25 +102,30 @@ export class LicoresComponent implements OnInit {
     });
   }
 
-  agregarProductoAlCarrito(producto: Producto): void {
-    this.carritoService.agregarProducto(producto);
-  }
 
+  // licores.component.ts
+agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
+  this.carritoService.agregarProducto(evento.producto, evento.presentacion); // ✅ Recibir objeto
+}
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
   selectCategory(nombreCategoria: string): void {
-    if (nombreCategoria) {
-      this.selectedCategory = nombreCategoria;
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+    this.selectedCategory = nombreCategoria;
+    this.router.navigate(['/', nombreCategoria.toLowerCase()]);
+    this.filtrarPorCategoria(nombreCategoria); // Aplica el filtro
+  }
+  verificarProductosDisponibles(): void {
+    if (this.productos.length === 0) {
+      console.log('No hay productos disponibles para los filtros seleccionados.');
     }
   }
 
   filtrarPorCategoria(categoria: string | null): void {
     this.productos = categoria
       ? this.productosOriginales.filter((producto) =>
-          producto.nombreProducto
+          producto.nombre
             .toLowerCase()
             .includes(categoria.toLowerCase())
         )
@@ -123,30 +133,56 @@ export class LicoresComponent implements OnInit {
     this.cambiarPagina(1);
   }
 
+
   filtrarPorMarca(marca: string): void {
     console.log('Marca seleccionada:', marca);
     this.selectedMarca = marca;
-    this.filtrarProductos();
-  }
 
-  filtrarPorPresentacion(presentacion: number): void {
-    console.log('Presentación seleccionada:', presentacion);
-    this.selectedPresentacion = presentacion;
-    this.filtrarProductos();
-  }
-
-  private filtrarProductos(): void {
-    this.productos = this.productosOriginales.filter((producto) => {
-      return (
-        (!this.selectedMarca || producto.marca === this.selectedMarca) &&
-        (!this.selectedPresentacion ||
-          producto.presentacion_ml === this.selectedPresentacion)
+    if (!marca || marca.trim() === '') {
+      if (this.selectedPresentacion) {
+        this.productos = this.productosOriginales.filter(
+          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
+        );
+      } else {
+        this.productos = [...this.productosOriginales];
+      }
+    } else {
+      this.productos = this.productosOriginales.filter((producto) =>
+        producto.nombre.toLowerCase().includes(marca.toLowerCase())
       );
-    });
 
-    this.cambiarPagina(1); // Actualiza la paginación con los productos filtrados
+      if (this.selectedPresentacion) {
+        this.productos = this.productos.filter(
+          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
+        );
+      }
+    }
+
+    this.verificarProductosDisponibles();
+    this.cambiarPagina(1);
   }
 
+  // licores.component.ts (CORRECCIÓN)
+
+  filtrarPorPresentacion(presentacion: number | null): void {
+    this.selectedPresentacion = presentacion;
+
+    // Filtra los productos originales por presentación
+    this.productos = presentacion
+      ? this.productosOriginales.filter(producto =>
+          producto.presentaciones.some(p => p.presentacion_ml === presentacion) // ✅ Usar .some()
+        )
+      : [...this.productosOriginales];
+
+    // Aplicar filtro de marca si existe
+    if (this.selectedMarca) {
+      this.productos = this.productos.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
+      );
+    }
+
+    this.cambiarPagina(1);
+  }
   get totalPaginas(): number {
     return Math.ceil(this.productos.length / this.productosPorPagina);
   }
@@ -155,12 +191,11 @@ export class LicoresComponent implements OnInit {
     return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
   }
 
-  cambiarPagina(nuevaPagina: number): void {
-    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
-      this.paginaActual = nuevaPagina;
-      const inicio = (nuevaPagina - 1) * this.productosPorPagina;
-      const fin = inicio + this.productosPorPagina;
-      this.productosPaginados = this.productos.slice(inicio, fin);
-    }
-  }
+
+cambiarPagina(nuevaPagina: number) {
+  this.paginaActual = nuevaPagina;
+  const startIndex = (this.paginaActual - 1) * this.productosPorPagina;
+  const endIndex = startIndex + this.productosPorPagina;
+  this.productosPaginados = this.productos.slice(startIndex, endIndex);
+}
 }

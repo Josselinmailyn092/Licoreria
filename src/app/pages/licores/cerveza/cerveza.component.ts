@@ -101,10 +101,10 @@ export class CervezaComponent implements OnInit{
       this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
     });
   }
- // Carrito
- agregarProductoAlCarrito(producto: Producto): void {
-  this.carritoService.agregarProducto(producto);
-}
+//  // Carrito
+//  agregarProductoAlCarrito(producto: Producto): void {
+//   this.carritoService.agregarProducto(producto);
+// }
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
@@ -127,7 +127,7 @@ export class CervezaComponent implements OnInit{
 
   filtrarPorCategoria(categoria: string | null): void {
     if (categoria) {
-      this.productos = this.productos.filter((producto) => producto.nombreProducto.includes(categoria));
+      this.productos = this.productos.filter((producto) => producto.nombre.includes(categoria));
     } else {
       this.productoService.getAllProducts().subscribe((data) => {
         this.productos = data;
@@ -149,19 +149,19 @@ export class CervezaComponent implements OnInit{
     if (!marca || marca.trim() === '') {
       if (this.selectedPresentacion) {
         this.productos = this.productosOriginales.filter(
-          (producto) => producto.presentacion_ml === this.selectedPresentacion
+          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
         );
       } else {
         this.productos = [...this.productosOriginales];
       }
     } else {
       this.productos = this.productosOriginales.filter((producto) =>
-        producto.nombreProducto.toLowerCase().includes(marca.toLowerCase())
+        producto.nombre.toLowerCase().includes(marca.toLowerCase())
       );
 
       if (this.selectedPresentacion) {
         this.productos = this.productos.filter(
-          (producto) => producto.presentacion_ml === this.selectedPresentacion
+          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
         );
       }
     }
@@ -177,19 +177,19 @@ export class CervezaComponent implements OnInit{
     if (!presentacion) {
       if (this.selectedMarca) {
         this.productos = this.productosOriginales.filter((producto) =>
-          producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
+          producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
         );
       } else {
         this.productos = [...this.productosOriginales];
       }
     } else {
       this.productos = this.productosOriginales.filter(
-        (producto) => producto.presentacion_ml === presentacion
+        (producto) => producto.presentaciones.some(p => p.presentacion_ml === presentacion)
       );
 
       if (this.selectedMarca) {
         this.productos = this.productos.filter((producto) =>
-          producto.nombreProducto.toLowerCase().includes(this.selectedMarca.toLowerCase())
+          producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
         );
       }
     }

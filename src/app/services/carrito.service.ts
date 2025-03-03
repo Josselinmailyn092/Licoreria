@@ -17,29 +17,31 @@ export class CarritoService {
 
 
   // Agregar un producto al carrito
-  agregarProducto(producto: Producto): void {
-    const productoExistente = this.carrito.find(
-      (p) =>
-        p.id === producto.id &&
-        p.nombreProducto === producto.nombreProducto &&
-        p.presentacion_ml === producto.presentacion_ml
+  agregarProducto(producto: Producto, presentacion: any) {
+    const productoConPresentacion: Producto = {
+      ...producto,
+      presentaciones: [presentacion], // ✅ Guardar solo la presentación seleccionada
+      cantidad: 1
+    };
+
+    const productoExistente = this.carrito.find(p =>
+      p.id === producto.id &&
+      p.presentaciones[0].presentacion_ml === presentacion.presentacion_ml
     );
 
     if (productoExistente) {
-      productoExistente.cantidad = (productoExistente.cantidad || 1) + 1;
+      productoExistente.cantidad! += 1;
     } else {
-      this.carrito.push({ ...producto, cantidad: 1 });
+      this.carrito.push(productoConPresentacion);
     }
-
-    this.actualizarCarrito();
   }
 
   // Disminuir la cantidad de un producto o eliminarlo si la cantidad es 0
   disminuirCantidad(producto: Producto): void {
     const productoExistente = this.carrito.find((p) =>
       p.id === producto.id &&
-      p.nombreProducto === producto.nombreProducto &&
-      p.presentacion_ml === producto.presentacion_ml);
+      p.nombre === producto.nombre &&
+      p.presentaciones[0].presentacion_ml === producto.presentaciones[0].presentacion_ml);
 
 
       if (productoExistente) {
@@ -77,7 +79,7 @@ export class CarritoService {
   // Notificar cambios a los observadores
   private actualizarCarrito(): void {
     this.carritoSubject.next([...this.carrito]); // Asegúrate de emitir una copia del array
-    const total = this.carrito.reduce((sum, prod) => sum + (prod.precio * (prod.cantidad || 0)), 0);
+    const total = this.carrito.reduce((sum, prod) => sum + (prod.presentaciones[0].precio  * (prod.cantidad || 0)), 0);
     this.totalSubject.next(total); // Emitir el nuevo total
   }
 
