@@ -7,6 +7,7 @@ import { Producto } from '../../../../models/licores.models';
 })
 export class ProductListComponent {
   @Input() productos: any[] = [];
+  @Input() selectedPresentacion: number | null = null;
   @Output() agregarAlCarrito = new EventEmitter<{
     producto: Producto;
     presentacion: any;
@@ -22,6 +23,14 @@ export class ProductListComponent {
     return 'http://localhost:3000/uploads/' + nombreImagen;
   }
 
+  getPresentacionesFiltradas(producto: Producto): any[] {
+    if (this.selectedPresentacion) {
+      return producto.presentaciones.filter(p =>
+        p.presentacion_ml === this.selectedPresentacion
+      );
+    }
+    return producto.presentaciones;
+  }
 
 
 }
