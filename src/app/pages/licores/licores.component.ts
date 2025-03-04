@@ -1,6 +1,5 @@
 import { MarcasService } from './../../services/marcas.service';
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../../services/producto.service';
 import { ProductosService } from '../../services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { PresentacionService } from '../../services/presentacion.service';
