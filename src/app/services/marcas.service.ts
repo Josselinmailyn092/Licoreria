@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MarcaService {
+export class MarcasService {
   private url = 'http://localhost:3000/marcas'; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
@@ -22,12 +22,12 @@ export class MarcaService {
 
   // Obtener marcas por categoría
   obtenerMarcasPorCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get(`${this.url}/${nombreCategoria}`);
+    return this.http.get<{nombreMarca: string}[]>(`${this.url}/${nombreCategoria}`);
   }
 
   // Obtener total de productos por marcas de una categoría
   obtenerTotalProductosPorMarcasDeCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get(`${this.url}/total/${nombreCategoria}`);
+    return this.http.get(`${this.url}/total-marca/${nombreCategoria}`);
   }
 
   // Añadir una nueva marca

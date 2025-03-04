@@ -1,4 +1,4 @@
-import { MarcaService } from './../../services/marcas.service';
+import { MarcasService } from './../../services/marcas.service';
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
 import { ProductosService } from '../../services/productos.service';
@@ -8,13 +8,28 @@ import { Producto } from '../../models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { error } from 'console';
 @Component({
   selector: 'app-licores',
   templateUrl: './licores.component.html',
   styleUrls: ['./licores.component.css'],
 })
 export class LicoresComponent implements OnInit {
-  selectedCategory: string | null = null;
+  // Variables de estado
+  seleccionarCategoria: string | null = null;
+  seleccionarMarca: string = '';
+  seleccionarPresentacion: number | null = 0;
+  // paginación
+  paginaActual = 1;
+  productosPorPagina: number = 8;
+  // colapsabilidad y navegación
+  isCollapsed: boolean = false;
+  selectedSubMenu: string = 'Licores';  
+  // url base para las imagenes
+  url = '/uploads';
+
+  // Almacenamiento de datos 
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   categorias: any[] = [];
@@ -23,24 +38,17 @@ export class LicoresComponent implements OnInit {
   productos: Producto[] = [];
   productosOriginales: Producto[] = [];
   productosPaginados: Producto[] = [];
-  productosPorPagina: number = 8;
   totalProductos = 100;
-  paginaActual = 1;
-  selectedMarca: string = '';
-  selectedPresentacion: number | null = 0;
-  isCollapsed: boolean = false;
-  selectedSubMenu: string = 'Licores';
+  carrito: Producto[] = [];
   productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
 
-  carrito: Producto[] = [];
-  url = '/uploads';
+ 
 
   constructor(
-    private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private productosService: ProductosService,
     private presentacionService: PresentacionService,
-    private marcaService: MarcaService,
+    private marcaService: MarcasService,
     private route: ActivatedRoute,
     private router: Router,
     private carritoService: CarritoService,
@@ -48,168 +56,151 @@ export class LicoresComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // categorias
-    this.categoriaService.obtenerCategorias().subscribe({
-      next: (data) => (this.categorias = data),
-      error: (err) => console.error('Error al obtener categorías:', err),
-    });
-    this.categoriaService.obtenerProductosPorCategoria().subscribe({
-      next: (data) => (this.categorias = data),
-      error: (err) => console.error('Error al obtener categorías:', err),
-    });
+    
+    this.cargarDatosIniciales();
+    this.configuracion_ruta();
+  }
 
-    // marcas
-    this.marcaService.obtenerMarcas().subscribe({
-      next: (data) => (this.marcas = data),
-      error: (err) => console.error('Error al obtener marcas:', err),
-    });
-
-    this.marcaService.obtenerTotalProductosPorMarcas().subscribe({
-      next: (data) => (this.marcasCantidad = data),
-      error: (err) =>
-        console.error('Error al obtener total de productos por marca:', err),
-    });
-
-    // ´presentaciones
-    this.presentacionService.getTodasPresentaciones().subscribe({
-      next: (data) => (this.presentaciones = data),
-      error: (err) => console.error('Error al obtener presentaciones:', err),
-    });
-
-    this.presentacionService.getCantidadTodasPresentaciones().subscribe({
-      next: (data) => (this.presentacionesCantidad = data),
-      error: (err) =>
-        console.error('Error al obtener cantidad de presentaciones:', err),
-    });
-
-    // producto
-    this.productosService.obtenerProductos().subscribe({
-      next: (data) => {
-        this.productosOriginales = data.map((producto) => ({
-          ...producto,
-          imagenUrl: `${this.url}/${producto.imagen}`,
-        }));
-        // Transformar productos en items de presentación
-    this.productosConPresentaciones = this.productosOriginales.flatMap(producto =>
-      producto.presentaciones.map(presentacion => ({
-        producto: { ...producto, presentaciones: [presentacion] }, // Clona el producto con solo esta presentación
-        presentacion: presentacion
-      }))
-    );
-
-    this.productos = [...this.productosConPresentaciones.map(item => item.producto)]; // Usar solo el producto clonado
-    this.cambiarPagina(1);
-
-      },
-      error: (err) => console.error('Error al obtener productos:', err),
-    });
-
-    this.route.url.subscribe((url) => {
-      const subMenu = url[1] ? url[1].path : null;
-      this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
+  // Craga de datos iniciales usando forkjoin eficiencia
+  private cargarDatosIniciales(): void {
+    forkJoin({
+      categorias: this.categoriaService.obtenerCategorias(),
+      productosPorCategoria: this.categoriaService.obtenerProductosPorCategoria(),
+      marcas: this.marcaService.obtenerMarcas(),
+      marcasCantidad: this.marcaService.obtenerTotalProductosPorMarcas(),
+      presentaciones: this.presentacionService.getTodasPresentaciones(),
+      presentacionesCantidad: this.presentacionService.getCantidadTodasPresentaciones(),
+      productos: this.productosService.obtenerProductos(),
+    }).subscribe({
+      next: (data) => this.procesarDatosCargados(data),
+      error: (err) => this.manejarError(err)
     });
   }
 
+// Procesa lo sdatos obtenidos de las peticiones
+  private procesarDatosCargados(data: any): void {
+    this.categorias = data.productosPorCategoria;
+    this.marcas = data.marcas;
+    this.marcasCantidad = data.marcasCantidad;
+    this.presentaciones = data.presentaciones;
+    this.presentacionesCantidad = data.presentacionesCantidad;
+    this.productosOriginales = this.transformarProductos(data.productos);
+    this.productos = [...this.productosOriginales];
+    this.cambiarPagina(1);
+  }
 
-  // licores.component.ts
-agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
-  this.carritoService.agregarProducto(evento.producto, evento.presentacion); // ✅ Recibir objeto
+// agregar la url de las imagen
+private transformarProductos(productos: Producto[]): Producto[] {
+  return productos.map(producto => ({
+    ...producto,
+    imagenUrl: `${this.url}/${producto.imagen}`
+  }));
 }
-  private capitalize(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+
+// configuracion de ruta 
+private configuracion_ruta(): void{
+  this.route.url.subscribe((url) => {
+    const subMenu = url[1] ? url[1].path : null;
+    this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
+  });
+}
+
+
+// Manejo de filtros en categorias, marca y presentación
+private aplicarFiltros(): void {
+  let productosFiltrados = [...this.productosOriginales];
+
+  if (this.seleccionarCategoria) {
+    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarCategoria);
   }
 
-  selectCategory(nombreCategoria: string): void {
-    this.selectedCategory = nombreCategoria;
-    this.router.navigate(['/', nombreCategoria.toLowerCase()]);
-    this.filtrarPorCategoria(nombreCategoria); // Aplica el filtro
-  }
-  verificarProductosDisponibles(): void {
-    if (this.productos.length === 0) {
-      console.log('No hay productos disponibles para los filtros seleccionados.');
-    }
+  if (this.seleccionarMarca) {
+    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarMarca);
   }
 
-  filtrarPorCategoria(categoria: string | null): void {
-    this.productos = categoria
-      ? this.productosOriginales.filter((producto) =>
-          producto.nombre
-            .toLowerCase()
-            .includes(categoria.toLowerCase())
-        )
-      : [...this.productosOriginales];
-    this.cambiarPagina(1);
+  if (this.seleccionarPresentacion) {
+    productosFiltrados = productosFiltrados.filter(producto =>
+      producto.presentaciones.some(p => p.presentacion_ml === this.seleccionarPresentacion)
+    );
   }
 
-
-  filtrarPorMarca(marca: string): void {
-    console.log('Marca seleccionada:', marca);
-    this.selectedMarca = marca;
-
-    if (!marca || marca.trim() === '') {
-      if (this.selectedPresentacion) {
-        this.productos = this.productosOriginales.filter(
-          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
-        );
-      } else {
-        this.productos = [...this.productosOriginales];
-      }
-    } else {
-      this.productos = this.productosOriginales.filter((producto) =>
-        producto.nombre.toLowerCase().includes(marca.toLowerCase())
-      );
-
-      if (this.selectedPresentacion) {
-        this.productos = this.productos.filter(
-          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
-        );
-      }
-    }
-
-    this.verificarProductosDisponibles();
-    this.cambiarPagina(1);
-  }
+  this.productos = this.ajustarPresentaciones(productosFiltrados);
+  this.cambiarPagina(1);
+}
 
 
-  filtrarPorPresentacion(presentacion: number | null): void {
-    this.selectedPresentacion = presentacion;
+// DEvuelve solo los productos cuyo nombre inclye el texto buscado
+private filtrarPorTexto(productos: Producto[], texto: string): Producto[] {
+  const busqueda = texto.toLowerCase();
+  return productos.filter(producto => 
+    producto.nombre.toLowerCase().includes(busqueda)
+  );
+}
 
-    // Filtra los productos originales por presentación
-    this.productos = presentacion
-      ? this.productosOriginales.filter(producto =>
-          producto.presentaciones.some(p => p.presentacion_ml === presentacion) // ✅ Usar .some()
-        )
-      : [...this.productosOriginales];
 
-    // Aplicar filtro de marca si existe
-    if (this.selectedMarca) {
-      this.productos = this.productos.filter(producto =>
-        producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
-      );
-    }
+// Filtra presentaciones del producto seleccionado 
+private ajustarPresentaciones(productos: Producto[]): Producto[] {
+  return productos.map(producto => ({
+    ...producto,
+    presentaciones: this.seleccionarPresentacion
+      ? producto.presentaciones.filter(p => p.presentacion_ml === this.seleccionarPresentacion)
+      : producto.presentaciones
+  }));
+}
 
-    this.cambiarPagina(1);
-  }
-  get totalPaginas(): number {
-    return Math.ceil(this.productos.length / this.productosPorPagina);
-  } 
 
-  get paginas(): number[] {
-    return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
-  }
+// Manejo de eventos
+manejarSeleccionCategoria(categoria: string): void {
+  this.seleccionarCategoria= categoria;
+  this.router.navigate(['/', categoria.toLowerCase()]);
+  this.aplicarFiltros();
+}
 
-  onProductosPorPaginaChange(nuevaCantidad: number) {
+manejarFiltroMarca(marca: string): void {
+  this.seleccionarMarca= marca;
+  this.aplicarFiltros();
+}
+
+manejarFiltroPresentacion(presentacion: number | null): void {
+  this.seleccionarPresentacion= presentacion;
+  this.aplicarFiltros();
+}
+
+
+// Actualiza la cantidad de productos por pagina
+cambiarProductosPorPagina(nuevaCantidad: number) {
     this.productosPorPagina = nuevaCantidad;
     this.paginaActual = 1;
     this.cambiarPagina(1);
   }
 
+  // cambiar pagina
 cambiarPagina(nuevaPagina: number) {
   this.paginaActual = nuevaPagina;
-  const startIndex = (this.paginaActual - 1) * this.productosPorPagina;
-  const endIndex = startIndex + this.productosPorPagina;
-  this.productosPaginados = this.productos.slice(startIndex, endIndex);
+  const inicio = (this.paginaActual - 1) * this.productosPorPagina;
+  const fin = inicio + this.productosPorPagina;
+  this.productosPaginados = this.productos.slice(inicio, fin);
+}
+ 
+// Calcula cuantas paginas hay en total dividiendiendo la cantidad de productos ente productosPorPaginas
+get totalPaginas(): number {
+  return Math.ceil(this.productos.length / this.productosPorPagina);
+} 
+
+// maneja errores
+private manejarError(error: any): void {
+  console.error('Error loading data:', error);
+  // Aquí podrías agregar lógica para mostrar un mensaje al usuario
 }
 
+// Conviete la primera letra en mayúscula
+  private capitalize(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+// Carrito
+agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
+  this.carritoService.agregarProducto(evento.producto, evento.presentacion); 
+}
 
 }

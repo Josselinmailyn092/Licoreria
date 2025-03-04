@@ -18,7 +18,7 @@ export class SideMenuComponent {
 // emite el nombre de categoria, marca, presentacion seleccionada
   @Output() categoriaSeleccionada = new EventEmitter<string>();
   @Output() marcaSeleccionada = new EventEmitter<string>();
-  @Output() presentacionSeleccionada = new EventEmitter<string>();
+  @Output() presentacionSeleccionada = new EventEmitter<number>();
 
 // variables de seguimiento de selecciones 
   selectedCategoria:string | null =null;
@@ -36,7 +36,7 @@ export class SideMenuComponent {
   }
 
 // Emite la presentacion seleccionad y actualiza el estado activo
-  filtrarPorPresentacion(presentacion: string) {
+  filtrarPorPresentacion(presentacion: number) {
     this.presentacionSeleccionada.emit(presentacion);
   }
 }

@@ -4,9 +4,9 @@
   [categorias]="categorias"
   [marcas]="marcasCantidad"
   [presentaciones]="presentacionesCantidad"
-  (categoriaSeleccionada)="selectCategory($event)"
-  (marcaSeleccionada)="filtrarPorMarca($event)"
-  (presentacionSeleccionada)="filtrarPorPresentacion($event ? +$event : null)">
+  (categoriaSeleccionada)="manejarSeleccionCategoria($event)"
+  (marcaSeleccionada)="manejarFiltroMarca($event)"
+  (presentacionSeleccionada)="manejarFiltroPresentacion($event ? +$event : null)">
 >
 </app-side-menu>
 
@@ -23,9 +23,8 @@
       [presentaciones]="presentaciones"
       [productosTotal]="productos.length"
       [productosPorPagina]="productosPorPagina"
-      (filtrarPorMarca)="filtrarPorMarca($event)"
-      (filtrarPorPresentacion)="filtrarPorPresentacion($event)"
-     
+      (filtrarPorMarca)="manejarFiltroMarca($event)"
+      (filtrarPorPresentacion)="manejarFiltroPresentacion($event)"
     ></app-filtros-componente>
 
 
@@ -37,7 +36,7 @@
     <app-product-list
     (agregarAlCarrito)="agregarProductoAlCarrito($event)"
     [productos]="productosPaginados"
-    [selectedPresentacion]="selectedPresentacion"
+    [selectedPresentacion]="seleccionarPresentacion"
     >
   </app-product-list>
 
@@ -47,7 +46,7 @@
     [paginaActual]="paginaActual"
     [totalPaginas]="totalPaginas"
     (cambiarPagina)="cambiarPagina($event)"
-    (cambiarProductosPorPagina)="onProductosPorPaginaChange($event ? +$event : 0)">
+    (cambiarProductosPorPagina)="cambiarProductosPorPagina($event ? +$event : 0)">
   </app-paginacion>
 
 
