@@ -74,7 +74,7 @@ private cargarDatosIniciales(): void {
       error: (err) => this.manejarError(err)
     });
   }
-
+  // Craga de datos iniciales usando forkjoin eficiencia
   private procesarDatosCargados(data: any): void {
     this.categorias = data.productosPorCategoria;
     this.marcas = data.marcas.map((m: any ) => m.nombreMarca);
@@ -88,7 +88,7 @@ private cargarDatosIniciales(): void {
     this.productos = [...this.productosOriginales];
     this.cambiarPagina(1);
   }
-  
+// Procesa lo sdatos obtenidos de las peticiones 
   private transformarProductos(productos: Producto[]): Producto[] {
     return productos.map(producto => ({
       ...producto,
@@ -96,25 +96,62 @@ private cargarDatosIniciales(): void {
     }));
   }
 
-  aplicarFiltros(): void {
-    let productosFiltrados = [...this.productosOriginales];
-  
-    if (this.seleccionarMarca) {
-      productosFiltrados = productosFiltrados.filter(producto =>
-        producto.marca.toLowerCase().includes(this.seleccionarMarca.toLowerCase())
-      );
-    }
-  
-    if (this.seleccionarPresentacion) {
-      productosFiltrados = productosFiltrados.filter(producto =>
-        producto.presentaciones.some(p => p.presentacion_ml === this.seleccionarPresentacion)
-      );
-    }
-  
-    this.productos = productosFiltrados;
-    this.cambiarPagina(1);
+// configuracion de ruta 
+  private configuracionRuta(): void {
+    this.route.url.subscribe((url) => {
+      const subMenu = url[1] ? url[1].path : null;
+      this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Whiskey';
+    });
   }
-  
+
+// DEvuelve solo los productos cuyo nombre inclye el texto buscado
+private aplicarFiltros(): void {
+  let productosFiltrados = [...this.productosOriginales];
+
+  if (this.seleccionarCategoria) {
+    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarCategoria);
+  }
+
+  if (this.seleccionarMarca) {
+    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarMarca);
+  }
+
+  if (this.seleccionarPresentacion) {
+    productosFiltrados = productosFiltrados.filter(producto =>
+      producto.presentaciones.some(p => p.presentacion_ml === this.seleccionarPresentacion)
+    );
+  }
+
+  this.productos = this.ajustarPresentaciones(productosFiltrados);
+  this.cambiarPagina(1);
+}
+
+// DEvuelve solo los productos cuyo nombre inclye el texto buscado
+private filtrarPorTexto(productos: Producto[], texto: string): Producto[] {
+  const busqueda = texto.toLowerCase();
+  return productos.filter(producto => 
+    producto.nombre.toLowerCase().includes(busqueda)
+  );
+}
+
+
+// Filtra presentaciones del producto seleccionado 
+private ajustarPresentaciones(productos: Producto[]): Producto[] {
+  return productos.map(producto => ({
+    ...producto,
+    presentaciones: this.seleccionarPresentacion
+      ? producto.presentaciones.filter(p => p.presentacion_ml === this.seleccionarPresentacion)
+      : producto.presentaciones
+  }));
+}
+
+
+// Manejo de eventos
+manejarSeleccionCategoria(categoria: string): void {
+  this.seleccionarCategoria= categoria;
+  this.router.navigate(['/', categoria.toLowerCase()]);
+  this.aplicarFiltros();
+}
   manejarFiltroMarca(marca: string): void {
     this.seleccionarMarca= marca;
     this.aplicarFiltros();
@@ -123,42 +160,6 @@ private cargarDatosIniciales(): void {
   manejarFiltroPresentacion(presentacion: number | null): void {
     this.seleccionarPresentacion = presentacion;
     this.aplicarFiltros();
-  }
-
-  private configuracionRuta(): void {
-    this.route.url.subscribe((url) => {
-      const subMenu = url[1] ? url[1].path : null;
-      this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Whiskey';
-    });
-  }
-  
-  selectCategory(nombreCategoria: string): void {
-    if (this.seleccionarCategoria !== nombreCategoria) {
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]);
-    }
-  }
-  
-  private capitalize(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-
-   // Carrito
-  //  agregarProductoAlCarrito(producto: Producto): void {
-  //   this.carritoService.agregarProducto(producto);
-  // }
-
-
-
-
-
- 
-
-  get totalPaginas(): number {
-    return Math.ceil(this.productos.length/ this.productosPorPagina);
-  }
-
-  get paginas(): number[] {
-    return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
   }
 
   cambiarPagina(nuevaPagina: number): void {
@@ -170,12 +171,32 @@ private cargarDatosIniciales(): void {
       console.log('Página actual:', this.paginaActual);
     }
   }
+  
+// Actualiza la cantidad de productos por pagina
+cambiarProductosPorPagina(nuevaCantidad: number) {
+  this.productosPorPagina = nuevaCantidad;
+  this.paginaActual = 1;
+  this.cambiarPagina(1);
+}
+  
+  get totalPaginas(): number {
+    return Math.ceil(this.productos.length/ this.productosPorPagina);
+  }
 
   // maneja errores
 private manejarError(error: any): void {
   console.error('Error loading data:', error);
   // Aquí podrías agregar lógica para mostrar un mensaje al usuario
 }
+private capitalize(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+
+ // Carrito
+  //  agregarProductoAlCarrito(producto: Producto): void {
+  //   this.carritoService.agregarProducto(producto);
+  // }
 }
 
 

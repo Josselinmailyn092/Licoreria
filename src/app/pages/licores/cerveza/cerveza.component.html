@@ -1,52 +1,40 @@
 <div class="licores-container">
-  <!-- Menu lateral -->
   <app-side-menu
-  [categorias]="categorias"
-  [marcas]="marcasCantidad"
-  [presentaciones]="presentacionesCantidad"
-  (categoriaSeleccionada)="selectCategory($event)"
-  (marcaSeleccionada)="filtrarPorMarca($event)"
-  (presentacionSeleccionada)="filtrarPorPresentacion(+($event))">
->
-</app-side-menu>
-
+    [categorias]="categorias"
+    [marcas]="marcasCantidad"
+    [presentaciones]="presentacionesCantidad"
+    (categoriaSeleccionada)="manejarSeleccionCategoria($event)"
+    (marcaSeleccionada)="manejarFiltroMarca($event)"
+    (presentacionSeleccionada)="manejarFiltroPresentacion($event ? +$event : null)"
+  ></app-side-menu>
 
   <div class="licores-content">
-    <!-- Header Image and Title -->
     <div class="licores-header">
       <img [src]="'assets/images/imagenLicores.jpg'" alt="Licor" class="header-image">
     </div>
 
-    <!-- Filtros y Opciones de Ordenamiento -->
     <app-filtros-componente
-    [marcas]="marcas"
+      [marcas]="marcas"
       [presentaciones]="presentaciones"
       [productosTotal]="productos.length"
       [productosPorPagina]="productosPorPagina"
-      (filtrarPorMarca)="filtrarPorMarca($event)"
-      (filtrarPorPresentacion)="filtrarPorPresentacion($event)"
-      (cambiarProductosPorPagina)="productosPorPagina = $event"
+      (filtrarPorMarca)="manejarFiltroMarca($event)"
+      (filtrarPorPresentacion)="manejarFiltroPresentacion($event)"
     ></app-filtros-componente>
-
 
     <div *ngIf="productos.length === 0" class="no-products-message">
       No hay productos disponibles para los filtros seleccionados.
     </div>
 
-    <!-- Products List -->
     <app-product-list
-    [productos]="productosPaginados"
-    >
-  </app-product-list>
+      [productos]="productosPaginados"
+      
+    ></app-product-list>
 
-
-    <!-- Paginación -->
     <app-paginacion
-    [paginaActual]="paginaActual"
-    [totalPaginas]="totalPaginas"
-    (cambiarPagina)="cambiarPagina($event)">
-  </app-paginacion>
-
-
+      [paginaActual]="paginaActual"
+      [totalPaginas]="totalPaginas"
+      (cambiarPagina)="cambiarPagina($event)"
+    ></app-paginacion>
   </div>
 </div>

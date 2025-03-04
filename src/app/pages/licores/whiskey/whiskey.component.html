@@ -3,7 +3,7 @@
     [categorias]="categorias"
     [marcas]="marcasCantidad"
     [presentaciones]="presentacionesCantidad"
-    (categoriaSeleccionada)="selectCategory($event)"
+    (categoriaSeleccionada)="manejarSeleccionCategoria($event)"
     (marcaSeleccionada)="manejarFiltroMarca($event)"
     (presentacionSeleccionada)="manejarFiltroPresentacion($event ? +$event : null)"
   ></app-side-menu>

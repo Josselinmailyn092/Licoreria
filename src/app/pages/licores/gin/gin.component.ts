@@ -1,217 +1,200 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoGinService } from '../../../services/productoGin.service';
-import { ProductoService } from '../../../services/producto.service';
-import { ActivatedRoute,Router } from '@angular/router';
 import { Producto } from '../../../models/licores.models';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../../services/carrito.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { CategoriaService } from '../../../services/categoria.service';
+import { ProductosService } from '../../../services/productos.service';
+import { PresentacionService } from '../../../services/presentacion.service';
+import { MarcasService } from '../../../services/marcas.service';
 @Component({
   selector: 'app-gin',
   templateUrl: './gin.component.html',
   styleUrl: './gin.component.css'
 })
 export class GinComponent implements OnInit {
-  selectedCategory: string | null = 'Gin';
-  marcas: any[] = [];
-  marcasCantidad: any[] = [];
-  tiposLicores: any[] = [];
-  categorias: any[] = [];
-  selectedCategoria: string | null = null;
-  presentaciones: any[] = [];
-  presentacionesCantidad: any[] = [];
-  productos: Producto[] = [];
-  productosOriginales: Producto[] = [];
-  productosPaginados: Producto[] = [];
-  productosPorPagina: number = 8;
-  totalProductos = 100;
-  paginaActual = 1;
-  selectedMarca: string = '';
-  selectedPresentacion: number = 0;
-  isCollapsed: boolean = false;
-  selectedSubMenu: string = 'Gin';
-  carrito: Producto[] = [];
-  url='/uploads';
+    // Variables de estado
+    seleccionarCategoria: string | null = null;
+    seleccionarMarca: string = '';
+    seleccionarPresentacion: number | null = 0;
+    // paginación
+    paginaActual = 1;
+    productosPorPagina: number = 8;
+    // colapsabilidad y navegación
+    isCollapsed: boolean = false;
+    selectedSubMenu: string = 'Licores';  
+    // url base para las imagenes
+    url = '/uploads';
+  
+    // Almacenamiento de datos 
+    marcas: any[] = [];
+    marcasCantidad: any[] = [];
+    categorias: any[] = [];
+    presentaciones: any[] = [];
+    presentacionesCantidad: any[] = [];
+    productos: Producto[] = [];
+    productosOriginales: Producto[] = [];
+    productosPaginados: Producto[] = [];
+    totalProductos = 100;
+    carrito: Producto[] = [];
+    productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
+  
+    constructor(
+      private categoriaService: CategoriaService,
+      private productosService: ProductosService,
+      private presentacionService: PresentacionService,
+      private marcaService: MarcasService,
+      private route: ActivatedRoute,
+      private router: Router,
+      private carritoService: CarritoService,
+      private cdr: ChangeDetectorRef
+      ) {}
 
-constructor(private productoGinService: ProductoGinService,private productoService:ProductoService, private route: ActivatedRoute, private router: Router,private carritoService: CarritoService){}
-
-  ngOnInit(): void {
-
-  this.selectedCategoria = 'Gin'; // Establece la categoría activada por defecto
-  this.filtrarPorCategoria(this.selectedCategoria); // Aplica el filtro por defecto si es necesario
-
-   // Obtener categorias de licores
-   this.productoService.getTiposLicores().subscribe((data) => {
-    this.tiposLicores = data;
-  });
-
-  // Obtener cantidad de las categorias de licores
-  this.productoService.getCategoriasConCantidad().subscribe((data) => {
-    this.categorias = data;
-  });
-
-    // Obtener marcas desde la API
-    this.productoGinService.getMarcasGin().subscribe((data) => {
-      this.marcas = data.map((marca) => marca.nombreMarca); // Indica solo los nombres de las marcas
-    });
-
-    // Contar cantidad de marcas disponibles
-    this.productoGinService.getCountMarcasGin().subscribe((data) => {
-      this.marcasCantidad = data; // Data tendrá el formato [{nombreMarca: 'Macallan', cantidad: 5}, ...]
-    });
-
-    // Obtener productos desde la API
-    this.productoGinService.getAllProductGin().subscribe((data) => {
-      this.productosOriginales = data.map((producto) => ({
+      ngOnInit(): void {
+        this.cargarDatosIniciales();
+        this.configuracionRuta();
+    
+      }
+    
+    private cargarDatosIniciales(): void {
+        forkJoin({
+          categorias: this.categoriaService.obtenerCategorias(),
+          productosPorCategoria: this.categoriaService.obtenerProductosPorCategoria(),
+          marcas: this.marcaService.obtenerMarcasPorCategoria('Gin'),
+          marcasCantidad: this.marcaService.obtenerTotalProductosPorMarcasDeCategoria('Gin'),
+          presentaciones: this.presentacionService.obtenerPresentacionesPorCategoria('Gin'),
+          presentacionesCantidad: this.presentacionService.obtenerTotalProductosPorPresentacionesDeCategoria('Gin'),
+          productos: this.productosService.obtenerProductos({ categoria: 'Gin' })
+        }).subscribe({
+          next: (data) => this.procesarDatosCargados(data),
+          error: (err) => this.manejarError(err)
+        });
+      }
+      // Craga de datos iniciales usando forkjoin eficiencia
+      private procesarDatosCargados(data: any): void {
+        this.categorias = data.productosPorCategoria;
+        this.marcas = data.marcas.map((m: any ) => m.nombreMarca);
+        this.marcasCantidad = data.marcasCantidad;
+        this.presentaciones = data.presentaciones.map((p: any) => p.presentacion_ml);
+        this.presentacionesCantidad =  data.presentacionesCantidad.map((p: any) => ({
+          presentacion_ml: p.presentacion_ml,
+          cantidad: p.cantidad
+        }));
+        this.productosOriginales = this.transformarProductos(data.productos);
+        this.productos = [...this.productosOriginales];
+        this.cambiarPagina(1);
+      }
+    // Procesa lo sdatos obtenidos de las peticiones 
+      private transformarProductos(productos: Producto[]): Producto[] {
+        return productos.map(producto => ({
+          ...producto,
+          imagenUrl: `${this.url}/${producto.imagen}`
+        }));
+      }
+    
+    // configuracion de ruta 
+      private configuracionRuta(): void {
+        this.route.url.subscribe((url) => {
+          const subMenu = url[1] ? url[1].path : null;
+          this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Whiskey';
+        });
+      }
+    
+    // DEvuelve solo los productos cuyo nombre inclye el texto buscado
+    private aplicarFiltros(): void {
+      let productosFiltrados = [...this.productosOriginales];
+    
+      if (this.seleccionarCategoria) {
+        productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarCategoria);
+      }
+    
+      if (this.seleccionarMarca) {
+        productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarMarca);
+      }
+    
+      if (this.seleccionarPresentacion) {
+        productosFiltrados = productosFiltrados.filter(producto =>
+          producto.presentaciones.some(p => p.presentacion_ml === this.seleccionarPresentacion)
+        );
+      }
+    
+      this.productos = this.ajustarPresentaciones(productosFiltrados);
+      this.cambiarPagina(1);
+    }
+    
+    // DEvuelve solo los productos cuyo nombre inclye el texto buscado
+    private filtrarPorTexto(productos: Producto[], texto: string): Producto[] {
+      const busqueda = texto.toLowerCase();
+      return productos.filter(producto => 
+        producto.nombre.toLowerCase().includes(busqueda)
+      );
+    }
+    
+    
+    // Filtra presentaciones del producto seleccionado 
+    private ajustarPresentaciones(productos: Producto[]): Producto[] {
+      return productos.map(producto => ({
         ...producto,
-        imagenUrl: `${this.url}/${producto.imagen}`
+        presentaciones: this.seleccionarPresentacion
+          ? producto.presentaciones.filter(p => p.presentacion_ml === this.seleccionarPresentacion)
+          : producto.presentaciones
       }));
-      this.productos = [...this.productosOriginales];
-      this.cambiarPagina(this.paginaActual);
-    });
-
-    // Obtener presentaciones desde la API
-    this.productoGinService.getPresentacionesGin().subscribe((data) => {
-      this.presentaciones = data;
-    });
-
-    // Cantidad de presentaciones disponibles
-    this.productoGinService.getPresentacionesGinCount().subscribe((data) => {
-      this.presentacionesCantidad = data;
-    });
-
-    // Suscribirse a los cambios en la ruta
-    this.route.params.subscribe((params) => {
-      const category = params['category'];
-      if (category) {
-        this.selectedCategoria = this.capitalize(category);
-      }
-    });
-
-    // Suscribirse a la URL para cambiar el submenú
-    this.route.url.subscribe((url) => {
-      const subMenu = url[1] ? url[1].path : null;
-      this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
-    });
-  }
-   // Carrito
-  //  agregarProductoAlCarrito(producto: Producto): void {
-  //   this.carritoService.agregarProducto(producto);
-  // }
-
-  private capitalize(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-
-  selectCategory(nombreCategoria: string): void {
-    if (this.selectedCategoria !== nombreCategoria) {
-      this.selectedCategoria = nombreCategoria; // Actualiza la categoría seleccionada
-      this.router.navigate(['/', nombreCategoria.toLowerCase()]); // Navega a la nueva categoría
-    } else if (nombreCategoria === 'Gin') {
-      // Forzar recarga si ya estás en la categoría "Whiskey"
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/', nombreCategoria.toLowerCase()]);
-      });
     }
-  }
-
-
-
-  resetCategory() {
-    this.selectedCategory = null;
-  }
-
-  filtrarPorCategoria(categoria: string | null): void {
-    if (categoria) {
-      this.productos = this.productos.filter((producto) => producto.nombre.includes(categoria));
-    } else {
-      this.productoService.getAllProducts().subscribe((data) => {
-        this.productos = data;
-        this.cambiarPagina(this.paginaActual);
-      });
+    
+    
+    // Manejo de eventos
+    manejarSeleccionCategoria(categoria: string): void {
+      this.seleccionarCategoria= categoria;
+      this.router.navigate(['/', categoria.toLowerCase()]);
+      this.aplicarFiltros();
     }
-  }
-
-  verificarProductosDisponibles(): void {
-    if (this.productos.length === 0) {
-      console.log('No hay productos disponibles para los filtros seleccionados.');
+      manejarFiltroMarca(marca: string): void {
+        this.seleccionarMarca= marca;
+        this.aplicarFiltros();
+      }
+      
+      manejarFiltroPresentacion(presentacion: number | null): void {
+        this.seleccionarPresentacion = presentacion;
+        this.aplicarFiltros();
+      }
+    
+      cambiarPagina(nuevaPagina: number): void {
+        if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
+          this.paginaActual = nuevaPagina;
+          const inicio = (nuevaPagina - 1) * this.productosPorPagina;
+          const fin = inicio + this.productosPorPagina;
+          this.productosPaginados = this.productos.slice(inicio, fin);
+          console.log('Página actual:', this.paginaActual);
+        }
+      }
+      
+    // Actualiza la cantidad de productos por pagina
+    cambiarProductosPorPagina(nuevaCantidad: number) {
+      this.productosPorPagina = nuevaCantidad;
+      this.paginaActual = 1;
+      this.cambiarPagina(1);
     }
-  }
-
-  filtrarPorMarca(marca: string): void {
-    console.log('Marca seleccionada:', marca);
-    this.selectedMarca = marca;
-
-    if (!marca || marca.trim() === '') {
-      if (this.selectedPresentacion) {
-        this.productos = this.productosOriginales.filter(
-          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
-        );
-      } else {
-        this.productos = [...this.productosOriginales];
+      
+      get totalPaginas(): number {
+        return Math.ceil(this.productos.length/ this.productosPorPagina);
       }
-    } else {
-      this.productos = this.productosOriginales.filter((producto) =>
-        producto.nombre.toLowerCase().includes(marca.toLowerCase())
-      );
-
-      if (this.selectedPresentacion) {
-        this.productos = this.productos.filter(
-          (producto) => producto.presentaciones.some(p => p.presentacion_ml === this.selectedPresentacion)
-        );
-      }
+    
+      // maneja errores
+    private manejarError(error: any): void {
+      console.error('Error loading data:', error);
+      // Aquí podrías agregar lógica para mostrar un mensaje al usuario
     }
-
-    this.verificarProductosDisponibles();
-    this.cambiarPagina(1);
-  }
-
-  filtrarPorPresentacion(presentacion: number): void {
-    console.log('Filtrando por presentación:', presentacion);
-    this.selectedPresentacion = presentacion;
-
-    if (!presentacion) {
-      if (this.selectedMarca) {
-        this.productos = this.productosOriginales.filter((producto) =>
-          producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
-        );
-      } else {
-        this.productos = [...this.productosOriginales];
-      }
-    } else {
-      this.productos = this.productosOriginales.filter(
-        (producto) => producto.presentaciones.some(p => p.presentacion_ml === presentacion)
-      );
-
-      if (this.selectedMarca) {
-        this.productos = this.productos.filter((producto) =>
-          producto.nombre.toLowerCase().includes(this.selectedMarca.toLowerCase())
-        );
-      }
+    private capitalize(text: string): string {
+      return text.charAt(0).toUpperCase() + text.slice(1);
     }
-
-    this.verificarProductosDisponibles();
-    this.cambiarPagina(1);
-  }
-
-  get totalPaginas(): number {
-    return Math.ceil(this.totalProductos / this.productosPorPagina);
-  }
-
-  get paginas(): number[] {
-    return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
-  }
-
-  cambiarPagina(nuevaPagina: number): void {
-    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
-      this.paginaActual = nuevaPagina;
-      const inicio = (nuevaPagina - 1) * this.productosPorPagina;
-      const fin = inicio + this.productosPorPagina;
-      this.productosPaginados = this.productos.slice(inicio, fin);
-      console.log('Página actual:', this.paginaActual);
-
-  }
-}}
-
-
-
-
-
+    
+    
+     // Carrito
+      //  agregarProductoAlCarrito(producto: Producto): void {
+      //   this.carritoService.agregarProducto(producto);
+      // }
+    }
+    
+    
+    
