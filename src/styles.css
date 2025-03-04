@@ -1,11 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
-*{
-margin: 0; /* Elimina los márgenes */
-  padding: 0; /* Elimina el padding */
-  border: none; /* Elimina cualquier borde */
-  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+/* styles.scss */
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+:root {
+  --primary-color: #FF5F00;
+  --secondary-color: #2D2D2D;
+  --accent-color: #F8F9FA;
+  --text-dark: #2D2D2D;
+  --text-light: #6C757D;
+  --transition-speed: 0.3s;
 }
-body{
-  font-family: 'Mona Sans', sans-serif;
-  background-color: #F8F5F3; 
+
+/* Estilos base */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--accent-color);
+  color: var(--text-dark);
+}
+
+/* Ajustes generales de NG-ZORRO */
+.ant-layout {
+  background: transparent;
+}
+
+.ant-menu {
+  border-right: none !important;
+}
+
+/* Header image global */
+.licores-header img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }

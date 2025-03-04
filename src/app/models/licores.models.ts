@@ -12,8 +12,23 @@ export interface Producto {
   }[];
   cantidad?: number;
 }
+
 export interface Categoria {
-  id_categoria: number;
-  nombreCategoria: string;
-  tipo: string;
+  Categoria: string;
+  TotalProductos: number;
+}
+
+ export interface Marca {
+  nombreMarca: string;
+  cantidad: number;
+}
+
+ export interface Presentacion {
+  presentacion_ml: number;
+  cantidad: number;
+}
+
+ export interface ProductoConPresentacion {
+  producto: Producto;
+  presentacion: any;
 }

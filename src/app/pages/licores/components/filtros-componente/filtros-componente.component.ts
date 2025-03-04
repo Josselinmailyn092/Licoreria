@@ -6,11 +6,17 @@ import { Producto } from '../../../../models/licores.models';
   styleUrl: './filtros-componente.component.css'
 })
 export class FiltrosComponenteComponent {
+// @Input(): Se utiliza para recibir datos de un componente padre.
+// Array de marcas y presentaciones
   @Input() marcas: string[] = [];
   @Input() presentaciones: number[] = [];
+
+  // numero de productos  y catidad de productos al mostrar por pagina 
   @Input() productosTotal: number = 0;
   @Input() productosPorPagina: number = 8;
 
+// @Output(): Se utiliza para enviar datos o eventos a un componente padre.
+// emite la marca, mililitros, numero de productos por paginas 
   @Output() filtrarPorMarca = new EventEmitter<string>();
   @Output() filtrarPorPresentacion = new EventEmitter<number>();
   @Output() cambiarProductosPorPagina = new EventEmitter<number>();
@@ -19,18 +25,20 @@ export class FiltrosComponenteComponent {
   selectedMarca: string = '';
   selectedPresentacion: any;
 
-  // filtros-componente.component.ts
-onMarcaChange(marca: string) {
+// manejo de cambio de marcas 
+seleccionarMarca(marca: string) {
   this.selectedMarca = marca;
   this.filtrarPorMarca.emit(marca);
 }
 
-onPresentacionChange(presentacion: number ) {
+// manejo de cambiode presentacion de los productos 
+seleccionarPresentacion(presentacion: number ) {
   this.selectedPresentacion = presentacion;
   this.filtrarPorPresentacion.emit(presentacion );
 }
 
-  onProductosPorPaginaChange(value: number) {
+// Manejo de la paginacion 
+productosPagina(value: number) {
     this.cambiarProductosPorPagina.emit(value);
   }
   cambiarFiltro(valor: string) {

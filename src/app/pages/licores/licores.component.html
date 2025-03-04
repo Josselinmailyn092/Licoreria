@@ -25,7 +25,7 @@
       [productosPorPagina]="productosPorPagina"
       (filtrarPorMarca)="filtrarPorMarca($event)"
       (filtrarPorPresentacion)="filtrarPorPresentacion($event)"
-      (cambiarProductosPorPagina)="productosPorPagina = $event"
+     
     ></app-filtros-componente>
 
 
@@ -46,7 +46,8 @@
     <app-paginacion
     [paginaActual]="paginaActual"
     [totalPaginas]="totalPaginas"
-    (cambiarPagina)="cambiarPagina($event)">
+    (cambiarPagina)="cambiarPagina($event)"
+    (cambiarProductosPorPagina)="onProductosPorPaginaChange($event ? +$event : 0)">
   </app-paginacion>
 
 

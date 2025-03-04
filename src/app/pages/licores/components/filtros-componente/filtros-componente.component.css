@@ -2,15 +2,9 @@
 .filters {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
   gap: 15px;
-  padding: 15px;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
-  margin: 20px auto;
 }
 
 /* Estilo individual de cada filtro */
@@ -25,7 +19,7 @@
 
 /* Etiquetas de los filtros */
 .filter-item label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: #444;
 }
@@ -33,7 +27,7 @@
 /* Menús desplegables */
 .custom-select {
   width: 100%;
-  height: 32px;
+  height: 30px;
   padding: 5px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;

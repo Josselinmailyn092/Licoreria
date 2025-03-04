@@ -89,8 +89,16 @@ export class LicoresComponent implements OnInit {
           ...producto,
           imagenUrl: `${this.url}/${producto.imagen}`,
         }));
-        this.productos = [...this.productosOriginales];
-        this.cambiarPagina(this.paginaActual);
+        // Transformar productos en items de presentación
+    this.productosConPresentaciones = this.productosOriginales.flatMap(producto =>
+      producto.presentaciones.map(presentacion => ({
+        producto: { ...producto, presentaciones: [presentacion] }, // Clona el producto con solo esta presentación
+        presentacion: presentacion
+      }))
+    );
+
+    this.productos = [...this.productosConPresentaciones.map(item => item.producto)]; // Usar solo el producto clonado
+    this.cambiarPagina(1);
 
       },
       error: (err) => console.error('Error al obtener productos:', err),
@@ -162,7 +170,6 @@ agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
     this.cambiarPagina(1);
   }
 
-  // licores.component.ts (CORRECCIÓN)
 
   filtrarPorPresentacion(presentacion: number | null): void {
     this.selectedPresentacion = presentacion;
@@ -185,12 +192,17 @@ agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
   }
   get totalPaginas(): number {
     return Math.ceil(this.productos.length / this.productosPorPagina);
-  }
+  } 
 
   get paginas(): number[] {
     return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
   }
 
+  onProductosPorPaginaChange(nuevaCantidad: number) {
+    this.productosPorPagina = nuevaCantidad;
+    this.paginaActual = 1;
+    this.cambiarPagina(1);
+  }
 
 cambiarPagina(nuevaPagina: number) {
   this.paginaActual = nuevaPagina;
@@ -198,4 +210,6 @@ cambiarPagina(nuevaPagina: number) {
   const endIndex = startIndex + this.productosPorPagina;
   this.productosPaginados = this.productos.slice(startIndex, endIndex);
 }
+
+
 }

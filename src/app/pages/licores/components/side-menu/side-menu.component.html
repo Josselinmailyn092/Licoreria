@@ -8,7 +8,7 @@
         <div class="menu-columns">
           <nz-menu-item *ngFor="let categoria of categorias"
                         [ngClass]="{'active': selectedCategoria === categoria.Categoria}"
-                        (click)="selectCategory(categoria.Categoria)"
+                        (click)="seleccionarCategoria(categoria.Categoria)"
                         [routerLink]="['/', categoria.Categoria]">
             <span class="circle-indicator" [ngClass]="{'selected': selectedCategoria === categoria.Categoria}"></span>
             <span class="category-name">{{ categoria.Categoria }}</span>

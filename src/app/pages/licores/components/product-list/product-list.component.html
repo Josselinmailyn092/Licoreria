@@ -2,7 +2,7 @@
   <!-- Itera cada producto -->
   <ng-container *ngFor="let producto of productos">
     <!-- Itera cada presentación del producto -->
-    <div class="product-card" *ngFor="let presentacion of getPresentacionesFiltradas(producto)">
+    <div class="product-card" *ngFor="let presentacion of obtener_Presentaciones_Filtradas(producto)">
       <div class="product-image">
         <img [src]="obtenerImagen(producto.imagen)" [alt]="producto.nombre" />
       </div>
