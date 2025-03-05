@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MarcasService {
   private url = 'http://localhost:3000/marcas'; // Ajusta la URL según tu backend
@@ -22,11 +22,15 @@ export class MarcasService {
 
   // Obtener marcas por categoría
   obtenerMarcasPorCategoria(nombreCategoria: string): Observable<any> {
-    return this.http.get<{nombreMarca: string}[]>(`${this.url}/${nombreCategoria}`);
+    return this.http.get<{ nombreMarca: string }[]>(
+      `${this.url}/${nombreCategoria}`
+    );
   }
 
   // Obtener total de productos por marcas de una categoría
-  obtenerTotalProductosPorMarcasDeCategoria(nombreCategoria: string): Observable<any> {
+  obtenerTotalProductosPorMarcasDeCategoria(
+    nombreCategoria: string
+  ): Observable<any> {
     return this.http.get(`${this.url}/total-marca/${nombreCategoria}`);
   }
 
@@ -42,6 +46,6 @@ export class MarcasService {
 
   // Eliminar una marca
   eliminarMarca(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/`, { body: { id } });
+    return this.http.delete(`${this.url}/${id}`);
   }
 }

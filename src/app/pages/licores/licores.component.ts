@@ -24,11 +24,11 @@ export class LicoresComponent implements OnInit {
   productosPorPagina: number = 8;
   // colapsabilidad y navegación
   isCollapsed: boolean = false;
-  selectedSubMenu: string = 'Licores';  
+  selectedSubMenu: string = 'Licores';
   // url base para las imagenes
   url = '/uploads';
 
-  // Almacenamiento de datos 
+  // Almacenamiento de datos
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   categorias: any[] = [];
@@ -40,8 +40,6 @@ export class LicoresComponent implements OnInit {
   totalProductos = 100;
   carrito: Producto[] = [];
   productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
-
- 
 
   constructor(
     private categoriaService: CategoriaService,
@@ -55,7 +53,6 @@ export class LicoresComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.cargarDatosIniciales();
     this.configuracion_ruta();
   }
@@ -64,19 +61,21 @@ export class LicoresComponent implements OnInit {
   private cargarDatosIniciales(): void {
     forkJoin({
       categorias: this.categoriaService.obtenerCategorias(),
-      productosPorCategoria: this.categoriaService.obtenerProductosPorCategoria(),
+      productosPorCategoria:
+        this.categoriaService.obtenerProductosPorCategoria(),
       marcas: this.marcaService.obtenerMarcas(),
       marcasCantidad: this.marcaService.obtenerTotalProductosPorMarcas(),
       presentaciones: this.presentacionService.getTodasPresentaciones(),
-      presentacionesCantidad: this.presentacionService.getCantidadTodasPresentaciones(),
+      presentacionesCantidad:
+        this.presentacionService.getCantidadTodasPresentaciones(),
       productos: this.productosService.obtenerProductos(),
     }).subscribe({
       next: (data) => this.procesarDatosCargados(data),
-      error: (err) => this.manejarError(err)
+      error: (err) => this.manejarError(err),
     });
   }
 
-// Procesa lo sdatos obtenidos de las peticiones
+  // Procesa lo sdatos obtenidos de las peticiones
   private procesarDatosCargados(data: any): void {
     this.categorias = data.productosPorCategoria;
     this.marcas = data.marcas;
@@ -88,118 +87,122 @@ export class LicoresComponent implements OnInit {
     this.cambiarPagina(1);
   }
 
-// agregar la url de las imagen
-private transformarProductos(productos: Producto[]): Producto[] {
-  return productos.map(producto => ({
-    ...producto,
-    imagenUrl: `${this.url}/${producto.imagen}`
-  }));
-}
-
-// configuracion de ruta 
-private configuracion_ruta(): void{
-  this.route.url.subscribe((url) => {
-    const subMenu = url[1] ? url[1].path : null;
-    this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
-  });
-}
-
-
-// Manejo de filtros en categorias, marca y presentación
-private aplicarFiltros(): void {
-  let productosFiltrados = [...this.productosOriginales];
-
-  if (this.seleccionarCategoria) {
-    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarCategoria);
+  // agregar la url de las imagen
+  private transformarProductos(productos: Producto[]): Producto[] {
+    return productos.map((producto) => ({
+      ...producto,
+      imagenUrl: `${this.url}/${producto.imagen}`,
+    }));
   }
 
-  if (this.seleccionarMarca) {
-    productosFiltrados = this.filtrarPorTexto(productosFiltrados, this.seleccionarMarca);
+  // configuracion de ruta
+  private configuracion_ruta(): void {
+    this.route.url.subscribe((url) => {
+      const subMenu = url[1] ? url[1].path : null;
+      this.selectedSubMenu = subMenu ? this.capitalize(subMenu) : 'Licores';
+    });
   }
 
-  if (this.seleccionarPresentacion) {
-    productosFiltrados = productosFiltrados.filter(producto =>
-      producto.presentaciones.some(p => p.presentacion_ml === this.seleccionarPresentacion)
+  // Manejo de filtros en categorias, marca y presentación
+  private aplicarFiltros(): void {
+    let productosFiltrados = [...this.productosOriginales];
+
+    if (this.seleccionarCategoria) {
+      productosFiltrados = this.filtrarPorTexto(
+        productosFiltrados,
+        this.seleccionarCategoria
+      );
+    }
+
+    if (this.seleccionarMarca) {
+      productosFiltrados = this.filtrarPorTexto(
+        productosFiltrados,
+        this.seleccionarMarca
+      );
+    }
+
+    if (this.seleccionarPresentacion) {
+      productosFiltrados = productosFiltrados.filter((producto) =>
+        producto.presentaciones.some(
+          (p) => p.presentacion_ml === this.seleccionarPresentacion
+        )
+      );
+    }
+
+    this.productos = this.ajustarPresentaciones(productosFiltrados);
+    this.cambiarPagina(1);
+  }
+
+  // DEvuelve solo los productos cuyo nombre inclye el texto buscado
+  private filtrarPorTexto(productos: Producto[], texto: string): Producto[] {
+    const busqueda = texto.toLowerCase();
+    return productos.filter((producto) =>
+      producto.nombre.toLowerCase().includes(busqueda)
     );
   }
 
-  this.productos = this.ajustarPresentaciones(productosFiltrados);
-  this.cambiarPagina(1);
-}
+  // Filtra presentaciones del producto seleccionado
+  private ajustarPresentaciones(productos: Producto[]): Producto[] {
+    return productos.map((producto) => ({
+      ...producto,
+      presentaciones: this.seleccionarPresentacion
+        ? producto.presentaciones.filter(
+            (p) => p.presentacion_ml === this.seleccionarPresentacion
+          )
+        : producto.presentaciones,
+    }));
+  }
 
+  // Manejo de eventos
+  manejarSeleccionCategoria(categoria: string): void {
+    this.seleccionarCategoria = categoria;
+    this.router.navigate(['/', categoria.toLowerCase()]);
+    this.aplicarFiltros();
+  }
 
-// DEvuelve solo los productos cuyo nombre inclye el texto buscado
-private filtrarPorTexto(productos: Producto[], texto: string): Producto[] {
-  const busqueda = texto.toLowerCase();
-  return productos.filter(producto => 
-    producto.nombre.toLowerCase().includes(busqueda)
-  );
-}
+  manejarFiltroMarca(marca: string): void {
+    this.seleccionarMarca = marca;
+    this.aplicarFiltros();
+  }
 
+  manejarFiltroPresentacion(presentacion: number | null): void {
+    this.seleccionarPresentacion = presentacion;
+    this.aplicarFiltros();
+  }
 
-// Filtra presentaciones del producto seleccionado 
-private ajustarPresentaciones(productos: Producto[]): Producto[] {
-  return productos.map(producto => ({
-    ...producto,
-    presentaciones: this.seleccionarPresentacion
-      ? producto.presentaciones.filter(p => p.presentacion_ml === this.seleccionarPresentacion)
-      : producto.presentaciones
-  }));
-}
-
-
-// Manejo de eventos
-manejarSeleccionCategoria(categoria: string): void {
-  this.seleccionarCategoria= categoria;
-  this.router.navigate(['/', categoria.toLowerCase()]);
-  this.aplicarFiltros();
-}
-
-manejarFiltroMarca(marca: string): void {
-  this.seleccionarMarca= marca;
-  this.aplicarFiltros();
-}
-
-manejarFiltroPresentacion(presentacion: number | null): void {
-  this.seleccionarPresentacion= presentacion;
-  this.aplicarFiltros();
-}
-
-
-// Actualiza la cantidad de productos por pagina
-cambiarProductosPorPagina(nuevaCantidad: number) {
+  // Actualiza la cantidad de productos por pagina
+  cambiarProductosPorPagina(nuevaCantidad: number) {
     this.productosPorPagina = nuevaCantidad;
     this.paginaActual = 1;
     this.cambiarPagina(1);
   }
 
   // cambiar pagina
-cambiarPagina(nuevaPagina: number) {
-  this.paginaActual = nuevaPagina;
-  const inicio = (this.paginaActual - 1) * this.productosPorPagina;
-  const fin = inicio + this.productosPorPagina;
-  this.productosPaginados = this.productos.slice(inicio, fin);
-}
- 
-// Calcula cuantas paginas hay en total dividiendiendo la cantidad de productos ente productosPorPaginas
-get totalPaginas(): number {
-  return Math.ceil(this.productos.length / this.productosPorPagina);
-} 
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+    const inicio = (this.paginaActual - 1) * this.productosPorPagina;
+    const fin = inicio + this.productosPorPagina;
+    this.productosPaginados = this.productos.slice(inicio, fin);
+  }
 
-// maneja errores
-private manejarError(error: any): void {
-  console.error('Error loading data:', error);
-  // Aquí podrías agregar lógica para mostrar un mensaje al usuario
-}
+  // Calcula cuantas paginas hay en total dividiendiendo la cantidad de productos ente productosPorPaginas
+  get totalPaginas(): number {
+    return Math.ceil(this.productos.length / this.productosPorPagina);
+  }
 
-// Conviete la primera letra en mayúscula
+  // maneja errores
+  private manejarError(error: any): void {
+    console.error('Error loading data:', error);
+    // Aquí podrías agregar lógica para mostrar un mensaje al usuario
+  }
+
+  // Conviete la primera letra en mayúscula
   private capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-// Carrito
-agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
-  this.carritoService.agregarProducto(evento.producto, evento.presentacion); 
-}
-
+  // Carrito
+  agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
+    this.carritoService.agregarProducto(evento.producto, evento.presentacion);
+  }
 }

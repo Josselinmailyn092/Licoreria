@@ -11,7 +11,11 @@ export class ProductoService {
 
   constructor(private http: HttpClient) {}
 
-  getProductos(categoria?: string, marca?: string, presentacion?: number): Observable<Producto[]> {
+  getProductos(
+    categoria?: string,
+    marca?: string,
+    presentacion?: number
+  ): Observable<Producto[]> {
     const params: any = {};
     if (categoria) params.categoria = categoria;
     if (marca) params.marca = marca;
@@ -22,41 +26,43 @@ export class ProductoService {
 
   //Muestra todos los productos de la bd
   //endpoint final http://localhost:3000/producto/All.
-  getAllProducts():Observable<any[]>{
-    return this.http.get<any[]>(`${this.apiUrl}/All`)
+  getAllProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/All`);
   }
-  
+
   getTiposLicores(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/categoria/tipos-licores');
-  }
-  
-
-// Método para obtener marcas desde ls API 
-  getMarcas(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:3000/marca')
+    return this.http.get<any[]>(
+      'http://localhost:3000/categoria/tipos-licores'
+    );
   }
 
-// Obtener as presentaciones desde la API 
-  getPresentaciones(): Observable<number[]>{
-    return this.http.get<number[]>(`${this.apiUrl}/presentaciones`)
+  // Método para obtener marcas desde ls API
+  getMarcas(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/marca');
   }
-// Contar presentaciones disponibles 
-getPresentacionesConCantidad(): Observable<any[]> {
-  return this.http.get<any[]>('http://localhost:3000/producto/presentaciones-cantidad');
-}
+
+  // Obtener as presentaciones desde la API
+  getPresentaciones(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/presentaciones`);
+  }
+  // Contar presentaciones disponibles
+  getPresentacionesConCantidad(): Observable<any[]> {
+    return this.http.get<any[]>(
+      'http://localhost:3000/producto/presentaciones-cantidad'
+    );
+  }
 
   //contar el numero de cada una de las marcas disponibles
   getCountMarcas(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/marca/count');
   }
- 
 
-  // api contar tipo de licores 
+  // api contar tipo de licores
   getCategoriasConCantidad(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/categoria/categorias-cantidad');
+    return this.http.get<any[]>(
+      'http://localhost:3000/categoria/categorias-cantidad'
+    );
   }
-  
-
 
   addProducto(producto: Producto): Observable<any> {
     return this.http.post(this.apiUrl, producto);
@@ -65,8 +71,8 @@ getPresentacionesConCantidad(): Observable<any[]> {
   deleteProducto(id_producto: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id_producto}`);
   }
-  // Productos destacados 
-  getProductosDestacados(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:3000/producto/destacados')
+  // Productos destacados
+  getProductosDestacados(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/producto/destacados');
   }
 }
