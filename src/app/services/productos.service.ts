@@ -27,6 +27,6 @@ export class ProductosService {
   }
 
   eliminarProducto(id: number): Observable<any> {
-    return this.http.request<any>('delete', this.apiUrl, { body: { id } });
+    return this.http.request<any>('delete', this.apiUrl + '/' + id);
   }
 }

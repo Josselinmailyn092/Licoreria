@@ -1,32 +1,54 @@
 <div class="products-grid">
-  <!-- Itera cada producto -->
   <ng-container *ngFor="let producto of productos">
-    <!-- Itera cada presentación del producto -->
-    <div class="product-card" *ngFor="let presentacion of obtener_Presentaciones_Filtradas(producto)">
+    <div class="product-card">
       <div class="product-image">
         <img [src]="obtenerImagen(producto.imagen)" [alt]="producto.nombre" />
       </div>
+      <h3>{{ producto.nombre }}</h3>
       <div class="product-details">
-        <h3>{{ producto.nombre }}</h3>
-        <p>{{ presentacion.presentacion_ml }} ml</p>
-        <div class="price">
-          <span class="old-price" *ngIf="presentacion.precio > 10">
-            ${{ presentacion.precio | number: "1.2-2" }}
-          </span>
-          <span class="discount-price">
-            ${{
-              presentacion.precio * (1 - presentacion.descuento) | number: "1.2-2"
-            }}
-          </span>
+        <div>
+          <ul>
+            <li *ngFor="let presentacion of producto.presentaciones">
+              <button (click)="seleccionarPresentacion(presentacion, producto)">
+                {{ presentacion.presentacion_ml }} ml
+              </button>
+            </li>
+          </ul>
+
+          <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
+          <div *ngIf="producto.presentacionSeleccionada">
+            <div class="price">
+              <span
+                class="old-price"
+                *ngIf="producto.presentacionSeleccionada.precio > 10"
+              >
+                ${{
+                  producto.presentacionSeleccionada.precio | number : "1.2-2"
+                }}
+              </span>
+              <span class="discount-price">
+                ${{
+                  producto.presentacionSeleccionada.precio *
+                    (1 - producto.presentacionSeleccionada.descuento)
+                    | number : "1.2-2"
+                }}
+              </span>
+            </div>
+            <button
+              nz-button
+              nzType="primary"
+              class="boton-comprar"
+              (click)="
+                agregarProductoAlCarrito(
+                  producto,
+                  producto.presentacionSeleccionada
+                )
+              "
+            >
+              Comprar
+            </button>
+          </div>
         </div>
-        <button
-          nz-button
-          nzType="primary"
-          class="boton-comprar"
-          (click)="agregarProductoAlCarrito(producto, presentacion)"
-        >
-          Comprar
-        </button>
       </div>
     </div>
   </ng-container>

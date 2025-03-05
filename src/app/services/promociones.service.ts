@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PromocionesService {
-  private apiUrl = 'http://localhost:3000/promociones';  
-constructor(private http:HttpClient) { }
+  private url = 'http://localhost:3000/promociones';
+  constructor(private http: HttpClient) {}
 
-getPromociones(): Observable<any> {
-  return this.http.get<any[]>(`${this.apiUrl}`);
-}
-getPromocionDestacada(): Observable<any> {
-  return this.http.get(`${this.apiUrl}/Destacada`);
-}
+  getPromociones(): Observable<any> {
+    return this.http.get<any[]>(`${this.url}`);
+  }
+  getPromocionDestacada(): Observable<any> {
+    return this.http.get(`${this.url}`, { params: { esDestacado: true } });
+  }
 
+  eliminarPromocion(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }
