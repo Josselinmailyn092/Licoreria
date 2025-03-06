@@ -43,8 +43,9 @@ export class ProductListComponent implements OnChanges {
       ...productoSinSeleccionada,
       presentaciones: presentacion,
     };
-    this.agregarAlCarrito.emit({ producto: productoCarrito });
-    console.log(productoCarrito);
+    this.agregarAlCarrito.emit({
+      producto: productoCarrito,
+    });
   }
 
   // Seleccionar una presentación para un producto

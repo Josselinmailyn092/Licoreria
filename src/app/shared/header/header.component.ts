@@ -7,7 +7,6 @@ import { LinkService } from '../../services/link.service';
 import { SubmenuService } from '../../services/submenu.service';
 import { CarritoService } from '../../services/carrito.service';
 
-
 // Estructura de la interfaz link
 interface Link {
   path: string;
@@ -18,13 +17,13 @@ interface Link {
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'] // Corrección aquí
+  styleUrls: ['./header.component.css'], // Corrección aquí
 })
 export class HeaderComponent implements OnInit {
   imagenLogo: string = 'assets/images/logo-chinito.jpg';
   // Exportar clase
   links: Link[] = [];
-// Indica si el menu esta abierto o cerrado
+  // Indica si el menu esta abierto o cerrado
   isMenuOpen: boolean = false;
 
   // Modal de búsqueda
@@ -38,19 +37,18 @@ export class HeaderComponent implements OnInit {
   // Método ngOnInit se ejecuta al inicializar el componente.
   //  Carrito
 
-isCarritoVisible: boolean = false; // Controla la visibilidad del modal
-carrito: Producto[] = [];
-total:number=0;
+  isCarritoVisible: boolean = false; // Controla la visibilidad del modal
+  carrito: Producto[] = [];
+  total: number = 0;
 
   constructor(
     private linkService: LinkService,
     private router: Router,
     private subMenu: SubmenuService,
-    private carritoService : CarritoService
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit(): void {
-
     // Obtener los enlaces desde el servicio
     this.links = this.linkService.getLinks();
 
@@ -59,13 +57,16 @@ total:number=0;
     this.menuItems = this.subMenu.geSubMenuItems();
     this.carritoService.carrito$.subscribe((productos) => {
       this.carrito = productos;
-      this.total = productos.reduce((total, producto) => total + producto.presentaciones[0].precio * (producto.cantidad ?? 0), 0);
+      this.total = productos.reduce(
+        (total, producto) =>
+          total + producto.presentaciones[0].precio * (producto.cantidad ?? 0),
+        0
+      );
     });
 
     this.carritoService.total$.subscribe((total) => {
       this.total = total;
     });
-
   }
 
   // Método para abrir/cerrar el modal de búsqueda
@@ -85,52 +86,53 @@ total:number=0;
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-
-    closeMenuAndNavigate(path: string): void {
-      this.isMenuOpen = false;
-      this.router.navigate([path]);
-
+  closeMenuAndNavigate(path: string): void {
+    this.isMenuOpen = false;
+    this.router.navigate([path]);
   }
 
+  // Carrito
+  agregarProducto(evento: { producto: Producto }) {
+    this.carritoService.agregarProducto(evento.producto);
+  }
 
-// Carrito
-agregarProducto (evento: { producto: Producto; presentacion: any }) {
-  this.carritoService.agregarProducto(evento.producto, evento.presentacion);
-}
+  disminuirCantidad(producto: Producto): void {
+    this.carritoService.disminuirCantidad(producto);
+  }
 
-disminuirCantidad(producto:Producto):void{
-  this.carritoService.disminuirCantidad(producto);
-}
+  eliminarProducto(productoId: number): void {
+    this.carritoService.eliminarProducto(productoId);
+  }
 
-eliminarProducto(productoId: number): void {
-  this.carritoService.eliminarProducto(productoId);
-}
+  abrirCarrito(): void {
+    this.isCarritoVisible = true;
+  }
 
-abrirCarrito(): void {
-  this.isCarritoVisible = true;
-}
+  cerrarCarrito(): void {
+    this.isCarritoVisible = false;
+  }
 
-cerrarCarrito(): void {
-  this.isCarritoVisible = false;
-}
+  enviarPedidoPorWhatsApp(): void {
+    const numeroWhatsApp = '593939380666';
+    const saludo = 'Hola buenas tardes me gustaría realizar un pedido:';
+    const mensaje = this.carrito
+      .map(
+        (producto) =>
+          `${producto.nombre} (${
+            producto.presentaciones[0].presentacion_ml
+          } ml) - $${(producto.presentaciones[0].precio * 0.9).toFixed(2)}`
+      )
+      .join('\n');
 
+    const textoCompleto = `${saludo}\n${mensaje}`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
+      textoCompleto
+    )}`;
 
-enviarPedidoPorWhatsApp(): void {
-  const numeroWhatsApp = '593939380666';
-  const saludo = "Hola buenas tardes me gustaría realizar un pedido:";
-  const mensaje = this.carrito.map(producto =>
-    `${producto.nombre} (${producto.presentaciones[0].presentacion_ml} ml) - $${(producto.presentaciones[0].precio * 0.9).toFixed(2)}`
-  ).join('\n');
+    window.open(url, '_blank');
+  }
 
-  const textoCompleto = `${saludo}\n${mensaje}`;
-  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoCompleto)}`;
-
-  window.open(url, '_blank');
-}
-
-limpiarCarrito(): void {
-  this.carritoService.limpiarCarrito();
-}
-
-
+  limpiarCarrito(): void {
+    this.carritoService.limpiarCarrito();
+  }
 }

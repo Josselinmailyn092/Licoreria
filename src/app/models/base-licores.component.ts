@@ -12,7 +12,7 @@ import { MarcasService } from '../services/marcas.service';
 
 @Component({
   selector: 'app-base-licores',
-  template: ''
+  template: '',
 })
 export abstract class BaseLicoresComponent implements OnInit {
   // Propiedad abstracta que debe implementar cada componente hijo
@@ -22,11 +22,11 @@ export abstract class BaseLicoresComponent implements OnInit {
   seleccionarCategoria: string | null = null;
   seleccionarMarca: string = '';
   seleccionarPresentacion: number | null = null;
-   // paginación
+  // paginación
   paginaActual = 1;
   productosPorPagina: number = 8;
   selectedSubMenu: string = 'Licores';
-   // url base para las imagenes
+  // url base para las imagenes
   url = '/uploads';
 
   // Datos comunes Almacenamiento de datos
@@ -39,9 +39,8 @@ export abstract class BaseLicoresComponent implements OnInit {
   productosOriginales: Producto[] = [];
   productosPaginados: Producto[] = [];
   totalProductos = 100;
-   carrito: Producto[] = [];
-   productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
-
+  carrito: Producto[] = [];
+  productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
 
   constructor(
     protected categoriaService: CategoriaService,
@@ -59,19 +58,31 @@ export abstract class BaseLicoresComponent implements OnInit {
     this.configurarRuta();
   }
 
-    // Craga de datos iniciales usando forkjoin eficiencia
+  // Craga de datos iniciales usando forkjoin eficiencia
   protected cargarDatosIniciales(): void {
     forkJoin({
       categorias: this.categoriaService.obtenerCategorias(),
-      productosPorCategoria: this.categoriaService.obtenerProductosPorCategoria(),
+      productosPorCategoria:
+        this.categoriaService.obtenerProductosPorCategoria(),
       marcas: this.marcaService.obtenerMarcasPorCategoria(this.categoria),
-      marcasCantidad: this.marcaService.obtenerTotalProductosPorMarcasDeCategoria(this.categoria),
-      presentaciones: this.presentacionService.obtenerPresentacionesPorCategoria(this.categoria),
-      presentacionesCantidad: this.presentacionService.obtenerTotalProductosPorPresentacionesDeCategoria(this.categoria),
-      productos: this.productosService.obtenerProductos({ categoria: this.categoria })
+      marcasCantidad:
+        this.marcaService.obtenerTotalProductosPorMarcasDeCategoria(
+          this.categoria
+        ),
+      presentaciones:
+        this.presentacionService.obtenerPresentacionesPorCategoria(
+          this.categoria
+        ),
+      presentacionesCantidad:
+        this.presentacionService.obtenerTotalProductosPorPresentacionesDeCategoria(
+          this.categoria
+        ),
+      productos: this.productosService.obtenerProductos({
+        categoria: this.categoria,
+      }),
     }).subscribe({
       next: (data) => this.procesarDatosCargados(data),
-      error: (err) => this.manejarError(err)
+      error: (err) => this.manejarError(err),
     });
   }
 
@@ -89,9 +100,9 @@ export abstract class BaseLicoresComponent implements OnInit {
 
   // Transforma los productos para agregar la url de la imagen
   protected transformarProductos(productos: Producto[]): Producto[] {
-    return productos.map(producto => ({
+    return productos.map((producto) => ({
       ...producto,
-      imagenUrl: `${this.url}/${producto.imagen}`
+      imagenUrl: `${this.url}/${producto.imagen}`,
     }));
   }
 
@@ -99,7 +110,9 @@ export abstract class BaseLicoresComponent implements OnInit {
   protected configurarRuta(): void {
     this.route.url.subscribe((url) => {
       const subMenu = url[1]?.path;
-      this.selectedSubMenu = subMenu ? this.capitalizar(subMenu) : this.categoria;
+      this.selectedSubMenu = subMenu
+        ? this.capitalizar(subMenu)
+        : this.categoria;
     });
   }
 
@@ -107,34 +120,57 @@ export abstract class BaseLicoresComponent implements OnInit {
   protected aplicarFiltros(): void {
     let productosFiltrados = [...this.productosOriginales];
 
-    productosFiltrados = this.aplicarFiltroTexto(productosFiltrados, 'categoria', this.seleccionarCategoria);
-    productosFiltrados = this.aplicarFiltroTexto(productosFiltrados, 'marca', this.seleccionarMarca);
+    productosFiltrados = this.aplicarFiltroTexto(
+      productosFiltrados,
+      'categoria',
+      this.seleccionarCategoria
+    );
+    productosFiltrados = this.aplicarFiltroTexto(
+      productosFiltrados,
+      'marca',
+      this.seleccionarMarca
+    );
     productosFiltrados = this.aplicarFiltroPresentacion(productosFiltrados);
 
     this.productos = this.ajustarPresentaciones(productosFiltrados);
     this.cambiarPagina(1);
   }
 
-// DEvuelve solo los productos cuyo nombre inclye el texto buscado
-  private aplicarFiltroTexto(productos: Producto[], tipo: string, valor: string | null): Producto[] {
+  // DEvuelve solo los productos cuyo nombre inclye el texto buscado
+  private aplicarFiltroTexto(
+    productos: Producto[],
+    tipo: string,
+    valor: string | null
+  ): Producto[] {
     return valor
-      ? productos.filter(p => p[tipo as keyof Producto]?.toString().toLowerCase().includes(valor.toLowerCase()))
+      ? productos.filter((p) =>
+          p[tipo as keyof Producto]
+            ?.toString()
+            .toLowerCase()
+            .includes(valor.toLowerCase())
+        )
       : productos;
   }
 
   private aplicarFiltroPresentacion(productos: Producto[]): Producto[] {
     return this.seleccionarPresentacion
-      ? productos.filter(p => p.presentaciones.some(pr => pr.presentacion_ml === this.seleccionarPresentacion))
+      ? productos.filter((p) =>
+          p.presentaciones.some(
+            (pr) => pr.presentacion_ml === this.seleccionarPresentacion
+          )
+        )
       : productos;
   }
 
-// Filtra presentaciones del producto seleccionado
+  // Filtra presentaciones del producto seleccionado
   private ajustarPresentaciones(productos: Producto[]): Producto[] {
-    return productos.map(producto => ({
+    return productos.map((producto) => ({
       ...producto,
       presentaciones: this.seleccionarPresentacion
-        ? producto.presentaciones.filter(p => p.presentacion_ml === this.seleccionarPresentacion)
-        : producto.presentaciones
+        ? producto.presentaciones.filter(
+            (p) => p.presentacion_ml === this.seleccionarPresentacion
+          )
+        : producto.presentaciones,
     }));
   }
 
@@ -156,7 +192,7 @@ export abstract class BaseLicoresComponent implements OnInit {
   }
 
   // Paginación
-// Actualiza la cantidad de productos por pagina
+  // Actualiza la cantidad de productos por pagina
   cambiarPagina(nuevaPagina: number): void {
     if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
       this.paginaActual = nuevaPagina;
@@ -188,7 +224,7 @@ export abstract class BaseLicoresComponent implements OnInit {
   }
 
   // Método para el carrito
-  agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }): void {
-    this.carritoService.agregarProducto(evento.producto, evento.presentacion);
+  agregarProductoAlCarrito(evento: { producto: Producto }): void {
+    this.carritoService.agregarProducto(evento.producto);
   }
 }
