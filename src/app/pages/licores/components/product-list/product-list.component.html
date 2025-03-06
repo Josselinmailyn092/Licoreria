@@ -6,48 +6,46 @@
       </div>
       <h3>{{ producto.nombre }}</h3>
       <div class="product-details">
-        <div>
-          <ul>
+        <div class="presentations-list">
+          <ul *ngIf="producto.presentaciones[0].presentacion_ml!=null && producto.presentaciones.length>0">
             <li *ngFor="let presentacion of producto.presentaciones">
-              <button (click)="seleccionarPresentacion(presentacion, producto)">
+              <button
+                [class.selected]="producto.presentacionSeleccionada === presentacion"
+                (click)="seleccionarPresentacion(presentacion, producto)">
                 {{ presentacion.presentacion_ml }} ml
               </button>
             </li>
           </ul>
-
-          <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
-          <div *ngIf="producto.presentacionSeleccionada">
-            <div class="price">
-              <span
-                class="old-price"
-                *ngIf="producto.presentacionSeleccionada.precio > 10"
-              >
-                ${{
-                  producto.presentacionSeleccionada.precio | number : "1.2-2"
-                }}
-              </span>
-              <span class="discount-price">
-                ${{
-                  producto.presentacionSeleccionada.precio *
-                    (1 - producto.presentacionSeleccionada.descuento)
-                    | number : "1.2-2"
-                }}
-              </span>
-            </div>
-            <button
-              nz-button
-              nzType="primary"
-              class="boton-comprar"
-              (click)="
-                agregarProductoAlCarrito(
-                  producto,
-                  producto.presentacionSeleccionada
-                )
-              "
+        </div>
+        <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
+        <div *ngIf="producto.presentacionSeleccionada">
+          <div class="price">
+            <span
+              class="old-price"
+              *ngIf="producto.presentacionSeleccionada.precio > 10"
             >
-              Comprar
-            </button>
+              ${{ producto.presentacionSeleccionada.precio | number : "1.2-2" }}
+            </span>
+            <span class="discount-price">
+              ${{
+                producto.presentacionSeleccionada.precio *
+                  (1 - producto.presentacionSeleccionada.descuento)
+                  | number : "1.2-2"
+              }}
+            </span>
           </div>
+          @if(producto.presentacionSeleccionada.cantidad<1){
+            <p id="not-available">¡No disponible!</p>
+          }@else {
+            <button
+            nz-button
+            nzType="primary"
+            class="boton-comprar"
+            (click)="agregarProductoAlCarrito(producto,producto.presentacionSeleccionada)">
+            Comprar
+          </button>
+          }
+          
         </div>
       </div>
     </div>

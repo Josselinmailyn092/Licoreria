@@ -1,4 +1,4 @@
-import { NgModule ,  CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LicoresRoutingModule } from './licores-routing.module';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
@@ -25,7 +25,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
-import { DoubleLeftOutline,DoubleRightOutline } from '@ant-design/icons-angular/icons';
+import {
+  DoubleLeftOutline,
+  DoubleRightOutline,
+} from '@ant-design/icons-angular/icons';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { FiltrosComponenteComponent } from './components/filtros-componente/filtros-componente.component';
@@ -45,7 +48,7 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     SideMenuComponent,
     ProductListComponent,
     FiltrosComponenteComponent,
-    PaginacionComponent
+    PaginacionComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,7 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     NzSelectModule,
     NzButtonModule,
     NzButtonModule,
-  NzIconModule,
+    NzIconModule,
     FormsModule,
     CommonModule,
     FormsModule,
@@ -74,18 +77,14 @@ const icons: IconDefinition[] = [DoubleLeftOutline, DoubleRightOutline];
     NzIconModule,
     NzButtonModule,
     NzPaginationModule,
-
   ],
   exports: [
     WhiskeyComponent,
     CervezaComponent,
-    GinComponent
-     // Exporta el componente para que sea accesible desde otros módulos
+    GinComponent,
+    // Exporta el componente para que sea accesible desde otros módulos
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] ,
-  providers: [
-    { provide: NZ_ICONS, useValue: icons },
-  ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [{ provide: NZ_ICONS, useValue: icons }],
 })
-export class LicoresModule { }
+export class LicoresModule {}

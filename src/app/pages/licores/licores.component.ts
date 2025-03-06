@@ -202,7 +202,7 @@ export class LicoresComponent implements OnInit {
   }
 
   // Carrito
-  agregarProductoAlCarrito(evento: { producto: Producto; presentacion: any }) {
-    this.carritoService.agregarProducto(evento.producto, evento.presentacion);
+  agregarProductoAlCarrito(evento: { producto: Producto }) {
+    this.carritoService.agregarProducto(evento.producto);
   }
 }
