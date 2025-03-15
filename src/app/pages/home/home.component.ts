@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
-import { ProductoService } from '../../services/producto.service';
+import { CategoriaService } from '../../services/categoria.service';
 import { CarritoService } from '../../services/carrito.service';
 import { Producto } from '../../models/licores.models';
 @Component({
@@ -26,18 +26,18 @@ export class HomeComponent implements OnInit {
   pageSize: number = 4;
   totalPages: number = 0;
   url='http://localhost:3000/uploads';
-  constructor(private carritoService: CarritoService, private productoService: ProductoService, private router: Router) {}
+  constructor(private carritoService: CarritoService, private categoriaService: CategoriaService, private router: Router) {}
 
   ngOnInit() {
     this.loadCategorias();
-    this.loadFeaturedProducts();
+    // this.loadFeaturedProducts();
   }
   // // Carrito
   //  agregarProductoAlCarrito(producto: Producto): void {
   //   this.carritoService.agregarProducto(producto);
   // }
   loadCategorias(): void {
-    this.productoService.getCategoriasConCantidad().subscribe(
+    this.categoriaService. obtenerProductosPorCategoria().subscribe(
       (data) => {
         this.categorias = data.map((item: any) => ({
           name: item.Categoria,
@@ -52,21 +52,21 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  loadFeaturedProducts(): void {
-    this.productoService.getProductosDestacados().subscribe(
-      (data) => {
-        this.featuredProducts = data.map((producto: any) => ({
-          ...producto,
-          imagenUrl: `${this.url}/${producto.imagen}`
-        }));
-        this.totalPages = Math.ceil(this.featuredProducts.length / this.pageSize);
-        this.updatePaginatedProducts();
-      },
-      (error) => {
-        console.error('Error fetching featured products:', error);
-      }
-    );
-  }
+  // loadFeaturedProducts(): void {
+  //   this.productoService.getProductosDestacados().subscribe(
+  //     (data) => {
+  //       this.featuredProducts = data.map((producto: any) => ({
+  //         ...producto,
+  //         imagenUrl: `${this.url}/${producto.imagen}`
+  //       }));
+  //       this.totalPages = Math.ceil(this.featuredProducts.length / this.pageSize);
+  //       this.updatePaginatedProducts();
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching featured products:', error);
+  //     }
+  //   );
+  // }
 
 
   updatePaginatedProducts(): void {
@@ -95,14 +95,14 @@ export class HomeComponent implements OnInit {
 
   getCategoryColor(category: string): string {
     const colors: { [key: string]: string } = {
-      Licores: '#881f06',
-      Whiskey: '#AA2202',
-      Gin: '#FFB164',
-      Brandy: '#D72B00',
-      Cerveza: '#FF8326',
-      Tequila: '#FF4100',
-      Vodka: '#FF5F00',
-      Vinos: '#881F06'
+      Licores: '#FFFFFF',
+      Whiskey: '#FFFFFF',
+      Gin: '#FFFFFF',
+      Brandy: '#FFFFFFF',
+      Cerveza: '#FFFFFF',
+      Tequila:'#FFFFFF',
+      Vodka: '#FFFFFF',
+      Vinos: '#FFFFFF'
     };
     return colors[category] || '#FFFFFF';
   }
