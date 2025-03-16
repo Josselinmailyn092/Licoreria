@@ -105,9 +105,57 @@
 
 
 
+<!-- Productos destacados -->
+<div class="products-container">
+  <h2 class="section-title">DESTACADOS</h2>
+  <div class="carousel-wrapper">
+    <button
+      class="carousel-arrow left"
+      (click)="prevPage()"
+      [disabled]="currentPage === 0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+
+    <div nz-row [nzGutter]="24" class="products-grid">
+      <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6" *ngFor="let product of paginatedProducts">
+        <nz-card class="product-card">
+          <img
+            [src]="product.imagenUrl"
+            [alt]="product.nombreProducto"
+            class="product-image"
+            nz-image
+            nzFallback="assets/placeholder-product.jpg"
+          />
+          <nz-card-meta
+            [nzTitle]="product.nombreProducto"
+            [nzDescription]="product.presentacion_ml + 'ml'"
+          ></nz-card-meta>
+          <div class="product-footer">
+            <span class="price">{{ product.precio | currency }}</span>
+            <button nz-button nzType="primary" class="buy-button">
+              <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+              Añadir
+            </button>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+
+    <button
+      class="carousel-arrow right"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages - 1">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+  </div>
+</div>
 
 
-<div class="container">
+<!-- <div class="container">
   <div class="brand-logo">
     <img [src]="'assets/images/Licores.png'" alt="Licores">
   </div>
@@ -116,53 +164,35 @@
     <span class="category" id="dynamic-text"> #Licores</span>
     <span>...</span>
   </div>
+</div> -->
+
+<!-- slider con productos de marcas -->
+<div class="brands-slider">
+  <div class="slider-track">
+    <div class="slide" *ngFor="let brand of brands">
+      <img
+        [src]="brand.logo"
+        [alt]="brand.name"
+        class="brand-logo"
+        loading="lazy"
+      >
+    </div>
+  </div>
 </div>
 
-<!-- <Productos destacados -->
-  <div class="products-container">
-    <h2 class="title">Productos Destacados</h2>
-    <button
-      class="carousel-arrow carousel-arrow-left"
-      (click)="prevPage()"
-      [disabled]="currentPage === 0"
-    >
-      &#9664;
-    </button>
-    <div nz-row [nzGutter]="16" class="carousel-row">
-      <div nz-col nzSpan="6" *ngFor="let product of paginatedProducts">
-        <nz-card [nzBordered]="false" class="product-card">
-          <img
-            [src]="product.imagenUrl"
-            [alt]="product.nombreProducto"
-            class="product-image"
-          />
-          <nz-card-meta
-            [nzTitle]="product.nombreProducto"
-            [nzDescription]="'$' + product.precio + ' / ' + product.presentacion_ml + 'ml'"
-          ></nz-card-meta>
-          <div class="buy-button-container">
-            <button nz-button nzType="primary" class="buy-button" >Comprar ahora</button>
-          </div>
-        </nz-card>
-      </div>
-    </div>
-    <button
-      class="carousel-arrow carousel-arrow-right"
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages - 1"
-    >
-      &#9654;
-    </button>
+<!-- Sección: Call to Action -->
+<div class="cta-container">
+  <div class="cta-section">
+    <div class="cta-divider"></div>
+    <h2 class="cta-title">¡Ven a visitarnos<br>o haz tu pedido online!</h2>
+    <a href='https://wa.link/iecfyy' target="_blank" rel="noopener noreferrer">
+      <button nz-button nzType="primary" nzSize="large" class="cta-button">
+        <span nz-icon nzType="whatsapp" nzTheme="outline"></span>
+        Contáctanos por WhatsApp
+      </button>
+    </a>
   </div>
-
-    <!-- Sección: Call to Action -->
-    <div class="cta-section">
-      <hr class="cta-divider">
-      <h2>¡Ven a visitarnos o haz tu pedido online!</h2>
-      <a href='https://wa.link/iecfyy' target="_blank" rel="noopener noreferrer">
-        <button nz-button nzType="primary" nzSize="large">Contáctanos</button>
-      </a>
-    </div>
+</div>
 
 
   </div>

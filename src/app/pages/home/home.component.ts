@@ -90,9 +90,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-
-
-
   getCategoryColor(category: string): string {
     const colors: { [key: string]: string } = {
       Licores: '#FFFFFF',
@@ -153,18 +150,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/licores']); // Redirige al componente de licores
   }
 
-  testimonials = [
-    {
-      name: 'Carlos Rodríguez',
-      feedback: 'Excelente atención y productos de calidad. Recomendado.',
-    },
-    {
-      name: 'María López',
-      feedback: 'Las promociones son increíbles, siempre encuentro lo que busco.',
-    },
-    {
-      name: 'Juan Pérez',
-      feedback: 'El mejor lugar para comprar licores en la ciudad.',
-    },
-  ];
+
+brands = [
+  { name: 'Occucaje', logo: 'assets/images/brandy.jpeg' },
+  { name: 'Il Produce Neo', logo: 'assets/images/Gin.png' },
+  { name: 'Old Par', logo: 'assets/images/vino.jpg' },
+  { name: 'Samanoff', logo: 'assets/brands/samanoff.png' },
+  { name: 'Tanguang', logo: 'assets/brands/tanguang.png' },
+  { name: 'Veuve Clicquot', logo: 'assets/brands/veuve-clicquot.png' }
+];
+
+
 }
