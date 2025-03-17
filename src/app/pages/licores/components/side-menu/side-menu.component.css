@@ -46,7 +46,7 @@ app-side-menu {
   font-weight: bold;
   letter-spacing: 0.5px;
   padding: 15px 0;
-  border-bottom: 2px solid var(--primary-color);
+  border-bottom: 2px solid #DFD9D6;
 }
 
 .menu-title, .menu-titleMarca, .menu-titlePresentacion{
@@ -126,11 +126,11 @@ nz-menu-item.active {
 }
 .item-count {
   background: rgba(255, 95, 0, 0.1);
-  color: var(--primary-color);
+  color: #0000;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .item-count.custom-select{
   background-color: #ff5f00; /* Color de fondo del círculo activo */

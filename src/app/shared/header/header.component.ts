@@ -13,6 +13,20 @@ interface Link {
   label: string;
   subMenu?: Link[];
 }
+interface Slide {
+  image: string;
+  title: string;
+  description: string;
+  buttonText: string;
+}
+
+interface Category {
+  image: string;
+  name: string;
+  products: number;
+  route: string;
+}
+
 
 @Component({
   selector: 'app-header',
@@ -20,26 +34,51 @@ interface Link {
   styleUrls: ['./header.component.css'], // Corrección aquí
 })
 export class HeaderComponent implements OnInit {
+  // Propiedades existentes
   imagenLogo: string = 'assets/images/logo-chinito.jpg';
-  // Exportar clase
   links: Link[] = [];
-  // Indica si el menu esta abierto o cerrado
   isMenuOpen: boolean = false;
-
-  // Modal de búsqueda
   ModalBuscar: boolean = false;
-  menuItems: any[] = []; // Aquí almacenaremos los items del menú principal con submenús
-
-  // Caena de texto para busqueda
+  menuItems: any[] = [];
   search: string = '';
   isSideMenuOpen = false;
-
-  // Método ngOnInit se ejecuta al inicializar el componente.
-  //  Carrito
-
-  isCarritoVisible: boolean = false; // Controla la visibilidad del modal
+  isCarritoVisible: boolean = false;
   carrito: Producto[] = [];
   total: number = 0;
+
+  // Nuevas propiedades requeridas por el template
+  showWhatsAppPopup: boolean = false;
+  slides: Slide[] = [
+    {
+      image: 'assets/images/slide2.jpg',
+      title: '¡Bienvenido a Licorería El Chinito!',
+      description: 'Descubre nuestra selección de licores de alta calidad.',
+      buttonText: 'Ver Ofertas'
+    },
+    {
+      image: 'assets/images/slide3.jpg',
+      title: 'Toda la web -10% de descuento',
+      description: 'Aprovecha esta oferta exclusiva.',
+      buttonText: 'Ir a Licorería'
+    }
+  ];
+
+  categories: Category[] = [
+    {
+      image: 'assets/images/whisky-cat.jpg',
+      name: 'Whiskies',
+      products: 45,
+      route: '/whiskies'
+    },
+    {
+      image: 'assets/images/vino-cat.jpg',
+      name: 'Vinos',
+      products: 32,
+      route: '/vinos'
+    }
+  ];
+
+  featuredProducts: Producto[] = []; // Agregar datos reales aquí
 
   constructor(
     private linkService: LinkService,
@@ -68,7 +107,24 @@ export class HeaderComponent implements OnInit {
       this.total = total;
     });
   }
+  // Métodos para WhatsApp
+  toggleWhatsAppPopup(event?: boolean): void {
+    if (typeof event !== 'undefined') {
+      this.showWhatsAppPopup = event;
+    } else {
+      this.showWhatsAppPopup = !this.showWhatsAppPopup;
+    }
+  }
+  redirectToWhatsApp(): void {
+    const phone = '593939380666';
+    const message = encodeURIComponent('Hola, necesito información sobre...');
+    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+  }
 
+  // Métodos para navegación
+  navigateToCategory(route: string): void {
+    this.router.navigate([route]);
+  }
   // Método para abrir/cerrar el modal de búsqueda
   toggleSearchModal(): void {
     this.ModalBuscar = !this.ModalBuscar;

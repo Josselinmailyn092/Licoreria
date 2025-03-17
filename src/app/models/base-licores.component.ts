@@ -29,7 +29,7 @@ export abstract class BaseLicoresComponent implements OnInit {
   // url base para las imagenes
   url = '/uploads';
 
-  // Datos comunes Almacenamiento de datos
+  // Datos comunes Almacenamiento
   marcas: any[] = [];
   marcasCantidad: any[] = [];
   categorias: any[] = [];
@@ -61,22 +61,29 @@ export abstract class BaseLicoresComponent implements OnInit {
   // Craga de datos iniciales usando forkjoin eficiencia
   protected cargarDatosIniciales(): void {
     forkJoin({
+      // categorias
       categorias: this.categoriaService.obtenerCategorias(),
+      // categorias cantidad
       productosPorCategoria:
         this.categoriaService.obtenerProductosPorCategoria(),
+        // marcas
       marcas: this.marcaService.obtenerMarcasPorCategoria(this.categoria),
+      // marcas cantidad
       marcasCantidad:
         this.marcaService.obtenerTotalProductosPorMarcasDeCategoria(
           this.categoria
         ),
+        // presentaciones
       presentaciones:
         this.presentacionService.obtenerPresentacionesPorCategoria(
           this.categoria
         ),
+        // presentacion cantidad
       presentacionesCantidad:
         this.presentacionService.obtenerTotalProductosPorPresentacionesDeCategoria(
           this.categoria
         ),
+        // productos
       productos: this.productosService.obtenerProductos({
         categoria: this.categoria,
       }),
@@ -86,7 +93,7 @@ export abstract class BaseLicoresComponent implements OnInit {
     });
   }
 
-  // Procesa lo sdatos obtenidos de las peticiones
+  // Procesa los datos obtenidos de las peticiones
   protected procesarDatosCargados(data: any): void {
     this.categorias = data.productosPorCategoria;
     this.marcas = data.marcas;
@@ -136,7 +143,7 @@ export abstract class BaseLicoresComponent implements OnInit {
     this.cambiarPagina(1);
   }
 
-  // DEvuelve solo los productos cuyo nombre inclye el texto buscado
+  // Devuelve solo los productos cuyo nombre inclye el texto buscado
   private aplicarFiltroTexto(
     productos: Producto[],
     tipo: string,

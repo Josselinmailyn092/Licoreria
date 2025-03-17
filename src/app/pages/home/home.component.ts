@@ -1,113 +1,127 @@
+import { Category } from './../../../../../Dashboard/spirits-inventory-manager/src/app/models/category.model';
+import { ProductosService } from './../../services/productos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
-import { ProductoService } from '../../services/producto.service';
+import { CategoriaService } from '../../services/categoria.service';
 import { CarritoService } from '../../services/carrito.service';
 import { Producto } from '../../models/licores.models';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('categoryCarousel', { static: false }) categoryCarousel!: NzCarouselComponent;
+  @ViewChild('carruselCategorias', { static: false }) carruselCategorias!: NzCarouselComponent;
   animationActive: boolean = false;
-  categories: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
-  currentCategoryIndex: number = 0;
-  categoryText: string = this.categories[this.currentCategoryIndex];
-  private categoryInterval: any;
-
-  chunkedProducts: any[] = [];
-  featuredProducts: any[] = [];
-  showWhatsAppPopup: boolean = false;
+  Category: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
+  indiceCategoriaActual: number = 0;
+  productos: any[] = [];
+  textoCategorias: string = this.Category[this.indiceCategoriaActual];
+  productosAgrupados: any[] = [];
+  productosDestacados: any[] = [];
+  mostrarPopupWhatsApp: boolean = false;
   categorias: any[] = [];
-  paginatedProducts: any[] = [];
-  currentPage: number = 0;
+  productosPaginados: any[] = [];
+  paginaActual: number = 0;
   pageSize: number = 4;
-  totalPages: number = 0;
+  totalPaginas: number = 0;
   url='http://localhost:3000/uploads';
-  constructor(private carritoService: CarritoService, private productoService: ProductoService, private router: Router) {}
+
+  constructor(private carritoService: CarritoService,
+    private categoriaService: CategoriaService,
+    private productosService: ProductosService,
+    private router: Router) {}
 
   ngOnInit() {
-    this.loadCategorias();
-    this.loadFeaturedProducts();
+    this.cargarCategorias();
+    this.CargarProductosDestacados();
   }
   // // Carrito
   //  agregarProductoAlCarrito(producto: Producto): void {
   //   this.carritoService.agregarProducto(producto);
   // }
-  loadCategorias(): void {
-    this.productoService.getCategoriasConCantidad().subscribe(
-      (data) => {
+  // Corregir el método cargarCategorias
+cargarCategorias(): void {
+  this.categoriaService.obtenerProductosPorCategoria().subscribe(
+    (data) => {
         this.categorias = data.map((item: any) => ({
           name: item.Categoria,
           products: item.TotalProductos,
           color: this.getCategoryColor(item.Categoria),
           image: this.getCategoryImage(item.Categoria),
           route: `${item.Categoria.toLowerCase()}`
-        }));
-      },
-      (error) => {
-        console.error('Error fetching categories:', error);
-      }
-    );
+      }));
+      console.log('Categorías cargadas:', this.categorias); // Para debug
+    },
+    (error) => {
+      console.error('Error al cargar categorías:', error);
+    }
+  );
+}
+
+  obtenerImagen(nombreImagen: string): any {
+    return 'http://localhost:3000/uploads/' + nombreImagen;
   }
-  loadFeaturedProducts(): void {
-    this.productoService.getProductosDestacados().subscribe(
-      (data) => {
-        this.featuredProducts = data.map((producto: any) => ({
+
+   // Seleccionar una presentación para un producto
+   seleccionarPresentacion(presentacion: any, producto: any) {
+    producto.presentacionSeleccionada = presentacion;
+  }
+
+CargarProductosDestacados(): void {
+    this.productosService.obtenerProductosDestacados().subscribe({
+      next: (data) => {
+        console.log('Datos API:', data);
+        this.productosDestacados= data.map((producto: any) => ({
           ...producto,
-          imagenUrl: `${this.url}/${producto.imagen}`
+          imagenUrl: `${this.url}/${producto.imagen}` // Campo correcto
         }));
-        this.totalPages = Math.ceil(this.featuredProducts.length / this.pageSize);
-        this.updatePaginatedProducts();
+        this.totalPaginas = Math.ceil(this.productosDestacados.length / this.pageSize);
+        this.actualizarProductosPaginados();
       },
-      (error) => {
-        console.error('Error fetching featured products:', error);
-      }
-    );
+      error: (err) => console.error('Error API:', err)
+    });
   }
 
 
-  updatePaginatedProducts(): void {
-    const start = this.currentPage * this.pageSize;
+  actualizarProductosPaginados(): void {
+    const start = this.paginaActual * this.pageSize;
     const end = start + this.pageSize;
-    this.paginatedProducts = this.featuredProducts.slice(start, end);
+    this.productosPaginados = this.productosDestacados.slice(start, end);
   }
 
-   nextPage(): void {
-    if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++;
-      this.updatePaginatedProducts();
+   paginaSiguiente(): void {
+    if (this.paginaActual < this.totalPaginas - 1) {
+      this.paginaActual++;
+      this.actualizarProductosPaginados();
     }
   }
 
-  prevPage(): void {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.updatePaginatedProducts();
+  paginaAnterior(): void {
+    if (this.paginaActual > 0) {
+      this.paginaActual--;
+      this.actualizarProductosPaginados();
     }
   }
 
 
-
-
-
-  getCategoryColor(category: string): string {
+  getCategoryColor(categorias: string): string {
     const colors: { [key: string]: string } = {
-      Licores: '#881f06',
-      Whiskey: '#AA2202',
-      Gin: '#FFB164',
-      Brandy: '#D72B00',
-      Cerveza: '#FF8326',
-      Tequila: '#FF4100',
-      Vodka: '#FF5F00',
-      Vinos: '#881F06'
+      Licores: '#FFFFFF',
+      Whiskey: '#FFFFFF',
+      Gin: '#FFFFFF',
+      Brandy: '#FFFFFFF',
+      Cerveza: '#FFFFFF',
+      Tequila:'#FFFFFF',
+      Vodka: '#FFFFFF',
+      Vinos: '#FFFFFF'
     };
-    return colors[category] || '#FFFFFF';
+    return colors[categorias] || '#FFFFFF';
   }
 
-  getCategoryImage(category: string): string {
+  getCategoryImage(categorias: string): string {
     const images: { [key: string]: string } = {
       Licores: 'assets/images/brandy.jpeg',
       Whiskey: 'assets/images/Whiskey.jpg',
@@ -118,19 +132,19 @@ export class HomeComponent implements OnInit {
       Vodka: 'assets/images/vodka.png',
       Vinos: 'assets/images/vino.jpg'
     };
-    return images[category] || 'assets/images/default.jpg';
+    return images[categorias] || 'assets/images/default.jpg';
   }
 
   chunkFeaturedProducts() {
     const chunkSize = 4;
-    this.chunkedProducts = [];
-    for (let i = 0; i < this.featuredProducts.length; i += chunkSize) {
-      this.chunkedProducts.push(this.featuredProducts.slice(i, i + chunkSize));
+    this.productosAgrupados = [];
+    for (let i = 0; i < this.productosDestacados.length; i += chunkSize) {
+      this.productosAgrupados.push(this.productosDestacados.slice(i, i + chunkSize));
     }
   }
 
   toggleWhatsAppPopup(): void {
-    this.showWhatsAppPopup = !this.showWhatsAppPopup;
+    this.mostrarPopupWhatsApp = !this.mostrarPopupWhatsApp;
   }
 
   redirectToWhatsApp(): void {
@@ -141,30 +155,27 @@ export class HomeComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  prev(): void {
-    this.categoryCarousel?.pre(); // Navegar hacia la izquierda
+  anterior(): void {
+    this.carruselCategorias?.pre(); // Navegar hacia la izquierda
   }
 
-  next(): void {
-    this.categoryCarousel?.next(); // Navegar hacia la derecha
+  siguiente(): void {
+    this.carruselCategorias?.next(); // Navegar hacia la derecha
   }
 
   goToLiquor(): void {
     this.router.navigate(['/licores']); // Redirige al componente de licores
   }
 
-  testimonials = [
-    {
-      name: 'Carlos Rodríguez',
-      feedback: 'Excelente atención y productos de calidad. Recomendado.',
-    },
-    {
-      name: 'María López',
-      feedback: 'Las promociones son increíbles, siempre encuentro lo que busco.',
-    },
-    {
-      name: 'Juan Pérez',
-      feedback: 'El mejor lugar para comprar licores en la ciudad.',
-    },
-  ];
+
+marcas = [
+  { name: 'Occucaje', logo: 'assets/images/brandy.jpeg' },
+  { name: 'Il Produce Neo', logo: 'assets/images/Gin.png' },
+  { name: 'Old Par', logo: 'assets/images/vino.jpg' },
+  { name: 'Samanoff', logo: 'assets/brands/samanoff.png' },
+  { name: 'Tanguang', logo: 'assets/brands/tanguang.png' },
+  { name: 'Veuve Clicquot', logo: 'assets/brands/veuve-clicquot.png' }
+];
+
+
 }

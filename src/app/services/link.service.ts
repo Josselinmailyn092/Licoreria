@@ -15,7 +15,7 @@ export class LinkService {
   links: Link[] = [
     { path: '/home', label: 'Inicio' },
     { path: '/licores', label: 'Licores' },
-    { path: '/confiteria', label: 'Confiteria' },
+    // { path: '/confiteria', label: 'Confiteria' },
 
     { path: '/nosotros', label: 'Nosotros' }
   ];

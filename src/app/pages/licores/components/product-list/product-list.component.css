@@ -48,7 +48,7 @@
 
 /* Detalles del producto */
 .product-details {
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 0;
 }
 
@@ -76,7 +76,6 @@ h3 {
   color: #e65400b8;
   cursor: pointer;
   margin: 5px;
-  font-size: 12px;
 }
 .presentations-list button.selected {
   background-color: #e65400e4;
