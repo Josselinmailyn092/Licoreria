@@ -1,4 +1,3 @@
-
 app-side-menu {
   width: 100px;
   padding: 20px;
@@ -14,19 +13,17 @@ app-side-menu {
   padding: 10px;
   margin: 0;
   margin-top: 80px;
-
 }
-
 
 /* Estilo menu lateral */
-.side-menu{
- height: 100vh;
- margin-left: 10px;
- width: 100px;
- display: flex;
- flex-direction: column;
+.side-menu {
+  height: 100vh;
+  margin-left: 10px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
 }
-.nz-submenu{
+.nz-submenu {
   display: flex;
   flex-direction: column;
 }
@@ -46,10 +43,12 @@ app-side-menu {
   font-weight: bold;
   letter-spacing: 0.5px;
   padding: 15px 0;
-  border-bottom: 2px solid #DFD9D6;
+  border-bottom: 2px solid #dfd9d6;
 }
 
-.menu-title, .menu-titleMarca, .menu-titlePresentacion{
+.menu-title,
+.menu-titleMarca,
+.menu-titlePresentacion {
   padding: 0 18px;
   margin-top: 30px;
 }
@@ -57,44 +56,44 @@ app-side-menu {
 /* estilos de menu  */
 .side-menu .nz-menu {
   background-color: #fff; /* Fondo blanco para el menú */
-   display: flex;
-   flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-   /* Asegúrate de que los elementos se apilen en columna */
-   }
-   .menu-columns {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 20px;
-    gap: 8px;
-    font-size: 14px;
-    color: rgb(96, 94, 94);
-  }
-  .menu-columns-scrollable {
-    max-height: 180px; /* Ajusta el tamaño según sea necesario */
-    overflow-y: auto; /* Agrega el scroll vertical */
-    width: 195px;
-    max-width: 700px;
-    padding: 0.2rem; /* Ajusta el espacio interno */
-    border: 1px solid #dddddd00; /* Opcional: agrega un borde */
-  }
+  /* Asegúrate de que los elementos se apilen en columna */
+}
+.menu-columns {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px;
+  gap: 8px;
+  font-size: 14px;
+  color: rgb(96, 94, 94);
+}
+.menu-columns-scrollable {
+  max-height: 180px; /* Ajusta el tamaño según sea necesario */
+  overflow-y: auto; /* Agrega el scroll vertical */
+  width: 195px;
+  max-width: 700px;
+  padding: 0.2rem; /* Ajusta el espacio interno */
+  border: 1px solid #dddddd00; /* Opcional: agrega un borde */
+}
 
-  nz-menu-item {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition:  all var(--transition-speed) ease !important;
-    position: relative;
-  }
+nz-menu-item {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all var(--transition-speed) ease !important;
+  position: relative;
+}
 
-  /* Efecto al pasar el cursor */
+/* Efecto al pasar el cursor */
 nz-menu-item:hover {
-  background: #FFF5F0 !important;
-  transform: translateX(4px);}
+  background: #fff5f0 !important;
+  transform: translateX(4px);
+}
 
-
-  /* Estilo para el elemento seleccionado */
+/* Estilo para el elemento seleccionado */
 /* Clase activa */
 nz-menu-item.active {
   font-weight: bold;
@@ -118,7 +117,7 @@ nz-menu-item.active {
 
 .circle-indicator.selected {
   background-color: #aa2202; /* Color de fondo del círculo activo */
-  border-color: #5F0F00;
+  border-color: #5f0f00;
 }
 /* Estilo para el nombre de la categoría */
 .category-name {
@@ -126,26 +125,24 @@ nz-menu-item.active {
 }
 .item-count {
   background: rgba(255, 95, 0, 0.1);
-  color: #0000;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
   font-weight: 600;
 }
-.item-count.custom-select{
+.item-count.custom-select {
   background-color: #ff5f00; /* Color de fondo del círculo activo */
   color: #fff;
 }
 /* Estilo para el hover normal */
 .licores-content {
-    flex-grow: 1;
-    margin-left: 50px;
-    margin-right: 100px;
+  flex-grow: 1;
+  margin-left: 50px;
+  margin-right: 100px;
 }
 
 @media (max-width: 768px) {
-  .side-menu{
+  .side-menu {
     display: none;
   }
-
 }

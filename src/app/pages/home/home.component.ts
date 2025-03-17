@@ -1,4 +1,3 @@
-import { Category } from './../../../../../Dashboard/spirits-inventory-manager/src/app/models/category.model';
 import { ProductosService } from './../../services/productos.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,10 +9,11 @@ import { Producto } from '../../models/licores.models';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('carruselCategorias', { static: false }) carruselCategorias!: NzCarouselComponent;
+  @ViewChild('carruselCategorias', { static: false })
+  carruselCategorias!: NzCarouselComponent;
   animationActive: boolean = false;
   Category: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
   indiceCategoriaActual: number = 0;
@@ -27,12 +27,14 @@ export class HomeComponent implements OnInit {
   paginaActual: number = 0;
   pageSize: number = 4;
   totalPaginas: number = 0;
-  url='http://localhost:3000/uploads';
+  url = 'http://localhost:3000/uploads';
 
-  constructor(private carritoService: CarritoService,
+  constructor(
+    private carritoService: CarritoService,
     private categoriaService: CategoriaService,
     private productosService: ProductosService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.cargarCategorias();
@@ -43,48 +45,49 @@ export class HomeComponent implements OnInit {
   //   this.carritoService.agregarProducto(producto);
   // }
   // Corregir el método cargarCategorias
-cargarCategorias(): void {
-  this.categoriaService.obtenerProductosPorCategoria().subscribe(
-    (data) => {
+  cargarCategorias(): void {
+    this.categoriaService.obtenerProductosPorCategoria().subscribe(
+      (data) => {
         this.categorias = data.map((item: any) => ({
           name: item.Categoria,
           products: item.TotalProductos,
           color: this.getCategoryColor(item.Categoria),
           image: this.getCategoryImage(item.Categoria),
-          route: `${item.Categoria.toLowerCase()}`
-      }));
-      console.log('Categorías cargadas:', this.categorias); // Para debug
-    },
-    (error) => {
-      console.error('Error al cargar categorías:', error);
-    }
-  );
-}
+          route: `${item.Categoria.toLowerCase()}`,
+        }));
+        console.log('Categorías cargadas:', this.categorias); // Para debug
+      },
+      (error) => {
+        console.error('Error al cargar categorías:', error);
+      }
+    );
+  }
 
   obtenerImagen(nombreImagen: string): any {
     return 'http://localhost:3000/uploads/' + nombreImagen;
   }
 
-   // Seleccionar una presentación para un producto
-   seleccionarPresentacion(presentacion: any, producto: any) {
+  // Seleccionar una presentación para un producto
+  seleccionarPresentacion(presentacion: any, producto: any) {
     producto.presentacionSeleccionada = presentacion;
   }
 
-CargarProductosDestacados(): void {
+  CargarProductosDestacados(): void {
     this.productosService.obtenerProductosDestacados().subscribe({
       next: (data) => {
         console.log('Datos API:', data);
-        this.productosDestacados= data.map((producto: any) => ({
+        this.productosDestacados = data.map((producto: any) => ({
           ...producto,
-          imagenUrl: `${this.url}/${producto.imagen}` // Campo correcto
+          imagenUrl: `${this.url}/${producto.imagen}`, // Campo correcto
         }));
-        this.totalPaginas = Math.ceil(this.productosDestacados.length / this.pageSize);
+        this.totalPaginas = Math.ceil(
+          this.productosDestacados.length / this.pageSize
+        );
         this.actualizarProductosPaginados();
       },
-      error: (err) => console.error('Error API:', err)
+      error: (err) => console.error('Error API:', err),
     });
   }
-
 
   actualizarProductosPaginados(): void {
     const start = this.paginaActual * this.pageSize;
@@ -92,7 +95,7 @@ CargarProductosDestacados(): void {
     this.productosPaginados = this.productosDestacados.slice(start, end);
   }
 
-   paginaSiguiente(): void {
+  paginaSiguiente(): void {
     if (this.paginaActual < this.totalPaginas - 1) {
       this.paginaActual++;
       this.actualizarProductosPaginados();
@@ -106,7 +109,6 @@ CargarProductosDestacados(): void {
     }
   }
 
-
   getCategoryColor(categorias: string): string {
     const colors: { [key: string]: string } = {
       Licores: '#FFFFFF',
@@ -114,9 +116,9 @@ CargarProductosDestacados(): void {
       Gin: '#FFFFFF',
       Brandy: '#FFFFFFF',
       Cerveza: '#FFFFFF',
-      Tequila:'#FFFFFF',
+      Tequila: '#FFFFFF',
       Vodka: '#FFFFFF',
-      Vinos: '#FFFFFF'
+      Vinos: '#FFFFFF',
     };
     return colors[categorias] || '#FFFFFF';
   }
@@ -130,7 +132,7 @@ CargarProductosDestacados(): void {
       Cerveza: 'assets/images/cerveza.jpg',
       Tequila: 'assets/images/tequila.jpg',
       Vodka: 'assets/images/vodka.png',
-      Vinos: 'assets/images/vino.jpg'
+      Vinos: 'assets/images/vino.jpg',
     };
     return images[categorias] || 'assets/images/default.jpg';
   }
@@ -139,7 +141,9 @@ CargarProductosDestacados(): void {
     const chunkSize = 4;
     this.productosAgrupados = [];
     for (let i = 0; i < this.productosDestacados.length; i += chunkSize) {
-      this.productosAgrupados.push(this.productosDestacados.slice(i, i + chunkSize));
+      this.productosAgrupados.push(
+        this.productosDestacados.slice(i, i + chunkSize)
+      );
     }
   }
 
@@ -167,15 +171,12 @@ CargarProductosDestacados(): void {
     this.router.navigate(['/licores']); // Redirige al componente de licores
   }
 
-
-marcas = [
-  { name: 'Occucaje', logo: 'assets/images/brandy.jpeg' },
-  { name: 'Il Produce Neo', logo: 'assets/images/Gin.png' },
-  { name: 'Old Par', logo: 'assets/images/vino.jpg' },
-  { name: 'Samanoff', logo: 'assets/brands/samanoff.png' },
-  { name: 'Tanguang', logo: 'assets/brands/tanguang.png' },
-  { name: 'Veuve Clicquot', logo: 'assets/brands/veuve-clicquot.png' }
-];
-
-
+  marcas = [
+    { name: 'Occucaje', logo: 'assets/images/brandy.jpeg' },
+    { name: 'Il Produce Neo', logo: 'assets/images/Gin.png' },
+    { name: 'Old Par', logo: 'assets/images/vino.jpg' },
+    { name: 'Samanoff', logo: 'assets/brands/samanoff.png' },
+    { name: 'Tanguang', logo: 'assets/brands/tanguang.png' },
+    { name: 'Veuve Clicquot', logo: 'assets/brands/veuve-clicquot.png' },
+  ];
 }

@@ -16,9 +16,15 @@
 
 .licores-header {
   position: relative;
+  display: flex;
   overflow: hidden;
   border-radius: 16px;
   margin-bottom: 10px;
+  justify-content: center;
+}
+.licores-header img {
+  max-width: 600px;
+  height: auto;
 }
 
 .header-image {
@@ -30,7 +36,6 @@
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Responsive */
 @media (max-width: 768px) {

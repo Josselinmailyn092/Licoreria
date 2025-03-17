@@ -1,17 +1,18 @@
 /* styles.scss */
 @import "ng-zorro-antd/ng-zorro-antd.min.css";
 :root {
-  --primary-color: #FF5F00;
-  --secondary-color: #2D2D2D;
-  --accent-color: #F8F9FA;
-  --text-dark: #2D2D2D;
-  --text-light: #6C757D;
+  --primary-color: #ff5f00;
+  --secondary-color: #2d2d2d;
+  --accent-color: #f8f9fa;
+  --text-dark: #2d2d2d;
+  --text-light: #6c757d;
   --transition-speed: 0.3s;
+  --primary-color-hover: #e65600;
 }
 
 /* Estilos base */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--accent-color);
   color: var(--text-dark);
 }
