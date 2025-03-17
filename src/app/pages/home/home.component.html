@@ -5,7 +5,7 @@
       <img src="assets/images/whatsapp.png" alt="WhatsApp Icon" width="80" height="80">
     </button>
 
-    <div class="whatsapp-popup" *ngIf="showWhatsAppPopup">
+    <div class="whatsapp-popup" *ngIf="mostrarPopupWhatsApp">
       <div class="popup-header">
         <span>WhatsApp</span>
         <button (click)="toggleWhatsAppPopup()">✖</button>
@@ -63,7 +63,7 @@
   <h1>Categorias</h1>
   <p class="descubre">Descubre nuestras categorias</p>
   <!-- Flecha izquierda -->
-  <button class="arrow left-arrow" (click)="prev()">
+  <button class="arrow left-arrow" (click)="anterior()">
     <i nz-icon nzType="left" nzTheme="outline"></i>
   </button>
 
@@ -84,7 +84,7 @@
           <div
             (click)="navigateToCategory(category.route)"
             [ngStyle]="{ 'background-color': category.color }"
-            class="category-card"
+               class="category-card"
           >
             <img [src]="category.image" alt="{{ category.name }}" class="category-image" />
             <div class="category-info">
@@ -98,7 +98,7 @@
   </nz-carousel>
 
   <!-- Flecha derecha -->
-  <button class="arrow right-arrow" (click)="next()">
+  <button class="arrow right-arrow" (click)="siguiente()">
     <i nz-icon nzType="right" nzTheme="outline"></i>
   </button>
 </div>
@@ -111,42 +111,71 @@
   <div class="carousel-wrapper">
     <button
       class="carousel-arrow left"
-      (click)="prevPage()"
-      [disabled]="currentPage === 0">
+      (click)="paginaAnterior()"
+      [disabled]="paginaActual === 0">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M15 18l-6-6 6-6"/>
       </svg>
     </button>
 
     <div nz-row [nzGutter]="24" class="products-grid">
-      <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6" *ngFor="let product of paginatedProducts">
+      <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6" *ngFor="let product of productosPaginados">
         <nz-card class="product-card">
-          <img
-            [src]="product.imagenUrl"
-            [alt]="product.nombreProducto"
-            class="product-image"
-            nz-image
-            nzFallback="assets/placeholder-product.jpg"
-          />
-          <nz-card-meta
-            [nzTitle]="product.nombreProducto"
-            [nzDescription]="product.presentacion_ml + 'ml'"
-          ></nz-card-meta>
-          <div class="product-footer">
-            <span class="price">{{ product.precio | currency }}</span>
-            <button nz-button nzType="primary" class="buy-button">
-              <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
-              Añadir
-            </button>
+          <div class="product-image">
+            <img [src]="obtenerImagen(product.imagen)" [alt]="product.nombre" />
           </div>
+          <h3>{{ product.nombre }}</h3>
+      <div class="product-details">
+        <div class="presentations-list">
+          <ul *ngIf="product.presentaciones[0].presentacion_ml!=null && product.presentaciones.length>0">
+            <li *ngFor="let presentacion of product.presentaciones">
+              <button
+                [class.selected]="product.presentacionSeleccionada === presentacion"
+                (click)="seleccionarPresentacion(presentacion, product)">
+                {{ presentacion.presentacion_ml }} ml
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
+        <div *ngIf="product.presentacionSeleccionada">
+          <div class="price">
+            <span
+              class="old-price"
+              *ngIf="product.presentacionSeleccionada.precio > 10"
+            >
+              ${{ product.presentacionSeleccionada.precio | number : "1.2-2" }}
+            </span>
+            <span class="discount-price">
+              ${{
+                product.presentacionSeleccionada.precio *
+                  (1 - product.presentacionSeleccionada.descuento)
+                  | number : "1.2-2"
+              }}
+            </span>
+          </div>
+          @if(product.presentacionSeleccionada.cantidad<1){
+            <p id="not-available">¡No disponible!</p>
+          }@else {
+            <button
+            nz-button
+            nzType="primary"
+            class="boton-comprar"
+            >
+            Comprar
+          </button>
+          }
+
+        </div>
+      </div>
         </nz-card>
       </div>
     </div>
 
     <button
       class="carousel-arrow right"
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages - 1">
+      (click)="paginaSiguiente()"
+      [disabled]="paginaActual === totalPaginas - 1">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M9 18l6-6-6-6"/>
       </svg>
@@ -169,10 +198,10 @@
 <!-- slider con productos de marcas -->
 <div class="brands-slider">
   <div class="slider-track">
-    <div class="slide" *ngFor="let brand of brands">
+    <div class="slide" *ngFor="let marca of marcas">
       <img
-        [src]="brand.logo"
-        [alt]="brand.name"
+        [src]="marca.logo"
+        [alt]="marca.name"
         class="brand-logo"
         loading="lazy"
       >
@@ -195,4 +224,3 @@
 </div>
 
 
-  </div>

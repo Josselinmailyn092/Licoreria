@@ -6,11 +6,11 @@ nz-layout{
   position: fixed;
   align-items: center;
   width: 100%;
-  padding: 10px 50px ;
+  padding: 0 2rem ;
   margin-top: 0;
-  background-color: #F8F5F3; /* Fondo claro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-  height: 90px;
+  background-color: #ffffff; /* Fondo claro */
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  height: 80px;
   font-family: 'Mona Sans';
  justify-content: space-between;
  z-index: 10;
@@ -54,8 +54,8 @@ nz-layout{
   align-items: center;
   justify-content: space-between;
   margin-top: 0px;
-  width: 80%;
-  background-color: #F8F5F3;
+  width: 90%;
+  background-color: #ffffff;
   margin: 0;
 
 }
@@ -66,7 +66,7 @@ nz-layout{
   align-items: center;
   margin: auto;
   justify-content: center;
-  background-color:#F8F5F3 ;
+  background-color:#ffffff ;
   margin-top: 0;
 
 
@@ -80,9 +80,9 @@ nz-layout{
   list-style: none;
   margin: auto;
   padding:10px;
-  gap:25px;
+  gap:2rem;
   margin: 0;
-  background-color:#F8F5F3;
+  background-color:#ffffff;
   margin-top: 15px;
 
 }
@@ -247,9 +247,7 @@ i[nz-icon] {
   align-items: center;
   justify-content: center;
   background-color: #F8F5F3; /* Fondo blanco para el submenú */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el submenú */
   display: none; /* Ocultar submenú por defecto */
-  padding: 0;
   min-width: 110px; /* Ancho mínimo del submenú */
   z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
   font-size: 13px;
@@ -262,8 +260,8 @@ i[nz-icon] {
 
 /* Estilo para los elementos del submenú */
 .sub-menu-item {
-  padding: 0 10px;
-  height: 40px;
+  height: auto;
+  padding: 0.5rem 1rem;
   margin: auto;
   align-items: center;
   justify-content: center;
@@ -528,7 +526,7 @@ i[nz-icon] {
     margin: 0;
     width:40px;
     height: 40px;
-    margin-left: 25px;
+
 
   }
   .title {
@@ -537,7 +535,6 @@ i[nz-icon] {
     padding: 0;
     text-align: start;
     justify-content: flex-start;
-    margin-left: 40px;
     width: 100%;
   }
 
@@ -602,14 +599,14 @@ i[nz-icon] {
   .icons {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
     margin-left: auto;
-    padding: 0 15px;
+    padding: 0 4px;
   }
 
    .cart-icon {
     color:#ff4100;
-    font-size: 1.15rem;
+    font-size: 1rem;
     transition: color 0.3s ease;
     border: 2px solid #ff8326 ;
     border-radius: 15px;

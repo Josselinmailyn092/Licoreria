@@ -18,6 +18,9 @@ export class ProductosService {
     return this.http.get<any[]>(this.apiUrl, { params: filtros });
   }
 
+  obtenerProductosDestacados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/destacados`);}
+
   añadirProducto(producto: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, producto);
   }
