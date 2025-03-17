@@ -1,11 +1,11 @@
 /* Contenedor general */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
   padding: 15px 0px;
   margin: 0 auto;
-  max-width: 1100px;
+  max-width: 1300px;
   box-sizing: border-box;
 }
 
@@ -20,22 +20,23 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   border: 1px solid #f0f0f0;
+  max-width: 300px;
 }
 
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Imagen del producto */
 .product-image {
-  height: 100px;
+  height: 250px;
   overflow: hidden;
   border-radius: 12px;
 }
 
 .product-image img {
-  width: 30%;
+  width: auto;
   position: relative;
   height: 100%;
   object-fit: contain;
@@ -53,13 +54,13 @@
 }
 
 h3 {
-  font-size: 0.98rem;
+  font-size: 1.15rem;
   color: var(--text-dark);
   margin-bottom: 8px;
   font-weight: 600;
 }
 .presentations-list {
-  height: 36.13px;
+  height: 24px;
 }
 
 .presentations-list ul {
@@ -71,20 +72,19 @@ h3 {
 }
 .presentations-list button {
   background-color: transparent;
-  border: 2px solid #e65400b8;
+  border: none;
   border-radius: 8px;
-  color: #e65400b8;
+  color: var(--primary-color);
   cursor: pointer;
-  margin: 5px;
+  margin: 0px;
 }
 .presentations-list button.selected {
-  background-color: #e65400e4;
-  color: white;
+  background-color: #fbdece;
+  color: var(--primary-color);
 }
 
 .product-details p {
   font-size: 12px;
-  color: #646363;
   margin: 0;
   margin-top: -8px;
 }
@@ -97,8 +97,8 @@ h3 {
 }
 
 .discount-price {
-  color: var(--primary-color);
-  font-size: 0.9rem;
+  color: var(--text-dark);
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -115,7 +115,7 @@ h3 {
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   text-transform: uppercase;
@@ -124,18 +124,19 @@ h3 {
   justify-content: center;
   align-items: center;
   width: 60%;
-  margin: auto;
+  margin: 15px auto auto auto;
 }
 
 #not-available {
-  font-size: 16px;
+  font-size: 1.05rem;
   font-weight: 600;
   padding: 10px 20px;
+  margin: 10px auto;
   color: rgb(2, 2, 2);
 }
 
 .boton-comprar:hover {
-  background: #e65600;
+  background: var(--primary-color-hover);
   transform: scale(1.05);
 }
 
