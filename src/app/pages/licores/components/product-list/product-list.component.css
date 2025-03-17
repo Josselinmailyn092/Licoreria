@@ -58,6 +58,9 @@ h3 {
   margin-bottom: 8px;
   font-weight: 600;
 }
+.presentations-list {
+  height: 36.13px;
+}
 
 .presentations-list ul {
   list-style-type: none;
@@ -73,6 +76,7 @@ h3 {
   color: #e65400b8;
   cursor: pointer;
   margin: 5px;
+  font-size: 12px;
 }
 .presentations-list button.selected {
   background-color: #e65400e4;
