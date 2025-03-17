@@ -195,19 +195,7 @@
   </div>
 </div> -->
 
-<!-- slider con productos de marcas -->
-<div class="brands-slider">
-  <div class="slider-track">
-    <div class="slide" *ngFor="let marca of marcas">
-      <img
-        [src]="marca.logo"
-        [alt]="marca.name"
-        class="brand-logo"
-        loading="lazy"
-      >
-    </div>
-  </div>
-</div>
+
 
 <!-- Sección: Call to Action -->
 <div class="cta-container">
@@ -220,6 +208,21 @@
         Contáctanos por WhatsApp
       </button>
     </a>
+  </div>
+</div>
+
+<!-- slider con productos de marcas -->
+<div class="brands-slider">
+
+  <div class="slider-track">
+    <div class="slide" *ngFor="let marca of marcas">
+      <img
+        [src]="marca.logo"
+        [alt]="marca.name"
+        class="brand-logo"
+        loading="lazy"
+      >
+    </div>
   </div>
 </div>
 
