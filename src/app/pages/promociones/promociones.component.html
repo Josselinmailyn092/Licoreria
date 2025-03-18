@@ -1,70 +1,39 @@
-<!-- promotions.component.html
-<div class="promotions-page">
-  <div class="header-section">
-    <h1 nz-typography class="title">🔥 Promociones Especiales</h1>
-    <p nz-typography class="subtitle">Aprovecha nuestras ofertas por tiempo limitado</p>
+<!-- promotions.component.html -->
+<section class="promotions-section">
+  <div class="section-header">
+    <h2 class="section-title">Promociones Destacadas</h2>
+    <p class="section-subtitle">Aprovecha nuestras ofertas especiales</p>
   </div>
 
-  <nz-divider nzOrientation="left" nzText="Destacados"></nz-divider>
-
-  <div class="filters">
-    <nz-select [(ngModel)]="selectedCategory" nzPlaceHolder="Categoría" class="category-filter">
-      <nz-option nzValue="all" nzLabel="Todas"></nz-option>
-      <nz-option *ngFor="let category of categories" [nzValue]="category" [nzLabel]="category"></nz-option>
-    </nz-select>
-  </div>
-
-  <nz-row [nzGutter]="[24, 24]">
-    <nz-col
-      *ngFor="let product of promotions"
-      nzXs="24"
-      nzSm="12"
-      nzMd="8"
-      nzLg="6"
-    >
-      <nz-card class="promo-card">
-        <div class="discount-badge">
-          {{ product.discount * 100 | number:'1.0-0' }}% OFF
-        </div>
-
-        <nz-image
-          [nzSrc]="product.image"
-          [nzAlt]="product.name"
-          class="product-image"
-        ></nz-image>
-
-        <h3 class="product-name">{{ product.name }}</h3>
-
-        <div class="price-section">
-          <span class="original-price">
-            {{ product.originalPrice | currency:'S/ ' }}
+  <div class="promotions-grid">
+    <nz-card class="promotion-card" *ngFor="let promotion of promotions">
+      <div class="promotion-badge">-{{ promotion.discount }}%</div>
+      <div class="promotion-image-container">
+        <img [src]="promotion.image" alt="Promoción" class="promotion-image">
+      </div>
+      <div class="promotion-content">
+        <h3 class="promotion-title">{{ promotion.title }}</h3>
+        <p class="promotion-description">{{ promotion.description }}</p>
+        <div class="price">
+          <span class="old-price">
+           $10.25
           </span>
-          <span class="discounted-price">
-            {{ getDiscountedPrice(product) | currency:'S/ ' }}
+          <span class="discount-price">
+           $ 9.25
           </span>
         </div>
 
-        <nz-divider class="card-divider"></nz-divider>
+        <div class="promotion-meta">
+          <button class="promotion-cta">
+            Comprar
+          </button>
+          <div class="expiration-date">
+            <i class="far fa-clock"></i>
+            Válido hasta: {{ promotion.expirationDate }}
+          </div>
 
-        <div class="time-remaining">
-          <nz-statistic
-            [nzValue]="getTimeRemaining(product.endDate)"
-            nzTitle="Tiempo restante"
-            nzValueStyle="{ color: '#cf1322' }"
-          ></nz-statistic>
         </div>
-
-        <button
-          nz-button
-          nzType="primary"
-          nzBlock
-          nzDanger
-          class="buy-button"
-        >
-          <i nz-icon nzType="shopping-cart"></i>
-          COMPRAR AHORA
-        </button>
-      </nz-card>
-    </nz-col>
-  </nz-row>
-</div> -->
+      </div>
+    </nz-card>
+  </div>
+</section>
