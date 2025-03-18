@@ -1,64 +1,75 @@
-<div class="about-us-container">
-  <!-- para el tema -->
-  <section class="products-conclusion">
-      <h2 class="conclusion-title">Sobre Nosotros</h2>
+<div class="nosotros-container">
+  <!-- Encabezado -->
+  <section class="section-header">
+      <h2 class="section-title">Sobre Nosotros</h2>
   </section>
-  <div class="about-us-container">
-      <section class="owner-section">
-          <nz-card class="owner-card" nzBordered>
-              <div class="owner-title">Propietario</div>
-              <div class="owner-image"></div>
-              <div class="owner-name">Luis Cansion</div>
-          </nz-card>
-      </section>
-      <p>La Licorería "El chinito" es una empresa que se dedica a la venta de licores de todo tipo.
-          Nuestro
-          objetivo es brindar a nuestros clientes una experiencia única y satisfactoria, ofreciendo productos de alta
-          calidad y un excelente servicio.</p>
-          <p>Contamos con una amplia variedad de licores nacionales e importados, así como también con una gran
-            cantidad de productos de marcas reconocidas en el mercado.</p>
-                <p>Además, en la Licorería "El chinito" nos preocupamos por la seguridad y bienestar de nuestros clientes,
-                por lo que cumplimos con todas las normas y regulaciones establecidas para la venta de licores.</p>
-        <p>Estamos ubicados en <a href="https://maps.app.goo.gl/Pb43b2xLoXZJbAgb8?g_st=aw">Mocache, Los Ríos. </a>Contamos con un equipo de trabajo
-            altamente capacitado y comprometido con la excelencia en el servicio.</p>
 
-      <section class="products-conclusion">
-          <h2 class="conclusion-title">¿Quiénes somos?</h2>
-      </section>
-      <section class="development-team-section">
-          <div class="team-title">Equipo de Desarrollo</div>
-          <div class="team-cards">
-              <nz-card class="developer-card" nzBordered>
-                  <div class="developer-image"></div>
-                  <div class="developer-name">Ing. Anderson Velásquez</div>
-                  <div class="developer-correo">hvelasquezxxx&#64;utm.edu.ec</div>
-                  <div class="developer-age">21 años</div>
-              </nz-card>
-              <nz-card class="developer-card" nzBordered>
-                  <div class="developer-image"></div>
-                  <div class="developer-name">Ing. Josselyn De la Cruz</div>
-                  <div class="developer-correo">jdelacruzxxxx&#64;utm.edu.ec</div>
-                  <div class="developer-age">21 años</div>
-              </nz-card>
-              <nz-card class="developer-card" nzBordered>
-                  <div class="developer-image"></div>
-                  <div class="developer-name">Ing. Hansel Alcívar</div>
-                  <div class="developer-correo">halcivar3030&#64;utm.edu.ec</div>
-                  <div class="developer-age">21 años</div>
-              </nz-card>
+  <!-- Propietario -->
+  <section class="owner-section">
+      <nz-card class="profile-card" nzBordered>
+          <div class="profile-image-container">
+              <div class="profile-image"></div>
           </div>
-      </section>
-  </div>
-  <p>Somos 3 estudiantes universitarios, quienes buscan facilitar los procesos tantos para los usuarios finales como para el propietario, mediante conocimientos adquiridos en la trayectoria de nuestra carrera   </p>
+          <div class="profile-info">
+              <h3 class="profile-role">Propietario</h3>
+              <h2 class="profile-name">Luis Cansion</h2>
+          </div>
+      </nz-card>
+  </section>
 
-  <p>En este proyecto, hemos trabajado arduamente para brindar una solución tecnológica que permita a la Licorería "El chinito" mejorar su gestión de ventas y control de inventario.</p>
-  <p>Esperamos que nuestra aplicación sea de gran utilidad para la Licorería "El chinito" y que les permita alcanzar sus objetivos de negocio.</p>
-  <!-- Contáctanos -->
-  <section class="contact-us-section">
-      <div class="contact-title">Contáctanos</div>
-      <div class="contact-content">
-          <p>Si deseas comunicarte con nosotros, no dudes en enviarnos un correo a nuestro equipo <a
-                  href="halcivar3030@utm.edu.ec">aquí</a> o llamarnos al <strong>+593 98 765 4321</strong>.</p>
+  <!-- Descripción -->
+  <section class="description-section">
+      <p class="about-text">La Licorería "El chinito" es una empresa dedicada a la venta de licores de alta calidad.
+          Nuestro objetivo es brindar una experiencia única mediante productos seleccionados y servicio excepcional.</p>
+
+      <div class="highlight-box">
+          <p>Ubicados en <a href="https://maps.app.goo.gl/Pb43b2xLoXZJbAgb8?g_st=aw" class="location-link">
+              <i class="fas fa-map-marker-alt"></i> Mocache, Los Ríos</a>,
+              cumplimos con todas las normativas de seguridad para su tranquilidad.</p>
       </div>
+  </section>
+
+  <!-- Equipo de Desarrollo -->
+  <section class="section-header">
+      <h2 class="section-title">Equipo de Desarrollo</h2>
+  </section>
+
+  <section class="team-section">
+      <div class="team-grid">
+          <nz-card class="profile-card developer-card" nzBordered *ngFor="let dev of developers">
+              <div class="profile-image-container">
+                  <div class="profile-image developer-image"></div>
+              </div>
+              <div class="profile-info">
+                  <h3 class="profile-name">{{dev.name}}</h3>
+                  <p class="profile-meta">
+                      <a href="mailto:{{dev.email}}" class="profile-email">
+                          <i class="far fa-envelope"></i> {{dev.email}}
+                      </a>
+                  </p>
+                  <p class="profile-meta">
+                      <i class="fas fa-user"></i> {{dev.age}} años
+                  </p>
+              </div>
+          </nz-card>
+      </div>
+  </section>
+
+  <!-- Contacto -->
+  <section class="contact-section">
+      <nz-card class="contact-card">
+          <h2 class="section-title">Contáctanos</h2>
+          <div class="contact-content">
+              <p class="contact-text">Para más información o soporte técnico:</p>
+              <div class="contact-methods">
+                  <a href="mailto:halcivar3030@utm.edu.ec" class="contact-link">
+                      <i class="far fa-envelope"></i> soporte&#64;soporte.com
+                  </a>
+                  <a href="tel:+593987654321" class="contact-link">
+                      <i class="fas fa-phone"></i> +593 939380666
+                  </a>
+              </div>
+          </div>
+      </nz-card>
   </section>
 </div>

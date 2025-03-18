@@ -1,139 +1,225 @@
-.about-us-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
+/* Estilos Globales */
+:root {
+  --primary-color: #2d2d2d;
+  --accent-color: #ff5f00;
+  --text-color: #4a4a4a;
+  --background-light: #f8f9fa;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nosotros-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Secciones Comunes */
+.section-header {
   text-align: center;
-  margin-top: 40px;
+  margin: 4rem 0;
 }
 
-/* Conclusión sobre los productos */
-.products-conclusion {
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+  margin-top: 25px;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 3px;
+    background: #ff5f00;
+    margin: 1rem auto 0;
+  }
+}
+
+/* Tarjetas de Perfil */
+.profile-card {
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border: none !important;
+  background-color: #ffffff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow);
+  }
+}
+
+.profile-image-container {
+
+  .profile-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #e0e0e0;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: "Foto";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5rem;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  }
+}
+
+.profile-info {
   text-align: center;
-  margin-bottom: 40px;
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-top: 2px solid #800000; /* Color elegante */
-}
+  padding: 1.5rem;
 
-.conclusion-title {
-  font-size: 24px;
-  font-weight: bold;
-  font-style: italic;
-  color: #800000; /* Color elegante */
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-}
+  .profile-role {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
 
-/* Sección del propietario */
-.owner-section {
-  margin-bottom: 40px;
-}
-
-.owner-card {
-  text-align: center;
-  width: 250px;
-  margin: 0 auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.owner-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.owner-image {
-  width: 150px;
-  height: 200px;
-  margin: 0 auto 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.owner-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  .profile-name {
+    font-size: 1.50rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+  }
+  .profile-email {
+    font-size: 1rem;
+    color: #ff5f00
+  }
 }
 
 /* Equipo de Desarrollo */
-.development-team-section {
-  margin-bottom: 40px;
-}
-
-.team-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.team-cards {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
 }
 
 .developer-card {
-  text-align: center;
-  width: 250px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  .profile-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
 }
 
-.developer-image {
-  width: 150px;
-  height: 200px;
-  margin: 0 auto 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+/* Sección de Contacto */
+.contact-section {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 
-.developer-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Sección de contacto */
-.contact-us-section {
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-top: 2px solid #800000; /* Color elegante */
-}
-
-.contact-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #800000;
-  margin-bottom: 10px;
-}
-
-.contact-content p {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.contact-content a {
-  color: #800000;
-  text-decoration: none;
-}
-
-.contact-content a:hover {
-  text-decoration: underline;
-}
-
-  /* Para añadir las fotos del componente nosotros*/
-  .owner-image img,
-  .developer-image img {
+  .contact-card {
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 600px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+    text-align: center;
+
+    .section-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      align-items: center;
+    }
+
+    .contact-link {
+      color: var(--text-color);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: var(--transition);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      background: rgba(255, 107, 53, 0.1);
+
+      &:hover {
+        color:#ff5f00;
+        background: rgba(255, 107, 53, 0.2);
+
+        i {
+          transform: scale(1.1);
+        }
+      }
+
+      i {
+        font-size: 1.25rem;
+        transition: var(--transition);
+        color: #ff5f00;
+      }
+    }
+  }
+}
+/* Elementos Específicos */
+.about-text {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  max-width: 800px;
+  margin: 2rem auto;
+  text-align: justify;
+}
+
+.highlight-box {
+  background: var(--background-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin: 3rem 0;
+  border-left: 4px solid #ff5f00;
+  font-size: 1.3rem;
+  font-weight: 600;
+
+  .location-link {
+    color: #ff5f00;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .profile-image {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
 }

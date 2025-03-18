@@ -1,38 +1,70 @@
-
-<nz-card class="promociones-container">
-  <!-- Encabezado -->
-  <div class="promociones-header">
-    <h2>¡Promociones Exclusivas!</h2>
-    <p>Descubre nuestras mejores ofertas por tiempo limitado.</p>
+<!-- promotions.component.html
+<div class="promotions-page">
+  <div class="header-section">
+    <h1 nz-typography class="title">🔥 Promociones Especiales</h1>
+    <p nz-typography class="subtitle">Aprovecha nuestras ofertas por tiempo limitado</p>
   </div>
 
-  <!-- Promoción destacada -->
-  <nz-card *ngIf="promocionDestacada" class="promocion-destacada" [nzBordered]="true">
-    <nz-card-meta
-      [nzTitle]="promocionDestacada.nombrePromocion"
-      [nzDescription]="'Descuento: ' + (promocionDestacada.descuento * 100) + '%'"
-    ></nz-card-meta>
-    <img
-      class="promocion-img"
-      [src]="promocionDestacada.imagen "
-      [alt]="promocionDestacada.nombrePromocion"
-    />
-    <button nz-button nzType="primary" class="cta-btn">Agregar al carrito</button>
-  </nz-card>
+  <nz-divider nzOrientation="left" nzText="Destacados"></nz-divider>
 
-
-
-
-
-  <!-- Listado de promociones -->
-  <div class="promociones-grid">
-    <nz-card *ngFor="let promo of promociones" [nzBordered]="true">
-      <img class="promo-img" [src]="promo.imagen" [alt]="promo.nombrePromocion" />
-      <nz-card-meta
-        [nzTitle]="promo.nombrePromocion"
-        [nzDescription]="'Precio: $' + promo.precio"
-      ></nz-card-meta>
-      <button nz-button nzType="default" class="cta-btn">Ver más</button>
-    </nz-card>
+  <div class="filters">
+    <nz-select [(ngModel)]="selectedCategory" nzPlaceHolder="Categoría" class="category-filter">
+      <nz-option nzValue="all" nzLabel="Todas"></nz-option>
+      <nz-option *ngFor="let category of categories" [nzValue]="category" [nzLabel]="category"></nz-option>
+    </nz-select>
   </div>
-</nz-card>
+
+  <nz-row [nzGutter]="[24, 24]">
+    <nz-col
+      *ngFor="let product of promotions"
+      nzXs="24"
+      nzSm="12"
+      nzMd="8"
+      nzLg="6"
+    >
+      <nz-card class="promo-card">
+        <div class="discount-badge">
+          {{ product.discount * 100 | number:'1.0-0' }}% OFF
+        </div>
+
+        <nz-image
+          [nzSrc]="product.image"
+          [nzAlt]="product.name"
+          class="product-image"
+        ></nz-image>
+
+        <h3 class="product-name">{{ product.name }}</h3>
+
+        <div class="price-section">
+          <span class="original-price">
+            {{ product.originalPrice | currency:'S/ ' }}
+          </span>
+          <span class="discounted-price">
+            {{ getDiscountedPrice(product) | currency:'S/ ' }}
+          </span>
+        </div>
+
+        <nz-divider class="card-divider"></nz-divider>
+
+        <div class="time-remaining">
+          <nz-statistic
+            [nzValue]="getTimeRemaining(product.endDate)"
+            nzTitle="Tiempo restante"
+            nzValueStyle="{ color: '#cf1322' }"
+          ></nz-statistic>
+        </div>
+
+        <button
+          nz-button
+          nzType="primary"
+          nzBlock
+          nzDanger
+          class="buy-button"
+        >
+          <i nz-icon nzType="shopping-cart"></i>
+          COMPRAR AHORA
+        </button>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+</div> -->
