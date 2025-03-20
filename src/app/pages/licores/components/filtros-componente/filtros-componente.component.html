@@ -1,27 +1,35 @@
+<div>
+  <label>Productos encontrados: {{ productosTotal }}</label>
+</div>
 <div class="filters">
-  <div>
-    <label>Productos encontrados: {{ productosTotal }}</label>
-  </div>
-
   <!-- Filtro por Marca -->
   <div class="filter-item">
-    <label>Seleccione Marca</label>
-    <select class="custom-select"
-    [(ngModel)]="selectedMarca"
-    (change)="seleccionarMarca(selectedMarca)">
+    <label>Marca</label>
+    <select
+      class="custom-select"
+      [(ngModel)]="selectedMarca"
+      (change)="seleccionarMarca(selectedMarca)"
+    >
       <option [ngValue]="null">Todas las marcas</option>
-      <option *ngFor="let marca of marcas" [ngValue]="marca">{{ marca }}</option>
+      <option *ngFor="let marca of marcas" [ngValue]="marca">
+        {{ marca }}
+      </option>
     </select>
   </div>
 
   <!-- Filtro por Presentación -->
   <div class="filter-item">
-    <label>Seleccione Presentación</label>
-    <select class="custom-select"
-    [(ngModel)]="selectedPresentacion"
-    (change)="seleccionarPresentacion(selectedPresentacion )">
+    <label>Presentación</label>
+    <select
+      class="custom-select"
+      [(ngModel)]="selectedPresentacion"
+      (change)="seleccionarPresentacion(selectedPresentacion)"
+    >
       <option [ngValue]="null">Todas</option>
-      <option *ngFor="let presentacion of presentaciones" [ngValue]="presentacion">
+      <option
+        *ngFor="let presentacion of presentaciones"
+        [ngValue]="presentacion"
+      >
         {{ presentacion }} ml
       </option>
     </select>
@@ -29,9 +37,15 @@
 
   <!-- Artículos por Página -->
   <div class="filter-item productos-por-pagina">
-    <label>Artículos por página:</label>
-    <select class="custom-select" [(ngModel)]="productosPorPagina" (change)="productosPagina(productosPorPagina)">
-      <option *ngFor="let option of [8, 12, 24]" [value]="option">{{ option }}</option>
+    <label>Página:</label>
+    <select
+      class="custom-select"
+      [(ngModel)]="productosPorPagina"
+      (change)="productosPagina(productosPorPagina)"
+    >
+      <option *ngFor="let option of [8, 12, 24]" [value]="option">
+        {{ option }}
+      </option>
     </select>
   </div>
 </div>

@@ -6,21 +6,34 @@
       </div>
       <h3>{{ producto.nombre }}</h3>
       <div class="product-details">
-        <div class="presentations-list">
-          <ul *ngIf="producto.presentaciones[0].presentacion_ml!=null && producto.presentaciones.length>0">
-            <li *ngFor="let presentacion of producto.presentaciones">
-              <button
-                [class.selected]="producto.presentacionSeleccionada === presentacion"
-                (click)="seleccionarPresentacion(presentacion, producto)">
-                {{ presentacion.presentacion_ml }} ml
-              </button>
-            </li>
-          </ul>
-        </div>
-
         <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
         <div *ngIf="producto.presentacionSeleccionada">
-          <div class="price">
+          <div class="presentations-list">
+            <ul
+              *ngIf="
+                producto.presentaciones[0].presentacion_ml != null &&
+                producto.presentaciones.length > 0
+              "
+            >
+              <li *ngFor="let presentacion of producto.presentaciones">
+                <button
+                  [class.selected]="
+                    producto.presentacionSeleccionada === presentacion
+                  "
+                  (click)="seleccionarPresentacion(presentacion, producto)"
+                >
+                  {{ presentacion.presentacion_ml }} ml
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="price"
+            *ngIf="
+              producto.presentacionSeleccionada &&
+              producto.presentacionSeleccionada.precio > 0
+            "
+          >
             <span
               class="old-price"
               *ngIf="producto.presentacionSeleccionada.precio > 10"
@@ -36,17 +49,22 @@
             </span>
           </div>
           @if(producto.presentacionSeleccionada.cantidad<1){
-            <p id="not-available">¡No disponible!</p>
+          <p id="not-available">¡No disponible!</p>
           }@else {
-            <button
+          <button
             nz-button
             nzType="primary"
             class="boton-comprar"
-            (click)="agregarProductoAlCarrito(producto,producto.presentacionSeleccionada)">
+            (click)="
+              agregarProductoAlCarrito(
+                producto,
+                producto.presentacionSeleccionada
+              )
+            "
+          >
             Comprar
           </button>
           }
-
         </div>
       </div>
     </div>

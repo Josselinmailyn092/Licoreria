@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  min-width: 160px;
+  min-width: 100px;
   flex: 1;
 }
 
@@ -48,7 +48,7 @@
 
 /* Icono de flecha para los select */
 .custom-select::after {
-  content: '▼';
+  content: "▼";
   position: absolute;
   right: 12px;
   top: 50%;
@@ -66,8 +66,8 @@
 /* Responsive: En pantallas pequeñas, los filtros se apilan */
 @media (max-width: 768px) {
   .filters {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+
     display: flex;
     gap: 0 !important;
     background-color: transparent; /* Fondo ligero para mejor contraste */
@@ -77,16 +77,15 @@
   }
 
   .filter-item {
-    width: 50%;
+    width: 70%;
     gap: 2px;
   }
-  .filter-item label{
+  .filter-item label {
     font-size: 12px;
   }
-  .custom-select{
-    width: 70%;
+  .custom-select {
+    width: 90%;
     height: 28px;
     font-size: 12px;
   }
-
 }

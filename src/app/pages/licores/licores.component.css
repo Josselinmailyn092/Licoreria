@@ -3,7 +3,6 @@
   padding: 10px 0;
   margin: 0;
   margin-top: 50px;
-  margin-left: 50px;
   gap: 20px;
 }
 
@@ -36,6 +35,9 @@
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
+app-side-menu {
+  margin-left: 50px;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -53,26 +55,13 @@
   .licores-content {
     width: 100%;
     margin: 0;
-    padding: 0 15px;
+    padding: auto;
   }
 
   .licores-header {
     flex-direction: column;
     text-align: center;
     gap: 10px;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    padding: 10px;
-  }
-
-  .product-card {
-    padding: 12px;
-  }
-
-  .product-image img {
-    max-height: 160px;
   }
 
   .custom-pagination-row {
@@ -82,5 +71,8 @@
   .pagination-button {
     font-size: 12px;
     padding: 5px 8px;
+  }
+  app-product-lis {
+    width: 100%;
   }
 }
