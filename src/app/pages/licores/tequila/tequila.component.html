@@ -5,14 +5,12 @@
     [presentaciones]="presentacionesCantidad"
     (categoriaSeleccionada)="manejarSeleccionCategoria($event)"
     (marcaSeleccionada)="manejarFiltroMarca($event)"
-    (presentacionSeleccionada)="manejarFiltroPresentacion($event ? +$event : null)"
+    (presentacionSeleccionada)="
+      manejarFiltroPresentacion($event ? +$event : null)
+    "
   ></app-side-menu>
 
   <div class="licores-content">
-    <div class="licores-header">
-      <img [src]="'assets/images/imagenLicores.jpg'" alt="Licor" class="header-image">
-    </div>
-
     <app-filtros-componente
       [marcas]="marcas"
       [presentaciones]="presentaciones"
@@ -26,10 +24,7 @@
       No hay productos disponibles para los filtros seleccionados.
     </div>
 
-    <app-product-list
-      [productos]="productosPaginados"
-
-    ></app-product-list>
+    <app-product-list [productos]="productosPaginados"></app-product-list>
 
     <app-paginacion
       [paginaActual]="paginaActual"
