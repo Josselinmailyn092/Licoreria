@@ -1,4 +1,9 @@
 <div class="licores-container">
+
+  <div class="section-header">
+    <h2 class="section-title"> 🍾Licores</h2>
+    <p class="section-subtitle">"El mejor acompañante para tus momentos épicos – ¡líquidos con carácter para historias memorables!"</p>
+  </div>
   <!-- Menu lateral -->
   <app-side-menu
     [categorias]="categorias"
@@ -41,6 +46,7 @@
     >
     </app-product-list>
 
+    <div class="paginacion">
     <!-- Paginación -->
     <app-paginacion
       [paginaActual]="paginaActual"
@@ -51,5 +57,7 @@
       "
     >
     </app-paginacion>
+  </div>
+
   </div>
 </div>

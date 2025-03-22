@@ -3,7 +3,7 @@ import { BaseLicoresComponent } from '../../../models/base-licores.component';
 @Component({
   selector: 'app-vinos',
   templateUrl: './vinos.component.html',
-  styleUrl: './vinos.component.css'
+  styleUrl: '../licores.component.css'
 })
 
 export class VinosComponent extends BaseLicoresComponent {

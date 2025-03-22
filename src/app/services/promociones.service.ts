@@ -8,7 +8,7 @@ export class PromocionesService {
   private url = 'http://localhost:3000/promociones';
   constructor(private http: HttpClient) {}
 
-  getPromociones(): Observable<any> {
+  obtenerPromociones(): Observable<any> {
     return this.http.get<any[]>(`${this.url}`);
   }
   getPromocionDestacada(): Observable<any> {

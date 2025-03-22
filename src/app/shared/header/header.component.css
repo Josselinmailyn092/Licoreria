@@ -176,6 +176,9 @@ i[nz-icon] {
 .menu-toggle {
   display: none;
 }
+.side-menu-option{
+  display: none;
+}
 
 .icon-button {
   cursor: pointer;
@@ -527,49 +530,149 @@ i[nz-icon] {
   .icon-button {
     font-size: 16px;
   }
-  .nav-container.menu-open {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    top: 90px;
-    left: 0;
-    width: 100%;
-    padding: 0px 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 9999; /* Valor alto para que se sobreponga */
-    background-color: #f8f5f3;
-    color: #ffffff !important;
+/* menu vista movil  */
+
+.side-menu-option {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  @media (min-width: 769px) {
+    display: none;
   }
 
-  .nav-menu {
-    flex-direction: column;
-    gap: 0px;
-    background-color: #f8f5f3;
-    width: 100%;
-    color: #ffffff;
+  &.open {
+    transform: translateX(0);
   }
-  .nav-menu li {
-    padding: 0;
-    height: 45px; /*Alto menú*/
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    color: #ffffff;
+}
+
+.side-menu-header {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--primary-color);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .menu-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2d2d2d;
+    font-weight: 700;
   }
-  .nav-menu,
-  .ant-menu,
-  .ant-menu-root,
-  .ant-menu-light,
-  .ant-menu-horizonta {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+
+  .close-icon {
+    width: 24px;
+    height: 24px;
+    stroke: #070707;
+    transition: stroke 0.2s ease;
+
+    &:hover {
+      stroke: var(--primary-color);
+    }
+  }
+}
+
+.menu-content {
+  flex: 1;
+  padding: 0.8rem 0;
+  margin-top: 0.4;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu-link{
+  height: 50px;
+  font-weight: 600;
+  border-radius: 30px;
+  margin-top: 10px;
+  font-size: 18px;
+}
+.menu-item {
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+
+  &.has-submenu {
+    .menu-link {
+      cursor: pointer;
+      position: relative;
+      padding-right: 2rem;
+
+      &:hover {
+        background: #f8f9fa;
+      }
+    }
   }
 
-  .nav-menu li {
-    outline: none !important;
-    box-shadow: none !important;
+    .chevron {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: #666;
+
+      nz-icon {
+        font-size: 0.7rem;
+        color: #666;
+        transition: transform 0.2s ease;
+
+
+      }
+
+
+    }
+
+}
+
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #fafafa;
+
+  .submenu-item {
+    .submenu-link {
+      display: block;
+      padding: 0.6rem 2rem;
+      color: #666;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: #2d2d2d;
+        background: #f0f0f0;
+      }
+    }
   }
+}
+
 
   .icons {
     display: flex;
