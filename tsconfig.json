@@ -5,6 +5,17 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "strict": true,
+    "baseUrl":"./",
+    "paths":{
+      "@app/*":["src/app/*"],
+      "@environments/*":["src/environments/*"],
+      "@models/*":["src/app/models/*"],
+      "@services/*":["src/app/services/*"],
+      "@licores/*":["src/app/pages/licores/*"],
+      "@dashboard/*":["src/app/pages/dashboard/*"],
+      "@home/*":["src/app/pages/home/*"],
+      "@promociones/*":["src/app/promociones/*"]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PresentacionService {
-  private url = 'http://localhost:3000/presentaciones'; // Ajusta la URL según tu backend
+  private url = `${environment.url}/presentaciones`; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
   // Obtener presentaciones por categoría
-  obtenerPresentacionesPorCategoria(nombreCategoria: string): Observable<string[]> {
+  obtenerPresentacionesPorCategoria(
+    nombreCategoria: string
+  ): Observable<string[]> {
     return this.http.get<string[]>(`${this.url}/categoria/${nombreCategoria}`);
   }
 
   // Obtener total de productos por presentación en una categoría
-  obtenerTotalProductosPorPresentacionesDeCategoria(nombreCategoria: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/categoria/total/${nombreCategoria}`);
+  obtenerTotalProductosPorPresentacionesDeCategoria(
+    nombreCategoria: string
+  ): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.url}/categoria/total/${nombreCategoria}`
+    );
   }
   // Obtener todas las presentaciones disponibles
   getTodasPresentaciones(): Observable<string[]> {
@@ -40,7 +47,10 @@ export class PresentacionService {
   }
 
   // Eliminar una presentación
-  deletePresentacion(data: { producto_id: number; presentacion_ml: number }): Observable<any> {
+  deletePresentacion(data: {
+    producto_id: number;
+    presentacion_ml: number;
+  }): Observable<any> {
     return this.http.request<any>('delete', `${this.url}`, { body: data });
   }
 }

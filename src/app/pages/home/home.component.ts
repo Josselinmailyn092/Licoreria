@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 import { CategoriaService } from '../../services/categoria.service';
 import { CarritoService } from '../../services/carrito.service';
+import { environment } from '@environments/environment';
 import { Producto } from '../../models/licores.models';
 
 @Component({
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
   paginaActual: number = 0;
   pageSize: number = 4;
   totalPaginas: number = 0;
-  url = 'http://localhost:3000/uploads';
+  url = `${environment.url}/uploads`; // Ajusta la URL según tu backend
 
   constructor(
     private carritoService: CarritoService,
@@ -55,7 +56,6 @@ export class HomeComponent implements OnInit {
           image: this.getCategoryImage(item.Categoria),
           route: `${item.Categoria.toLowerCase()}`,
         }));
-        console.log('Categorías cargadas:', this.categorias); // Para debug
       },
       (error) => {
         console.error('Error al cargar categorías:', error);
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   obtenerImagen(nombreImagen: string): any {
-    return 'http://localhost:3000/uploads/' + nombreImagen;
+    return this.url + '/' + nombreImagen;
   }
 
   // Seleccionar una presentación para un producto

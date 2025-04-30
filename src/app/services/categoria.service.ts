@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoriaService {
-  private url = 'http://localhost:3000/categorias'; // Ajusta la URL según tu backend
+  private url = `${environment.url}/categorias`; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +27,11 @@ export class CategoriaService {
   }
 
   // Actualizar una categoría
-  actualizarCategoria(id: number, nombre: string, tipo_producto_id: number = 1): Observable<any> {
+  actualizarCategoria(
+    id: number,
+    nombre: string,
+    tipo_producto_id: number = 1
+  ): Observable<any> {
     return this.http.put(`${this.url}/${id}`, { id, nombre, tipo_producto_id });
   }
 

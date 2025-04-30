@@ -1,8 +1,12 @@
 <div class="home-container">
-
   <div class="whatsapp-container">
     <button class="whatsapp-button" (click)="toggleWhatsAppPopup()">
-      <img src="assets/images/whatsapp.png" alt="WhatsApp Icon" width="80" height="80">
+      <img
+        src="assets/images/whatsapp.png"
+        alt="WhatsApp Icon"
+        width="80"
+        height="80"
+      />
     </button>
 
     <div class="whatsapp-popup" *ngIf="mostrarPopupWhatsApp">
@@ -20,171 +24,212 @@
   </div>
 
   <nz-carousel
-  [nzAutoPlay]="true"
-  [nzEffect]="'scrollx'"
-  [nzAutoPlaySpeed]="3000"
-  class="full-screen-carousel">
-  <!-- Slide 1 -->
-  <div nz-carousel-content>
-    <div
-      class="carousel-item"
-      [ngClass]="animationActive ? 'animation-card1' : ''"
-    >
-      <img [src]="'assets/images/slide2.jpg'" alt="Slide 1">
-      <div class="carousel-caption">
-        <div class="welcome-section">
-          <h1 class="welcome-title">¡Bienvenido a Licorería El Chinito!</h1>
-          <p class="welcome-text">
-            Descubre nuestra selección de licores de alta calidad, perfecta para cualquier ocasión.
-            Celebremos juntos con estilo y sabor.
-          </p>
+    [nzAutoPlay]="true"
+    [nzEffect]="'scrollx'"
+    [nzAutoPlaySpeed]="3000"
+    class="full-screen-carousel"
+  >
+    <!-- Slide 1 -->
+    <div nz-carousel-content>
+      <div
+        class="carousel-item"
+        [ngClass]="animationActive ? 'animation-card1' : ''"
+      >
+        <img [src]="'assets/images/slide2.jpg'" alt="Slide 1" />
+        <div class="carousel-caption">
+          <div class="welcome-section">
+            <h1 class="welcome-title">¡Bienvenido a Licorería El Chinito!</h1>
+            <p class="welcome-text">
+              Descubre nuestra selección de licores de alta calidad, perfecta
+              para cualquier ocasión. Celebremos juntos con estilo y sabor.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-<!-- Slide 2 -->
-<div nz-carousel-content>
-  <div class="carousel-item" [ngClass]="animationActive ? 'animate-card2' : ''">
-    <img [src]="'assets/images/slide3.jpg'" alt="Slide 2">
-    <div class="carousel-caption2">
-      <div class="card2-section">
-        <h1 class="card2-title">Toda la web -10% de descuento</h1>
-        <p class="card2-text">Ve a comprar y aprovecha esta oferta exclusiva en productos seleccionados.</p>
-        <button class="btn-shop" (click)="goToLiquor()">Ir a Licorería</button>
-      </div>
-    </div>
-  </div>
-</div>
-</nz-carousel>
-
-<!-- Ver categorias disponibles -->
-<div class="carousel-container">
-  <h1>Categorias</h1>
-  <p class="descubre">Descubre nuestras categorias</p>
-  <!-- Flecha izquierda -->
-  <button class="arrow left-arrow" (click)="anterior()">
-    <i nz-icon nzType="left" nzTheme="outline"></i>
-  </button>
-
-  <!-- Carrusel -->
-  <nz-carousel
-    [nzEffect]="'scrollx'"
-    [nzDots]="false"
-    [nzAutoplay]="true"
-    [nzAutoplaySpeed]="3000"
-    [nzSwiping]="true"
-    [nzArrow]="true"
-    [nzInfinite]="true"
-    #categoryCarousel
-  >
+    <!-- Slide 2 -->
     <div nz-carousel-content>
-      <div class="horizontal-container">
-        <div *ngFor="let category of categorias" class="horizontal-item">
-          <div
-            (click)="navigateToCategory(category.route)"
-            [ngStyle]="{ 'background-color': category.color }"
-               class="category-card"
-          >
-            <img [src]="category.image" alt="{{ category.name }}" class="category-image" />
-            <div class="category-info">
-              <h3>{{ category.name }}</h3>
-              <p>{{ category.products }} productos</p>
-            </div>
+      <div
+        class="carousel-item"
+        [ngClass]="animationActive ? 'animate-card2' : ''"
+      >
+        <img [src]="'assets/images/slide3.jpg'" alt="Slide 2" />
+        <div class="carousel-caption2">
+          <div class="card2-section">
+            <h1 class="card2-title">Toda la web -10% de descuento</h1>
+            <p class="card2-text">
+              Ve a comprar y aprovecha esta oferta exclusiva en productos
+              seleccionados.
+            </p>
+            <button class="btn-shop" (click)="goToLiquor()">
+              Ir a Licorería
+            </button>
           </div>
         </div>
       </div>
     </div>
   </nz-carousel>
 
-  <!-- Flecha derecha -->
-  <button class="arrow right-arrow" (click)="siguiente()">
-    <i nz-icon nzType="right" nzTheme="outline"></i>
-  </button>
-</div>
-
-
-
-<!-- Productos destacados -->
-<div class="products-container">
-  <h2 class="section-title">DESTACADOS</h2>
-  <div class="carousel-wrapper">
-    <button
-      class="carousel-arrow left"
-      (click)="paginaAnterior()"
-      [disabled]="paginaActual === 0">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
+  <!-- Ver categorias disponibles -->
+  <div class="carousel-container">
+    <h1>Categorias</h1>
+    <p class="descubre">Descubre nuestras categorias</p>
+    <!-- Flecha izquierda -->
+    <button class="arrow left-arrow" (click)="anterior()">
+      <i nz-icon nzType="left" nzTheme="outline"></i>
     </button>
 
-    <div nz-row [nzGutter]="24" class="products-grid">
-      <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="6" *ngFor="let product of productosPaginados">
-        <nz-card class="product-card">
-          <div class="product-image">
-            <img [src]="obtenerImagen(product.imagen)" [alt]="product.nombre" />
-          </div>
-          <h3>{{ product.nombre }}</h3>
-      <div class="product-details">
-        <div class="presentations-list">
-          <ul *ngIf="product.presentaciones[0].presentacion_ml!=null && product.presentaciones.length>0">
-            <li *ngFor="let presentacion of product.presentaciones">
-              <button
-                [class.selected]="product.presentacionSeleccionada === presentacion"
-                (click)="seleccionarPresentacion(presentacion, product)">
-                {{ presentacion.presentacion_ml }} ml
-              </button>
-            </li>
-          </ul>
-        </div>
-        <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
-        <div *ngIf="product.presentacionSeleccionada">
-          <div class="price">
-            <span
-              class="old-price"
-              *ngIf="product.presentacionSeleccionada.precio > 10"
+    <!-- Carrusel -->
+    <nz-carousel
+      [nzEffect]="'scrollx'"
+      [nzDots]="false"
+      [nzAutoplay]="true"
+      [nzAutoplaySpeed]="3000"
+      [nzSwiping]="true"
+      [nzArrow]="true"
+      [nzInfinite]="true"
+      #categoryCarousel
+    >
+      <div nz-carousel-content>
+        <div class="horizontal-container">
+          <div *ngFor="let category of categorias" class="horizontal-item">
+            <div
+              (click)="navigateToCategory(category.route)"
+              [ngStyle]="{ 'background-color': category.color }"
+              class="category-card"
             >
-              ${{ product.presentacionSeleccionada.precio | number : "1.2-2" }}
-            </span>
-            <span class="discount-price">
-              ${{
-                product.presentacionSeleccionada.precio *
-                  (1 - product.presentacionSeleccionada.descuento)
-                  | number : "1.2-2"
-              }}
-            </span>
+              <img
+                [src]="category.image"
+                alt="{{ category.name }}"
+                class="category-image"
+              />
+              <div class="category-info">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.products }} productos</p>
+              </div>
+            </div>
           </div>
-          @if(product.presentacionSeleccionada.cantidad<1){
-            <p id="not-available">¡No disponible!</p>
-          }@else {
-            <button
-            nz-button
-            nzType="primary"
-            class="boton-comprar"
-            >
-            Comprar
-          </button>
-          }
-
         </div>
       </div>
-        </nz-card>
-      </div>
-    </div>
+    </nz-carousel>
 
-    <button
-      class="carousel-arrow right"
-      (click)="paginaSiguiente()"
-      [disabled]="paginaActual === totalPaginas - 1">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
+    <!-- Flecha derecha -->
+    <button class="arrow right-arrow" (click)="siguiente()">
+      <i nz-icon nzType="right" nzTheme="outline"></i>
     </button>
   </div>
-</div>
 
+  <!-- Productos destacados -->
+  <div class="products-container">
+    <h2 class="section-title">DESTACADOS</h2>
+    <div class="carousel-wrapper">
+      <button
+        class="carousel-arrow left"
+        (click)="paginaAnterior()"
+        [disabled]="paginaActual === 0"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
 
-<!-- <div class="container">
+      <div nz-row [nzGutter]="24" class="products-grid">
+        <div
+          nz-col
+          nzXs="24"
+          nzSm="12"
+          nzMd="8"
+          nzLg="6"
+          *ngFor="let product of productosPaginados"
+        >
+          <nz-card class="product-card">
+            <div class="product-image">
+              <img
+                [src]="obtenerImagen(product.imagen)"
+                [alt]="product.nombre"
+              />
+            </div>
+            <h3>{{ product.nombre }}</h3>
+            <div class="product-details">
+              <div class="presentations-list">
+                <ul
+                  *ngIf="
+                    product.presentaciones[0].presentacion_ml != null &&
+                    product.presentaciones.length > 0
+                  "
+                >
+                  <li *ngFor="let presentacion of product.presentaciones">
+                    <button
+                      [class.selected]="
+                        product.presentacionSeleccionada === presentacion
+                      "
+                      (click)="seleccionarPresentacion(presentacion, product)"
+                    >
+                      {{ presentacion.presentacion_ml }} ml
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
+              <div *ngIf="product.presentacionSeleccionada">
+                <div class="price">
+                  <span
+                    class="old-price"
+                    *ngIf="product.presentacionSeleccionada.precio > 10"
+                  >
+                    ${{
+                      product.presentacionSeleccionada.precio | number : "1.2-2"
+                    }}
+                  </span>
+                  <span class="discount-price">
+                    ${{
+                      product.presentacionSeleccionada.precio *
+                        (1 - product.presentacionSeleccionada.descuento)
+                        | number : "1.2-2"
+                    }}
+                  </span>
+                </div>
+                @if(product.presentacionSeleccionada.cantidad<1){
+                <p id="not-available">¡No disponible!</p>
+                }@else {
+                <button nz-button nzType="primary" class="boton-comprar">
+                  Comprar
+                </button>
+                }
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+
+      <button
+        class="carousel-arrow right"
+        (click)="paginaSiguiente()"
+        [disabled]="paginaActual === totalPaginas - 1"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- <div class="container">
   <div class="brand-logo">
     <img [src]="'assets/images/Licores.png'" alt="Licores">
   </div>
@@ -195,35 +240,35 @@
   </div>
 </div> -->
 
-
-
-<!-- Sección: Call to Action -->
-<div class="cta-container">
-  <div class="cta-section">
-    <div class="cta-divider"></div>
-    <h2 class="cta-title">¡Ven a visitarnos<br>o haz tu pedido online!</h2>
-    <a href='https://wa.link/iecfyy' target="_blank" rel="noopener noreferrer">
-      <button nz-button nzType="primary" nzSize="large" class="cta-button">
-        <span nz-icon nzType="whatsapp" nzTheme="outline"></span>
-        Contáctanos por WhatsApp
-      </button>
-    </a>
-  </div>
-</div>
-
-<!-- slider con productos de marcas -->
-<div class="brands-slider">
-
-  <div class="slider-track">
-    <div class="slide" *ngFor="let marca of marcas">
-      <img
-        [src]="marca.logo"
-        [alt]="marca.name"
-        class="brand-logo"
-        loading="lazy"
+  <!-- Sección: Call to Action -->
+  <div class="cta-container">
+    <div class="cta-section">
+      <div class="cta-divider"></div>
+      <h2 class="cta-title">¡Ven a visitarnos<br />o haz tu pedido online!</h2>
+      <a
+        href="https://wa.link/iecfyy"
+        target="_blank"
+        rel="noopener noreferrer"
       >
+        <button nz-button nzType="primary" nzSize="large" class="cta-button">
+          <nz-icon nzType="whatsapp" nzTheme="outline"></nz-icon>
+          Contáctanos por WhatsApp
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <!-- slider con productos de marcas -->
+  <div class="brands-slider">
+    <div class="slider-track">
+      <div class="slide" *ngFor="let marca of marcas">
+        <img
+          [src]="marca.logo"
+          [alt]="marca.name"
+          class="brand-logo"
+          loading="lazy"
+        />
+      </div>
     </div>
   </div>
 </div>
-
-

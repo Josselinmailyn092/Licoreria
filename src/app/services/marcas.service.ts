@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarcasService {
-  private url = 'http://localhost:3000/marcas'; // Ajusta la URL según tu backend
+  private url = `${environment.url}/marcas`; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 

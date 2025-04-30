@@ -3,12 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { PresentacionService } from '../../services/presentacion.service';
-import { Producto } from '../../models/licores.models';
+import { Producto } from '@models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { error } from 'console';
 @Component({
   selector: 'app-licores',
   templateUrl: './licores.component.html',

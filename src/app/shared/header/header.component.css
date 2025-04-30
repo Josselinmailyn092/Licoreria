@@ -18,32 +18,20 @@ nz-layout {
 .logo-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin: auto;
   gap: 25px;
-  height: 50px;
-  width: 400px;
-  padding: 10px 20px;
+  height: auto;
+  width: 350px;
+  padding: 10px 10px;
 }
-
-.logo img {
-  margin: 0;
-  width: 70px;
-  height: 70px;
-}
-
 .title {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
   color: #000000;
+  line-height: 1.5;
   align-items: center;
   margin: auto;
-  margin-top: 0px;
-  justify-content: center; /*Cnetrar logo en medio nav*/
-  display: flex;
-  padding: 0;
-  margin: 0;
-  margin-top: 0;
+  min-width: 140px;
 }
 .contenedor {
   display: flex;

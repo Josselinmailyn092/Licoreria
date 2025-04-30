@@ -37,7 +37,6 @@
                 "output": "assets"
               },
               "src/favicon.ico"
-
             ],
             "styles": [
               "src/styles.css",
@@ -62,6 +61,12 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kB",
                   "maximumError": "4kB"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.prod.ts"
                 }
               ],
               "outputHashing": "all"

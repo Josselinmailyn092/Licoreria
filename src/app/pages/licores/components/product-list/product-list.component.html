@@ -9,10 +9,12 @@
         <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
         <div *ngIf="producto.presentacionSeleccionada">
           <div class="presentations-list">
+            <!-- Lista de botones para pantallas grandes -->
             <ul
               *ngIf="
                 producto.presentaciones[0].presentacion_ml != null &&
-                producto.presentaciones.length > 0
+                producto.presentaciones.length > 0 &&
+                !isSmallScreen
               "
             >
               <li *ngFor="let presentacion of producto.presentaciones">
@@ -26,7 +28,22 @@
                 </button>
               </li>
             </ul>
+
+            <!-- Selector desplegable para pantallas pequeñas -->
+            <select
+              *ngIf="isSmallScreen"
+              (change)="seleccionarPresentacion($event, producto)"
+            >
+              <option
+                *ngFor="let presentacion of producto.presentaciones"
+                [value]="presentacion | json"
+              >
+                {{ presentacion.presentacion_ml }} ml
+              </option>
+            </select>
           </div>
+
+          <!-- Mostramos el precio solo si la presentación seleccionada tiene un precio válido -->
           <div
             class="price"
             *ngIf="
@@ -48,23 +65,31 @@
               }}
             </span>
           </div>
-          @if(producto.presentacionSeleccionada.cantidad<1){
-          <p id="not-available">¡No disponible!</p>
-          }@else {
-          <button
-            nz-button
-            nzType="primary"
-            class="boton-comprar"
-            (click)="
-              agregarProductoAlCarrito(
-                producto,
-                producto.presentacionSeleccionada
-              )
+
+          <!-- Botón de comprar o mensaje de no disponible -->
+          <div
+            *ngIf="
+              producto.presentacionSeleccionada.cantidad > 0;
+              else noDisponible
             "
           >
-            Comprar
-          </button>
-          }
+            <button
+              nz-button
+              nzType="primary"
+              class="boton-comprar"
+              (click)="
+                agregarProductoAlCarrito(
+                  producto,
+                  producto.presentacionSeleccionada
+                )
+              "
+            >
+              Comprar
+            </button>
+          </div>
+          <ng-template #noDisponible>
+            <p id="not-available">¡No disponible!</p>
+          </ng-template>
         </div>
       </div>
     </div>

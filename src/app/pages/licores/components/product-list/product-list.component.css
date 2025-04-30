@@ -90,6 +90,29 @@ h3 {
   background-color: #fbdece;
   color: var(--primary-color);
 }
+.presentations-list select {
+  height: 1.2rem;
+  background-color: transparent; /* Fondo similar al botón */
+  border: none; /* Sin bordes para un diseño limpio */
+  border-radius: 8px; /* Bordes redondeados como los botones */
+  color: var(--primary-color); /* Color del texto */
+  cursor: pointer; /* Indicador de interacción */
+  font-size: 0.7rem; /* Tamaño de fuente como en los botones */
+  padding: 0.2rem 0.5rem; /* Espaciado interno para un diseño cómodo */
+  text-align: center; /* Centra el texto */
+}
+
+.presentations-list select:focus {
+  outline: none; /* Elimina el borde azul predeterminado */
+  background-color: #fbdece; /* Fondo al seleccionar, como en los botones */
+  color: var(--primary-color); /* Mantiene la coherencia del texto */
+}
+
+.presentations-list option {
+  background-color: transparent; /* Fondo de las opciones */
+  color: var(--primary-color); /* Color del texto en las opciones */
+  font-size: 0.7rem; /* Tamaño de fuente coherente */
+}
 
 .product-details {
   font-size: 0.9rem;
@@ -157,9 +180,9 @@ h3 {
   margin-top: 20px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 850px) {
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 2fr));
     gap: 5%;
   }
   .product-card {

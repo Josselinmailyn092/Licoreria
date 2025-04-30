@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductosService {
-  private apiUrl = 'http://localhost:3000/productos'; // Reemplaza con tu URL real
+  private apiUrl = `${environment.url}/productos`; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +20,8 @@ export class ProductosService {
   }
 
   obtenerProductosDestacados(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/destacados`);}
+    return this.http.get<any[]>(`${this.apiUrl}/destacados`);
+  }
 
   añadirProducto(producto: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, producto);
