@@ -13,8 +13,9 @@ import { Producto } from '../../models/licores.models';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('carruselCategorias', { static: false })
-  carruselCategorias!: NzCarouselComponent;
+  @ViewChild('categoryCarousel', { static: false })
+  categoryCarousel!: NzCarouselComponent;
+
   animationActive: boolean = false;
   Category: string[] = ['#Ginebra', '#Gin', '#Cerveza', '#Vino', '#Tequila'];
   indiceCategoriaActual: number = 0;
@@ -75,7 +76,7 @@ export class HomeComponent implements OnInit {
   CargarProductosDestacados(): void {
     this.productosService.obtenerProductosDestacados().subscribe({
       next: (data) => {
-        console.log('Datos API:', data);
+        // console.log('Datos API:', data);
         this.productosDestacados = data.map((producto: any) => ({
           ...producto,
           imagenUrl: `${this.url}/${producto.imagen}`, // Campo correcto
@@ -160,11 +161,11 @@ export class HomeComponent implements OnInit {
   }
 
   anterior(): void {
-    this.carruselCategorias?.pre(); // Navegar hacia la izquierda
+    this.categoryCarousel?.pre(); // Navegar hacia la izquierda
   }
 
   siguiente(): void {
-    this.carruselCategorias?.next(); // Navegar hacia la derecha
+    this.categoryCarousel?.next(); // Navegar hacia la derecha
   }
 
   goToLiquor(): void {

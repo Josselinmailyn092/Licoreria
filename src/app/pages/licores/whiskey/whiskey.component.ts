@@ -4,7 +4,7 @@ import { BaseLicoresComponent } from '../../../models/base-licores.component';
 @Component({
   selector: 'app-whiskey',
   templateUrl: './whiskey.component.html',
-  styleUrls: ['./whiskey.component.css']
+  styleUrls: ['../licores.component.css']
 })
 export class WhiskeyComponent extends BaseLicoresComponent {
   categoria = 'Whiskey';

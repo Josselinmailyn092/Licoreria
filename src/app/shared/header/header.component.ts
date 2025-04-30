@@ -12,6 +12,7 @@ interface Link {
   path: string;
   label: string;
   subMenu?: Link[];
+  isOpen?: boolean; // Add this property to fix the error
 }
 interface Slide {
   image: string;
@@ -43,6 +44,8 @@ export class HeaderComponent implements OnInit {
   search: string = '';
   isSideMenuOpen = false;
   isCarritoVisible: boolean = false;
+  isSubmenuOpen: boolean = false
+  ismenuVisible: boolean = false;
   carrito: Producto[] = [];
   total: number = 0;
 
@@ -78,7 +81,7 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
-  featuredProducts: Producto[] = []; // Agregar datos reales aquí
+  featuredProducts: Producto[] = [];
 
   constructor(
     private linkService: LinkService,
@@ -144,6 +147,7 @@ export class HeaderComponent implements OnInit {
 
   closeMenuAndNavigate(path: string): void {
     this.isMenuOpen = false;
+    this.cerrarMenu();
     this.router.navigate([path]);
   }
 
@@ -168,6 +172,20 @@ export class HeaderComponent implements OnInit {
     this.isCarritoVisible = false;
   }
 
+  abrirMenu(): void {
+    this.ismenuVisible = true;}
+
+  toggleSubmenu(link: any) {
+  link.isOpen = !link.isOpen;
+  // Cerrar otros submenús si es necesario
+  this.links.forEach(l => {
+    if (l !== link) l.isOpen = false;
+  });
+}
+  cerrarMenu() {
+    this.ismenuVisible = false;
+    this.isSubmenuOpen = false; // Cierra submenús al cerrar el menú
+  }
   enviarPedidoPorWhatsApp(): void {
     const numeroWhatsApp = '593939380666';
     const saludo = 'Hola buenas tardes me gustaría realizar un pedido:';

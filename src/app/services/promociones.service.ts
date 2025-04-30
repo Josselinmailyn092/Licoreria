@@ -9,7 +9,7 @@ export class PromocionesService {
   private url = `${environment.url}/promociones`; // Ajusta la URL según tu backend
   constructor(private http: HttpClient) {}
 
-  getPromociones(): Observable<any> {
+  obtenerPromociones(): Observable<any> {
     return this.http.get<any[]>(`${this.url}`);
   }
   getPromocionDestacada(): Observable<any> {

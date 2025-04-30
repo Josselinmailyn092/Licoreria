@@ -5,12 +5,62 @@
   margin-top: 50px;
   gap: 20px;
 }
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  padding: 0 1rem;
+  display: none;
+
+
+  .section-title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 0;
+    display: inline-block;
+    background: var(--background-light);
+    padding: 0 4rem;
+    position: relative;
+    letter-spacing: -1.5px;
+
+
+  }
+
+  .section-subtitle {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%;
+      height: 2px;
+      background: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    &:hover::after {
+      width: 60%;
+    }
+
+
+  }
+}
 
 /* Contenido principal */
 .licores-content {
   flex-grow: 1;
   margin-left: 30px;
   margin-right: 60px;
+  margin-top: 2rem;
 }
 
 .licores-header {
@@ -47,6 +97,28 @@ app-side-menu {
     margin-top: 90px;
     padding: 10px;
   }
+  .section-header {
+    margin-bottom: 0.5rem;
+    display: block;
+
+    .section-title {
+      font-size: 2rem;
+      padding: 0 2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      font-size: 0.80rem;
+      letter-spacing: 1px;
+
+      &::after {
+        width: 60%;
+      }
+      &:hover::after {
+        width: 70%;
+      }
+    }
+  }
 
   app-side-menu {
     display: none;
@@ -74,5 +146,39 @@ app-side-menu {
   }
   app-product-lis {
     width: 100%;
+  }
+}
+@media (max-width: 576px) {
+  .promotions-section {
+    margin: 5rem 0;
+  }
+
+  .section-header {
+    .section-title {
+      font-size: 1.75rem;
+      padding: 0 1.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+    }
+  }
+  .paginacion{
+    margin-top: 185px;
+
+
+  }
+}
+
+@media (max-width: 380px) {
+  .section-header {
+    .section-title {
+      font-size: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+    }
   }
 }

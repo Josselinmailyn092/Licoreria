@@ -48,7 +48,7 @@
           nz-button
           nzType="primary"
           class="menu-toggle"
-          (click)="toggleMenu()"
+          (click)="abrirMenu()"
         >
           <span
             nz-icon
@@ -62,6 +62,47 @@
       </div>
     </div>
   </nz-header>
+
+
+
+<!-- Side Menu mejorado -->
+<div class="side-menu-option" [class.open]="ismenuVisible">
+  <div class="side-menu-header">
+    <h2 class="menu-title">Menú</h2>
+    <button class="close-btn" (click)="cerrarMenu()" aria-label="Cerrar menú">
+      <svg class="close-icon" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="menu-content">
+    <ul class="menu-list">
+      <li class="menu-item" *ngFor="let link of links"
+          [class.has-submenu]="link.subMenu?.length"
+          (click)="$event.stopPropagation()">
+
+          <div class="menu-link" (click)="link.subMenu?.length ? toggleSubmenu(link) : closeMenuAndNavigate(link.path)">
+            {{ link.label }}
+            <span class="chevron" *ngIf="link.subMenu?.length">
+              <i nz-icon [nzType]="link.isOpen ? 'down' : 'right'" nzTheme="outline"></i>
+            </span>
+          </div>
+
+        <ul class="submenu" *ngIf="link.subMenu?.length && link.isOpen">
+          <li class="submenu-item" *ngFor="let subItem of link.subMenu">
+            <a class="submenu-link"
+               [routerLink]="subItem.path"
+               (click)="cerrarMenu()">
+              {{ subItem.label }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
   <!-- Side Menu (Carrito) -->
   <div class="side-menu" [class.open]="isCarritoVisible">

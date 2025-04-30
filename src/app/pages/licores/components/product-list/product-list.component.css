@@ -67,6 +67,8 @@ h3 {
 }
 .presentations-list {
   height: 1.2rem;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 .presentations-list ul {
@@ -193,6 +195,22 @@ h3 {
   }
   .product-details {
     font-size: 0.8rem;
+  }
+  .presentations-list {
+    height: 2rem;
+    justify-content: center;
+  }
+  .presentations-list ul{
+   width: 100%;
+  }
+  .presentations-list li {
+    margin: 0;
+    padding: 0%;
+
+  }
+  .presentations-list button{
+    font-size: 0.6rem;
+    font-weight: 700;
   }
   .boton-comprar {
     font-size: 0.7rem;
