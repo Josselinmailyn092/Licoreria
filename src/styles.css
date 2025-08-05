@@ -9,7 +9,9 @@
   --transition-speed: 0.3s;
   --primary-color-hover: #e65600;
 }
-
+html {
+  overflow-x: hidden;
+}
 /* Estilos base */
 body {
   font-family: "Inter", sans-serif;

@@ -75,15 +75,11 @@ export class HomeComponent implements OnInit {
   CargarProductosDestacados(): void {
     this.productosService.obtenerProductosDestacados().subscribe({
       next: (data) => {
-        console.log('Datos API:', data);
         this.productosDestacados = data.map((producto: any) => ({
           ...producto,
           imagenUrl: `${this.url}/${producto.imagen}`, // Campo correcto
         }));
-        this.totalPaginas = Math.ceil(
-          this.productosDestacados.length / this.pageSize
-        );
-        this.actualizarProductosPaginados();
+        this.chunkFeaturedProducts();
       },
       error: (err) => console.error('Error API:', err),
     });

@@ -1,5 +1,5 @@
 import { MarcasService } from './../../services/marcas.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ProductosService } from '../../services/productos.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { PresentacionService } from '../../services/presentacion.service';
@@ -7,6 +7,8 @@ import { Producto } from '@models/licores.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
 import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-licores',
@@ -39,7 +41,6 @@ export class LicoresComponent implements OnInit {
   totalProductos = 100;
   carrito: Producto[] = [];
   productosConPresentaciones: { producto: Producto; presentacion: any }[] = [];
-
   constructor(
     private categoriaService: CategoriaService,
     private productosService: ProductosService,
@@ -48,7 +49,8 @@ export class LicoresComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private carritoService: CarritoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
@@ -182,6 +184,9 @@ export class LicoresComponent implements OnInit {
     const inicio = (this.paginaActual - 1) * this.productosPorPagina;
     const fin = inicio + this.productosPorPagina;
     this.productosPaginados = this.productos.slice(inicio, fin);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   // Calcula cuantas paginas hay en total dividiendiendo la cantidad de productos ente productosPorPaginas
