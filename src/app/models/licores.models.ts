@@ -9,8 +9,8 @@ export interface Producto {
     presentacion_ml: number;
     precio: number;
     descuento: number;
+    cantidad?: number;
   }[];
-  cantidad?: number;
 }
 
 export interface Categoria {
@@ -18,17 +18,17 @@ export interface Categoria {
   TotalProductos: number;
 }
 
- export interface Marca {
+export interface Marca {
   nombreMarca: string;
   cantidad: number;
 }
 
- export interface Presentacion {
+export interface Presentacion {
   presentacion_ml: number;
   cantidad: number;
 }
 
- export interface ProductoConPresentacion {
+export interface ProductoConPresentacion {
   producto: Producto;
   presentacion: any;
 }

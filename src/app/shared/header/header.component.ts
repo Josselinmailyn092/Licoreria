@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Producto } from '../../models/licores.models';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Producto} from '@models/licores.models';
 // Inyección de servio link
-import { LinkService } from '../../services/link.service';
+import {LinkService} from '@services/link.service';
 // Inyeccion de servico
-import { SubmenuService } from '../../services/submenu.service';
-import { CarritoService } from '../../services/carrito.service';
+import {SubmenuService} from '@services/submenu.service';
+import {CarritoService} from '@services/carrito.service';
+import {environment} from '@environments/environment';
 
 // Estructura de la interfaz link
 interface Link {
@@ -27,11 +28,10 @@ interface Category {
   route: string;
 }
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'], // Corrección aquí
+  styleUrls: ['./header.component.css'] // Corrección aquí
 })
 export class HeaderComponent implements OnInit {
   // Propiedades existentes
@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
-  featuredProducts: Producto[] = []; // Agregar datos reales aquí
+  featuredProducts: Producto[] = [];
 
   constructor(
     private linkService: LinkService,
@@ -94,16 +94,18 @@ export class HeaderComponent implements OnInit {
     //obtener links del sub menu
     this.links = this.subMenu.geSubMenuItems();
     this.menuItems = this.subMenu.geSubMenuItems();
-    this.carritoService.carrito$.subscribe((productos) => {
+    this.carritoService.carrito$.subscribe(productos => {
       this.carrito = productos;
-      this.total = productos.reduce(
-        (total, producto) =>
-          total + producto.presentaciones[0].precio * (producto.cantidad ?? 0),
-        0
-      );
+      // this.total = productos.reduce(
+      //   (total, producto) =>
+      //     total +
+      //     producto.presentaciones[0].precio *
+      //       (producto.presentaciones[0].cantidad ?? 0),
+      //   0
+      // );
     });
 
-    this.carritoService.total$.subscribe((total) => {
+    this.carritoService.total$.subscribe(total => {
       this.total = total;
     });
   }
@@ -148,7 +150,7 @@ export class HeaderComponent implements OnInit {
   }
 
   // Carrito
-  agregarProducto(evento: { producto: Producto }) {
+  agregarProducto(evento: {producto: Producto}) {
     this.carritoService.agregarProducto(evento.producto);
   }
 
@@ -156,8 +158,8 @@ export class HeaderComponent implements OnInit {
     this.carritoService.disminuirCantidad(producto);
   }
 
-  eliminarProducto(productoId: number): void {
-    this.carritoService.eliminarProducto(productoId);
+  eliminarProducto(productoId: number, presentacion_ml: number): void {
+    this.carritoService.eliminarProducto(productoId, presentacion_ml);
   }
 
   abrirCarrito(): void {
@@ -173,22 +175,21 @@ export class HeaderComponent implements OnInit {
     const saludo = 'Hola buenas tardes me gustaría realizar un pedido:';
     const mensaje = this.carrito
       .map(
-        (producto) =>
-          `${producto.nombre} (${
-            producto.presentaciones[0].presentacion_ml
-          } ml) - $${(producto.presentaciones[0].precio * 0.9).toFixed(2)}`
+        producto =>
+          `${producto.nombre} (${producto.presentaciones[0].presentacion_ml} ml) - $${(producto.presentaciones[0].precio * 0.9).toFixed(2)}`
       )
       .join('\n');
 
     const textoCompleto = `${saludo}\n${mensaje}`;
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
-      textoCompleto
-    )}`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoCompleto)}`;
 
     window.open(url, '_blank');
   }
 
   limpiarCarrito(): void {
     this.carritoService.limpiarCarrito();
+  }
+  obtenerImagen(nombreImagen: string): any {
+    return `${environment.url}/uploads/` + nombreImagen;
   }
 }

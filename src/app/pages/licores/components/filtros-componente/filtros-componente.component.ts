@@ -22,13 +22,14 @@ export class FiltrosComponenteComponent {
   @Output() cambiarProductosPorPagina = new EventEmitter<number>();
   @Output() filtroSeleccionado = new EventEmitter<string>();
 
-  selectedMarca: string = '';
-  selectedPresentacion: any;
+  selectedMarca: any | null = null;
+  selectedPresentacion: any = null;
 
   // manejo de cambio de marcas
   seleccionarMarca(marca: string) {
     this.selectedMarca = marca;
     this.filtrarPorMarca.emit(marca);
+    console.log(this.marcas, this.presentaciones);
   }
 
   // manejo de cambiode presentacion de los productos

@@ -1,60 +1,69 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Producto } from '../models/licores.models';
-import { map } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Producto} from '@models/licores.models';
+import {ProductosService} from '@services/productos.service';
+import {NotificacionService} from './notificacion.service';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CarritoService {
   private carrito: Producto[] = [];
+  //CREAR UN WEBSOCKET PARA VER LA DISPONIBILIDAD DE PRODUCTOS EN TIEMPO REAL
   private carritoSubject = new BehaviorSubject<Producto[]>([]);
-  carrito$ = this.carritoSubject.asObservable();
-
   private totalSubject = new BehaviorSubject<number>(0);
+
+  // Observables
+  carrito$ = this.carritoSubject.asObservable();
   total$ = this.totalSubject.asObservable();
 
-  // Observable para suscribirse al carrito
-
+  //Constructor
+  constructor(private notificacion: NotificacionService) {
+  }
   // Agregar un producto al carrito
   agregarProducto(producto: Producto) {
-    const productoConPresentacion: Producto = { ...producto, cantidad: 1 };
-
+    const productoConPresentacion: Producto = {
+      ...producto,
+      presentaciones: producto.presentaciones.map(p => ({
+        ...p,
+        cantidad: 1
+      }))
+    };
     const productoExistente = this.carrito.find(
-      (p) =>
-        p.id === producto.id &&
-        p.presentaciones[0].presentacion_ml ===
-          producto.presentaciones[0].presentacion_ml
+      p => p.id === producto.id && p.presentaciones[0].presentacion_ml === producto.presentaciones[0].presentacion_ml
     );
     if (productoExistente) {
-      productoExistente.cantidad! += 1;
+      productoExistente.presentaciones[0].cantidad! += 1;
     } else {
       this.carrito.push(productoConPresentacion);
     }
+    this.actualizarCarrito();
+    this.notificacion.showAlert('success', '¡Producto añadido al carrito!');
+
   }
 
-  // Disminuir la cantidad de un producto o eliminarlo si la cantidad es 0
+  // Disminuir la cantidad de un producto
   disminuirCantidad(producto: Producto): void {
     const productoExistente = this.carrito.find(
-      (p) =>
+      p =>
         p.id === producto.id &&
         p.nombre === producto.nombre &&
-        p.presentaciones[0].presentacion_ml ===
-          producto.presentaciones[0].presentacion_ml
+        p.presentaciones[0].presentacion_ml === producto.presentaciones[0].presentacion_ml
     );
 
-    if (productoExistente) {
-      productoExistente.cantidad = (productoExistente.cantidad || 1) - 1;
-      if (productoExistente.cantidad <= 0) {
-        this.carrito = this.carrito.filter((p) => p !== productoExistente);
-      }
+    if (productoExistente && productoExistente.presentaciones[0].cantidad! > 1) {
+      console.log(productoExistente.presentaciones[0].cantidad);
+      productoExistente.presentaciones[0].cantidad = (productoExistente.presentaciones[0].cantidad || 1) - 1;
+      // if (productoExistente.presentaciones[0].cantidad <= 0) {
+      //   this.carrito = this.carrito.filter((p) => p !== productoExistente);
+      // }
     }
-
     this.actualizarCarrito();
   }
 
   // Eliminar un producto completamente del carrito
-  eliminarProducto(productoId: number): void {
-    this.carrito = this.carrito.filter((p) => p.id !== productoId);
+  eliminarProducto(productoId: number, presentacion_ml: number): void {
+    this.carrito = this.carrito.filter(p => p.id !== productoId);
     this.actualizarCarrito();
   }
 
@@ -72,10 +81,7 @@ export class CarritoService {
   // Notificar cambios a los observadores
   private actualizarCarrito(): void {
     this.carritoSubject.next([...this.carrito]); // Asegúrate de emitir una copia del array
-    const total = this.carrito.reduce(
-      (sum, prod) => sum + prod.presentaciones[0].precio * (prod.cantidad || 0),
-      0
-    );
+    const total = this.carrito.reduce((sum, prod) => sum + prod.presentaciones[0].precio * (prod.presentaciones[0].cantidad || 0), 0);
     this.totalSubject.next(total); // Emitir el nuevo total
   }
 }

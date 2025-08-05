@@ -35,6 +35,9 @@
 /* Imagen del producto */
 .product-image {
   aspect-ratio: 9/16;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   max-height: 180px;
   overflow: hidden;
   border-radius: 12px;
@@ -65,26 +68,6 @@ h3 {
   margin-bottom: 8px;
   font-weight: 600;
 }
-.presentations-list {
-  height: 1.2rem;
-}
-
-.presentations-list ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
-.presentations-list button {
-  background-color: transparent;
-  border: none;
-  border-radius: 8px;
-  color: var(--primary-color);
-  cursor: pointer;
-  margin: 0px;
-  font-size: 0.7rem;
-}
 
 .presentations-list button.selected {
   background-color: #fbdece;
@@ -104,14 +87,16 @@ h3 {
 
 .presentations-list select:focus {
   outline: none; /* Elimina el borde azul predeterminado */
-  background-color: #fbdece; /* Fondo al seleccionar, como en los botones */
+  background-color: #f8f5f3; /* Fondo al seleccionar, como en los botones */
   color: var(--primary-color); /* Mantiene la coherencia del texto */
 }
 
 .presentations-list option {
-  background-color: transparent; /* Fondo de las opciones */
-  color: var(--primary-color); /* Color del texto en las opciones */
+  background-color: #f8f5f3; /* Fondo de las opciones */
+  color: #ffb164; /* Color del texto en las opciones */
   font-size: 0.7rem; /* Tamaño de fuente coherente */
+  font-weight: bolder;
+  border: none;
 }
 
 .product-details {
@@ -180,7 +165,7 @@ h3 {
   margin-top: 20px;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 919px) {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 2fr));
     gap: 5%;

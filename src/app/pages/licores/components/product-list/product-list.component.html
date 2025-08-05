@@ -9,35 +9,9 @@
         <!-- Mostramos el precio solo si hay una presentación seleccionada para este producto -->
         <div *ngIf="producto.presentacionSeleccionada">
           <div class="presentations-list">
-            <!-- Lista de botones para pantallas grandes -->
-            <ul
-              *ngIf="
-                producto.presentaciones[0].presentacion_ml != null &&
-                producto.presentaciones.length > 0 &&
-                !isSmallScreen
-              "
-            >
-              <li *ngFor="let presentacion of producto.presentaciones">
-                <button
-                  [class.selected]="
-                    producto.presentacionSeleccionada === presentacion
-                  "
-                  (click)="seleccionarPresentacion(presentacion, producto)"
-                >
-                  {{ presentacion.presentacion_ml }} ml
-                </button>
-              </li>
-            </ul>
-
-            <!-- Selector desplegable para pantallas pequeñas -->
-            <select
-              *ngIf="isSmallScreen"
-              (change)="seleccionarPresentacion($event, producto)"
-            >
-              <option
-                *ngFor="let presentacion of producto.presentaciones"
-                [value]="presentacion | json"
-              >
+            <!-- Selector desplegable -->
+            <select (change)="seleccionarPresentacion($event, producto)">
+              <option *ngFor="let presentacion of producto.presentaciones" [value]="presentacion | json">
                 {{ presentacion.presentacion_ml }} ml
               </option>
             </select>
@@ -51,10 +25,7 @@
               producto.presentacionSeleccionada.precio > 0
             "
           >
-            <span
-              class="old-price"
-              *ngIf="producto.presentacionSeleccionada.precio > 10"
-            >
+            <span class="old-price" *ngIf="producto.presentacionSeleccionada.precio > 10">
               ${{ producto.presentacionSeleccionada.precio | number : "1.2-2" }}
             </span>
             <span class="discount-price">
@@ -70,8 +41,7 @@
           <div
             *ngIf="
               producto.presentacionSeleccionada.cantidad > 0;
-              else noDisponible
-            "
+              else noDisponible"
           >
             <button
               nz-button

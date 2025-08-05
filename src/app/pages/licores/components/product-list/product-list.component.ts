@@ -62,7 +62,7 @@ export class ProductListComponent implements OnChanges {
     const { presentacionSeleccionada, ...productoSinSeleccionada } = producto;
     const productoCarrito: Producto = {
       ...productoSinSeleccionada,
-      presentaciones: presentacion,
+      presentaciones: [presentacion],
     };
     this.agregarAlCarrito.emit({
       producto: productoCarrito,
