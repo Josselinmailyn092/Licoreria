@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class SubmenuService {
   private subMenuItems = [
     {
       label: 'Inicio',
       path: '/home',
-      subMenu: [],
+      subMenu: []
     },
 
     {
       label: 'Licores',
       path: '/licores',
       subMenu: [
-        { label: 'Vinos', path: '/vinos' },
-        { label: 'Cerveza', path: '/cerveza' },
-        { label: 'Whiskey', path: '/whiskey' },
-        { label: 'Brandy', path: '/brandy' },
-        { label: 'Vodka', path: '/vodka' },
-        { label: 'Tequila', path: '/tequila' },
-        { label: 'Gin', path: '/gin' },
-      ],
+        {label: 'Vinos', path: '/vinos'},
+        {label: 'Cerveza', path: '/cerveza'},
+        {label: 'Whiskey', path: '/whiskey'},
+        {label: 'Brandy', path: '/brandy'},
+        {label: 'Vodka', path: '/vodka'},
+        {label: 'Tequila', path: '/tequila'},
+        {label: 'Gin', path: '/gin'}
+      ]
     },
 
     //confiteria submenu
@@ -40,17 +40,17 @@ export class SubmenuService {
     //   ]
 
     // },
-    {
-      label: 'Promociones',
-      path: '/promociones',
-      subMenu: [],
-    },
+    // {
+    //   label: 'Promociones',
+    //   path: '/promociones',
+    //   subMenu: [],
+    // },
 
     {
       label: 'Nosotros',
       path: '/nosotros',
-      subMenu: [],
-    },
+      subMenu: []
+    }
   ];
 
   geSubMenuItems() {

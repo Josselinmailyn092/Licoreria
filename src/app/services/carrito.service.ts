@@ -18,28 +18,50 @@ export class CarritoService {
   total$ = this.totalSubject.asObservable();
 
   //Constructor
-  constructor(private notificacion: NotificacionService) {
-  }
+  constructor(private notificacion: NotificacionService, private productoService: ProductosService) {}
   // Agregar un producto al carrito
   agregarProducto(producto: Producto) {
-    const productoConPresentacion: Producto = {
-      ...producto,
-      presentaciones: producto.presentaciones.map(p => ({
-        ...p,
-        cantidad: 1
-      }))
-    };
-    const productoExistente = this.carrito.find(
-      p => p.id === producto.id && p.presentaciones[0].presentacion_ml === producto.presentaciones[0].presentacion_ml
-    );
-    if (productoExistente) {
-      productoExistente.presentaciones[0].cantidad! += 1;
-    } else {
-      this.carrito.push(productoConPresentacion);
-    }
-    this.actualizarCarrito();
-    this.notificacion.showAlert('success', '¡Producto añadido al carrito!');
+    this.productoService.obtenerProductoPorId(producto.id).subscribe((productoBD: any) => {
+      // Buscar la presentación específica por presentacion_ml
+      const presentacionSeleccionada = productoBD[0].presentaciones.find(
+        (p: any) => p.presentacion_ml === producto.presentaciones[0].presentacion_ml
+      );
 
+      if (!presentacionSeleccionada || (presentacionSeleccionada.cantidad ?? 0) <= 0) {
+        this.notificacion.showAlert('error', '¡Producto sin stock disponible!');
+        return;
+      }
+
+      const productoConPresentacion: Producto = {
+        ...producto,
+        presentaciones: [
+          {
+            ...presentacionSeleccionada,
+            cantidad: 1
+          }
+        ]
+      };
+
+      const productoExistente = this.carrito.find(
+        p => p.id === producto.id && p.presentaciones[0].presentacion_ml === presentacionSeleccionada.presentacion_ml
+      );
+
+      if (productoExistente) {
+        // Verificar si hay suficiente stock en la BD
+        const cantidadEnCarrito = productoExistente.presentaciones[0].cantidad!;
+        if (cantidadEnCarrito < (presentacionSeleccionada.cantidad ?? 0)) {
+          productoExistente.presentaciones[0].cantidad! += 1;
+        } else {
+          this.notificacion.showAlert('warning', '¡Ya alcanzaste el límite de stock disponible!');
+          return;
+        }
+      } else {
+        this.carrito.push(productoConPresentacion);
+      }
+
+      this.actualizarCarrito();
+      this.notificacion.showAlert('success', '¡Producto añadido al carrito!');
+    });
   }
 
   // Disminuir la cantidad de un producto

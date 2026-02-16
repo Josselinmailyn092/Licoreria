@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {Producto} from '@models/licores.models';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Producto } from '@models/licores.models';
 // Inyección de servio link
-import {LinkService} from '@services/link.service';
+import { LinkService } from '@services/link.service';
 // Inyeccion de servico
-import {SubmenuService} from '@services/submenu.service';
-import {CarritoService} from '@services/carrito.service';
-import {environment} from '@environments/environment';
+import { SubmenuService } from '@services/submenu.service';
+import { CarritoService } from '@services/carrito.service';
+import { environment } from '@environments/environment';
 
 // Estructura de la interfaz link
 interface Link {
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
   slides: Slide[] = [
     {
       image: 'assets/images/slide2.jpg',
-      title: '¡Bienvenido a Licorería El Chinito!',
+      title: '¡Bienvenido a Licorería Punto Frío El Chinito!',
       description: 'Descubre nuestra selección de licores de alta calidad.',
       buttonText: 'Ver Ofertas'
     },
@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private subMenu: SubmenuService,
     private carritoService: CarritoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Obtener los enlaces desde el servicio
@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit {
   }
 
   // Carrito
-  agregarProducto(evento: {producto: Producto}) {
+  agregarProducto(evento: { producto: Producto }) {
     this.carritoService.agregarProducto(evento.producto);
   }
 

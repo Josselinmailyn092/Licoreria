@@ -1,12 +1,7 @@
 <div class="home-container">
   <div class="whatsapp-container">
     <button class="whatsapp-button" (click)="toggleWhatsAppPopup()">
-      <img
-        src="assets/images/whatsapp.png"
-        alt="WhatsApp Icon"
-        width="80"
-        height="80"
-      />
+      <img src="assets/images/whatsapp.png" alt="WhatsApp Icon" width="80" height="80" />
     </button>
 
     <div class="whatsapp-popup" *ngIf="mostrarPopupWhatsApp">
@@ -23,22 +18,14 @@
     </div>
   </div>
 
-  <nz-carousel
-    [nzAutoPlay]="true"
-    [nzEffect]="'scrollx'"
-    [nzAutoPlaySpeed]="3000"
-    class="full-screen-carousel"
-  >
+  <nz-carousel [nzAutoPlay]="true" [nzEffect]="'scrollx'" [nzAutoPlaySpeed]="3000" class="full-screen-carousel">
     <!-- Slide 1 -->
     <div nz-carousel-content>
-      <div
-        class="carousel-item"
-        [ngClass]="animationActive ? 'animation-card1' : ''"
-      >
+      <div class="carousel-item" [ngClass]="animationActive ? 'animation-card1' : ''">
         <img [src]="'assets/images/slide2.jpg'" alt="Slide 1" />
         <div class="carousel-caption">
           <div class="welcome-section">
-            <h1 class="welcome-title">¡Bienvenido a Licorería El Chinito!</h1>
+            <h1 class="welcome-title">¡Bienvenido a Licorería Punto Frío El Chinito!</h1>
             <p class="welcome-text">
               Descubre nuestra selección de licores de alta calidad, perfecta
               para cualquier ocasión. Celebremos juntos con estilo y sabor.
@@ -50,10 +37,7 @@
 
     <!-- Slide 2 -->
     <div nz-carousel-content>
-      <div
-        class="carousel-item"
-        [ngClass]="animationActive ? 'animate-card2' : ''"
-      >
+      <div class="carousel-item" [ngClass]="animationActive ? 'animate-card2' : ''">
         <img [src]="'assets/images/slide3.jpg'" alt="Slide 2" />
         <div class="carousel-caption2">
           <div class="card2-section">
@@ -81,29 +65,14 @@
     </button>
 
     <!-- Carrusel -->
-    <nz-carousel
-      [nzEffect]="'scrollx'"
-      [nzDots]="false"
-      [nzAutoplay]="true"
-      [nzAutoplaySpeed]="3000"
-      [nzSwiping]="true"
-      [nzArrow]="true"
-      [nzInfinite]="true"
-      #categoryCarousel
-    >
+    <nz-carousel [nzEffect]="'scrollx'" [nzDots]="false" [nzAutoplay]="true" [nzAutoplaySpeed]="3000" [nzSwiping]="true"
+      [nzArrow]="true" [nzInfinite]="true" #categoryCarousel>
       <div nz-carousel-content>
         <div class="horizontal-container">
           <div *ngFor="let category of categorias" class="horizontal-item">
-            <div
-              (click)="navigateToCategory(category.route)"
-              [ngStyle]="{ 'background-color': category.color }"
-              class="category-card"
-            >
-              <img
-                [src]="category.image"
-                alt="{{ category.name }}"
-                class="category-image"
-              />
+            <div (click)="navigateToCategory(category.route)" [ngStyle]="{ 'background-color': category.color }"
+              class="category-card">
+              <img [src]="category.image" alt="{{ category.name }}" class="category-image" />
               <div class="category-info">
                 <h3>{{ category.name }}</h3>
                 <p>{{ category.products }} productos</p>
@@ -130,34 +99,20 @@
       <i nz-icon nzType="left" nzTheme="outline"></i>
     </button>
 
-    <nz-carousel
-      [nzEffect]="'scrollx'"
-      [nzDots]="false"
-      [nzAutoplay]="true"
-      [nzAutoplaySpeed]="3000"
-      [nzSwiping]="true"
-      [nzArrow]="false"
-      [nzInfinite]="true"
-      #carouselDestacados
-    >
+    <nz-carousel [nzEffect]="'scrollx'" [nzDots]="false" [nzAutoplay]="true" [nzAutoplaySpeed]="3000" [nzSwiping]="true"
+      [nzArrow]="false" [nzInfinite]="true" #carouselDestacados>
       <div nz-carousel-content *ngFor="let grupo of productosAgrupados">
         <div class="horizontal-container">
           <div *ngFor="let product of grupo" class="horizontal-item">
             <div class="product-card">
               <div class="product-image">
-                <img
-                  [src]="obtenerImagen(product.imagen)"
-                  [alt]="product.nombre"
-                />
+                <img [src]="obtenerImagen(product.imagen)" [alt]="product.nombre" />
               </div>
               <h3>{{ product.nombre }}</h3>
               <div class="product-details">
                 <div class="presentations-list">
                   <select>
-                    <option
-                      *ngFor="let presentacion of product.presentaciones"
-                      [value]="presentacion"
-                    >
+                    <option *ngFor="let presentacion of product.presentaciones" [value]="presentacion">
                       {{ presentacion.presentacion_ml }} ml
                     </option>
                   </select>
@@ -180,11 +135,7 @@
     <div class="cta-section">
       <div class="cta-divider"></div>
       <h2 class="cta-title">¡Ven a visitarnos<br />o haz tu pedido online!</h2>
-      <a
-        href="https://wa.link/iecfyy"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href="https://wa.link/iecfyy" target="_blank" rel="noopener noreferrer">
         <button nz-button nzType="primary" nzSize="large" class="cta-button">
           <nz-icon nzType="whatsapp" nzTheme="outline"></nz-icon>
           Contáctanos por WhatsApp
@@ -197,12 +148,7 @@
   <div class="brands-slider">
     <div class="slider-track">
       <div class="slide" *ngFor="let marca of marcas">
-        <img
-          [src]="marca.logo"
-          [alt]="marca.name"
-          class="brand-logo"
-          loading="lazy"
-        />
+        <img [src]="marca.logo" [alt]="marca.name" class="brand-logo" loading="lazy" />
       </div>
     </div>
   </div>

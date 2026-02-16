@@ -31,6 +31,8 @@ import {
 import {IconDefinition} from '@ant-design/icons-angular';
 import {DashboardModule} from './pages/dashboard/dashboard.module';
 import {environment} from '@environments/environment';
+import {NzModalModule} from 'ng-zorro-antd/modal';
+
 const icons: IconDefinition[] = [
   SearchOutline,
   DollarOutline,
@@ -65,7 +67,8 @@ registerLocaleData(en);
     SharedModule,
     PagesModule,
     DashboardModule,
-    HttpClientModule
+    HttpClientModule,
+    NzModalModule
     // Otros módulos
   ],
   providers: [provideHttpClient(withFetch())],

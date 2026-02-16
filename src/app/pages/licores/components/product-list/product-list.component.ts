@@ -1,21 +1,11 @@
-import {
-  Component,
-  HostListener,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Producto } from '@models/licores.models';
-import { environment } from '@environments/environment';
+import {Component, HostListener, Input, Output, EventEmitter, OnChanges, SimpleChanges, Inject, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {Producto} from '@models/licores.models';
+import {environment} from '@environments/environment';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css',
+  styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnChanges {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
@@ -32,11 +22,8 @@ export class ProductListComponent implements OnChanges {
   filtroSeleccionado: string = ''; // Puede ser el nombre de la categoría o tipo
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['productos'] && this.productos) {
-      this.productos.forEach((producto) => {
-        if (
-          !producto.presentacionSeleccionada &&
-          producto.presentaciones.length > 0
-        ) {
+      this.productos.forEach(producto => {
+        if (!producto.presentacionSeleccionada && producto.presentaciones.length > 0) {
           producto.presentacionSeleccionada = producto.presentaciones[0]; // Asigna la primera presentación
         }
       });
@@ -59,13 +46,13 @@ export class ProductListComponent implements OnChanges {
   }
   // Agregar productos al carrito
   agregarProductoAlCarrito(producto: any, presentacion: any) {
-    const { presentacionSeleccionada, ...productoSinSeleccionada } = producto;
+    const {presentacionSeleccionada, ...productoSinSeleccionada} = producto;
     const productoCarrito: Producto = {
       ...productoSinSeleccionada,
-      presentaciones: [presentacion],
+      presentaciones: [presentacion]
     };
     this.agregarAlCarrito.emit({
-      producto: productoCarrito,
+      producto: productoCarrito
     });
   }
 

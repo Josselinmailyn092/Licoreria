@@ -11,7 +11,7 @@ nz-layout {
   background-color: #ffffff; /* Fondo claro */
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   height: 80px;
-  font-family: "Mona Sans";
+  font-family: 'Mona Sans';
   justify-content: space-between;
   z-index: 10;
 }
@@ -259,7 +259,7 @@ i[nz-icon] {
 
 /* Línea debajo del texto en el hover */
 .sub-menu-item a::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 29px; /* Coloca la línea en la parte inferior */
   left: 0;
@@ -283,6 +283,23 @@ i[nz-icon] {
   transform: scaleX(1); /* Hace que la línea se expanda */
   transform-origin: bottom left; /* Origen de la expansión */
   color: #ff8326;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* semioscuro */
+  z-index: 999; /* justo debajo del .side-menu (que tiene 1000) */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /* Carrito */
@@ -639,7 +656,7 @@ i[nz-icon] {
   .header {
     padding: 0;
     margin-top: 0;
-    font-family: "Mona Sans";
+    font-family: 'Mona Sans';
     justify-content: space-between;
   }
 
